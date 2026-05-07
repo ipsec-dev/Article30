@@ -1,0 +1,23 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "workspaces": {
+    ".": {
+      "ignoreBinaries": ["tsc", "backend.bin/eslint", "frontend.bin/eslint", "shared.bin/eslint"],
+      "ignoreDependencies": ["vite"]
+    },
+    "frontend": {
+      "entry": ["src/app/**/{page,layout,error,loading,not-found}.{ts,tsx}"],
+      "project": ["src/**/*.{ts,tsx}"],
+      "ignore": ["e2e/**", "src/components/ui/**"],
+      "ignoreDependencies": ["tailwindcss", "tw-animate-css"]
+    },
+    "backend": {
+      "ignoreDependencies": ["pino-pretty"]
+    },
+    "shared": {}
+  },
+  "ignoreExportsUsedInFile": true,
+  "rules": {
+    "enumMembers": "off"
+  }
+}

@@ -1,0 +1,21 @@
+[VIO] URGENT — CNIL 72h window — {{shortRef}}
+
+Hello {{recipientFirstName}},
+
+A {{severityLabel}}-severity violation must be notified to the CNIL within 72 hours of awareness (Art. 33 GDPR).
+
+  Severity              {{severityLabel}}
+  Awareness             {{awarenessDate}}
+  CNIL deadline         {{cnilDeadlineDate}}
+  Remaining             {{leadTimeLabel}}
+  Reference             {{shortRef}}
+
+Recommended action
+  Prepare the CNIL notification within 72 hours at the latest.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Manage your notifications: {{settingsUrl}}
+
+— {{orgCompanyName}}

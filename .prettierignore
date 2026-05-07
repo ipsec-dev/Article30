@@ -1,0 +1,13 @@
+node_modules
+dist
+.next
+.worktrees
+pnpm-lock.yaml
+*.generated.*
+backend/src/lib/api/generated
+frontend/next-env.d.ts
+
+# Tool / agent artifacts (not hand-authored)
+.playwright-mcp/
+backend/.serena/
+frontend/e2e/.admin-storage-state.json

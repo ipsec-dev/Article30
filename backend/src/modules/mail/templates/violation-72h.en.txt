@@ -1,0 +1,20 @@
+[VIO] CNIL reminder — {{leadTimeLabel}} — {{shortRef}}
+
+Hello {{recipientFirstName}},
+
+The {{severityLabel}}-severity violation is approaching its CNIL deadline. No notification has been recorded yet.
+
+  Severity        {{severityLabel}}
+  CNIL deadline   {{cnilDeadlineDate}}
+  Remaining       {{leadTimeLabel}}
+  Reference       {{shortRef}}
+
+Recommended action
+  Finalize the CNIL notification now.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Manage your notifications: {{settingsUrl}}
+
+— {{orgCompanyName}}

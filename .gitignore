@@ -1,0 +1,47 @@
+# Dependencies & build output
+node_modules/
+dist/
+.next/
+*.tsbuildinfo
+*.tgz
+
+# Test artifacts
+backend/coverage/
+frontend/coverage/
+frontend/playwright-report/
+frontend/test-results/
+
+# Environment files
+.env*
+!.env.dev.example
+!.env.prod.example
+
+# Logs
+*.log
+
+# Worktrees & local-only docs
+.worktrees/
+docs/
+
+# Tooling caches & local state
+.serena/
+.playwright-mcp/
+.eslintcache
+.claude/
+
+# Editors
+.vscode/
+*.swp
+*.swo
+*~
+
+# Locally-generated PDF samples (see backend/scripts/sample-pdfs.js)
+samples/
+
+# Markdown: deny by default, explicitly allow listed.
+*.md
+!README.md
+!CHANGELOG.md
+!CONTRIBUTING.md
+!SECURITY.md
+!.github/**/*.md

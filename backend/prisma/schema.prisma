@@ -1,0 +1,1016 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  DPO
+  EDITOR
+  PROCESS_OWNER
+  AUDITOR
+}
+
+enum TreatmentStatus {
+  DRAFT
+  VALIDATED
+}
+
+enum ChecklistAnswer {
+  YES
+  NO
+  NA
+  PARTIAL
+  IN_PROGRESS
+}
+
+enum Priority {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum ViolationStatus {
+  RECEIVED
+  TRIAGED
+  DISMISSED
+  ASSESSED
+  CONTAINED
+  NOTIFICATION_PENDING
+  NOTIFIED_CNIL
+  PERSONS_NOTIFIED
+  PERSONS_NOTIFICATION_WAIVED
+  REMEDIATED
+  CLOSED
+  REOPENED
+}
+
+enum BreachCategory {
+  CONFIDENTIALITY
+  INTEGRITY
+  AVAILABILITY
+}
+
+enum WaiverGround {
+  ENCRYPTION
+  RISK_MITIGATED
+  DISPROPORTIONATE_EFFORT_PUBLIC_COMM
+}
+
+enum RiskLikelihood {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum RiskSeverity {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum NotificationFilingPhase {
+  INITIAL
+  COMPLEMENTARY
+}
+
+enum NotificationFilingChannel {
+  PORTAL
+  EMAIL
+  POST
+}
+
+enum PersonsNotificationMethod {
+  EMAIL
+  POST
+  PUBLIC_COMMUNICATION
+  IN_APP
+}
+
+enum RegulatorInteractionDirection {
+  OUTBOUND
+  INBOUND
+}
+
+enum RegulatorInteractionKind {
+  FILING_INITIAL
+  FILING_COMPLEMENTARY
+  RFI_RECEIVED
+  RFI_RESPONDED
+  CLOSURE_NOTICE
+  SANCTION_NOTICE
+  OTHER
+}
+
+enum RemediationActionItemStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+  CANCELLED
+}
+
+enum DsrType {
+  ACCESS
+  RECTIFICATION
+  ERASURE
+  RESTRICTION
+  PORTABILITY
+  OBJECTION
+}
+
+enum DsrStatus {
+  RECEIVED
+  ACKNOWLEDGED
+  AWAITING_REQUESTER
+  IDENTITY_VERIFIED
+  IN_PROGRESS
+  RESPONDED
+  PARTIALLY_FULFILLED
+  REJECTED
+  WITHDRAWN
+  CLOSED
+}
+
+enum DsrDeadlineProfile {
+  STANDARD_30D
+  EXTENDED_90D
+  HEALTH_8D
+  HEALTH_OLD_60D
+}
+
+enum DsrRejectionReason {
+  MANIFESTLY_UNFOUNDED
+  EXCESSIVE
+  IDENTITY_UNVERIFIABLE
+  REPEAT_NO_NEW_INFO
+  LEGAL_BASIS_OVERRIDE
+}
+
+enum DsrPauseReason {
+  IDENTITY_VERIFICATION
+  SCOPE_CLARIFICATION
+  OTHER
+}
+
+enum TreatmentProcessingActionTaken {
+  NONE
+  ACCESS_EXPORT
+  RECTIFIED
+  DELETED
+  RESTRICTED
+  NOT_APPLICABLE
+}
+
+enum VendorPropagationStatus {
+  NOT_REQUIRED
+  PENDING
+  PROPAGATED
+  REFUSED
+}
+
+enum RequesterCommunicationKind {
+  ACKNOWLEDGEMENT
+  EXTENSION_NOTICE
+  CLARIFICATION_REQUEST
+  RESPONSE
+  REJECTION
+  WITHDRAWAL_CONFIRMATION
+}
+
+enum RequesterCommunicationChannel {
+  EMAIL
+  POSTAL
+  IN_PERSON
+}
+
+enum EntityType {
+  VIOLATION
+  DSR
+}
+
+enum CommentVisibility {
+  INTERNAL
+  AUDITOR_VISIBLE
+}
+
+enum AttachmentCategory {
+  EVIDENCE
+  CNIL_FILING
+  PERSONS_NOTIFICATION
+  REQUESTER_ID
+  RESPONSE_EXPORT
+  OTHER
+}
+
+enum DecisionKind {
+  DISMISS_BREACH
+  NOTIFY_CNIL
+  WAIVE_PERSONS_NOTIFICATION
+  EXTEND_DSR_DEADLINE
+  REJECT_DSR
+  CLOSE_DSR_PARTIAL
+  REOPEN
+  OTHER
+}
+
+enum TimelineEventKind {
+  STATUS_CHANGE
+  COMMENT
+  RISK_ASSESSMENT_RECORDED
+  ATTACHMENT_ADDED
+  DECISION
+  NOTIFICATION_SENT
+  ASSIGNMENT
+  REMINDER_SENT
+  INTERACTION_LOGGED
+  PAUSE_STARTED
+  PAUSE_ENDED
+  MIGRATION
+}
+
+enum ContentRevisionField {
+  CNIL_FILING_DRAFT
+  PERSONS_NOTIFICATION_BODY
+  REQUESTER_RESPONSE
+  REJECTION_LETTER
+  DSR_RESPONSE_NOTES
+  VIOLATION_NARRATIVE
+}
+
+model User {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String   @unique
+  password  String
+  role      Role     @default(AUDITOR)
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  treatments          Treatment[]
+  validatedTreatments Treatment[]               @relation("validator")
+  treatmentsAssigned  Treatment[]               @relation("treatmentAssignee")
+  checklistResponses  ChecklistResponse[]
+  violations          Violation[]
+  auditLogs           AuditLog[]
+  dsrCreated          DataSubjectRequest[]      @relation("dsrCreator")
+  dsrAssigned         DataSubjectRequest[]      @relation("dsrAssignee")
+  checklistAssigned   ChecklistResponse[]       @relation("checklistAssignee")
+  documents           Document[]
+  violationsAssigned  Violation[]               @relation("violationAssignee")
+  vendorsCreated      Vendor[]                  @relation("vendorCreator")
+  assessmentsCreated  VendorAssessment[]        @relation("assessmentCreator")
+  assessmentsReviewed VendorAssessment[]        @relation("assessmentReviewer")
+  screeningsCreated   Screening[]               @relation("screeningCreator")
+  passwordResets      PasswordResetToken[]
+  comments            FollowUpComment[]
+  attachmentsUploaded FollowUpAttachment[]      @relation("attachmentUploader")
+  attachmentsDeleted  FollowUpAttachment[]      @relation("attachmentDeleter")
+  decisions           FollowUpDecision[]
+  contentRevisions    FollowUpContentRevision[] @relation("revisionAuthor")
+
+  breachRiskAssessmentsAssessed BreachRiskAssessment[]     @relation("breachRiskAssessor")
+  breachNotificationFilings     BreachNotificationFiling[] @relation("breachFilingFiler")
+  personsNotificationsSent      PersonsNotification[]      @relation("personsNotificationSender")
+  regulatorInteractionsRecorded RegulatorInteraction[]     @relation("regulatorInteractionRecorder")
+  remediationActionsOwned       RemediationActionItem[]    @relation("remediationActionOwner")
+  remediationActionsDone        RemediationActionItem[]    @relation("remediationActionDoer")
+
+  dsrPauseStarted             DsrPauseInterval[]          @relation("dsrPauseStarter")
+  dsrTreatmentProcessed       DsrTreatmentProcessingLog[] @relation("dsrTreatmentProcessor")
+  requesterCommunicationsSent RequesterCommunication[]    @relation("requesterCommunicationSender")
+
+  @@map("users")
+}
+
+model Organization {
+  id     String @id @default(uuid())
+  slug   String @unique
+  locale String @default("fr")
+
+  companyName        String?
+  siren              String?
+  address            String?
+  representativeName String?
+  representativeRole String?
+  dpoName            String?
+  dpoEmail           String?
+  dpoPhone           String?
+
+  // Freshness configuration (in months)
+  freshnessThresholdMonths Int @default(6)
+  reviewCycleMonths        Int @default(12)
+
+  annualTurnover BigInt?
+
+  // Governance: when false, the same user can both create and validate a
+  // treatment. Default true; flip off only in single-validator orgs.
+  enforceSeparationOfDuties Boolean @default(true)
+
+  notifyDsrDeadline     Boolean @default(true)
+  notifyVendorDpaExpiry Boolean @default(true)
+  notifyTreatmentReview Boolean @default(true)
+  notifyViolation72h    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("organizations")
+}
+
+model Treatment {
+  id          String   @id @default(uuid())
+  refNumber   Int?     @unique
+  name        String
+  purpose     String?
+  subPurposes String[]
+  legalBasis  String?
+
+  // Data categories
+  personCategories String[]
+  dataCategories   Json?
+
+  // Sensitive data (Art. 9)
+  hasSensitiveData    Boolean  @default(false)
+  sensitiveCategories String[]
+
+  // Recipients
+  recipientTypes String[]
+  recipients     Json?
+
+  // Transfers
+  transfers Json?
+
+  // Retention & Security
+  retentionPeriod          String?
+  securityMeasures         String[]
+  securityMeasuresDetailed Json?
+
+  // CNIL Risk Criteria (9 criteria for AIPD determination)
+  hasEvaluationScoring      Boolean @default(false)
+  hasAutomatedDecisions     Boolean @default(false)
+  hasSystematicMonitoring   Boolean @default(false)
+  isLargeScale              Boolean @default(false)
+  hasCrossDatasetLinking    Boolean @default(false)
+  involvesVulnerablePersons Boolean @default(false)
+  usesInnovativeTech        Boolean @default(false)
+  canExcludeFromRights      Boolean @default(false)
+
+  // Freshness tracking
+  lastReviewedAt DateTime?
+  nextReviewAt   DateTime?
+
+  // Status & audit
+  status      TreatmentStatus @default(DRAFT)
+  validatedBy String?
+  validatedAt DateTime?
+  createdBy   String
+  assignedTo  String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  creator           User                        @relation(fields: [createdBy], references: [id])
+  validator         User?                       @relation("validator", fields: [validatedBy], references: [id])
+  assignee          User?                       @relation("treatmentAssignee", fields: [assignedTo], references: [id])
+  violationLinks    ViolationTreatment[]
+  vendorLinks       VendorTreatment[]
+  screening         Screening?
+  dsrProcessingLogs DsrTreatmentProcessingLog[]
+
+  @@map("treatments")
+}
+
+model ChecklistResponse {
+  id             String          @id @default(uuid())
+  itemId         String          @unique
+  response       ChecklistAnswer
+  reason         String?
+  actionPlan     String?
+  assignedTo     String?
+  deadline       DateTime?
+  priority       Priority?
+  lastReviewedAt DateTime?
+  nextReviewAt   DateTime?
+  respondedBy    String
+  respondedAt    DateTime        @default(now())
+
+  responder User  @relation(fields: [respondedBy], references: [id])
+  assignee  User? @relation("checklistAssignee", fields: [assignedTo], references: [id])
+
+  @@map("checklist_responses")
+}
+
+model Violation {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  severity    Severity
+  remediation String?
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  status           ViolationStatus @default(RECEIVED)
+  assignedTo       String?
+  dataCategories   String[]
+  estimatedRecords Int?
+  crossBorder      Boolean         @default(false)
+  closedAt         DateTime?
+  closureReason    String?
+  lessonsLearned   String?
+
+  occurredAt                DateTime?
+  awarenessAt               DateTime
+  breachCategories          BreachCategory[]
+  dismissalReason           String?
+  delayJustification        String?
+  personsNotificationWaiver WaiverGround?
+  waiverJustification       String?
+
+  creator    User                 @relation(fields: [createdBy], references: [id])
+  assignee   User?                @relation("violationAssignee", fields: [assignedTo], references: [id])
+  treatments ViolationTreatment[]
+
+  riskAssessments       BreachRiskAssessment[]
+  notificationFilings   BreachNotificationFiling[]
+  personsNotifications  PersonsNotification[]
+  regulatorInteractions RegulatorInteraction[]
+  actionItems           RemediationActionItem[]
+
+  @@map("violations")
+}
+
+model AuditLog {
+  id           String   @id @default(uuid())
+  action       String
+  entity       String
+  entityId     String
+  oldValue     Json?
+  newValue     Json?
+  hash         String   @default("")
+  previousHash String?
+  performedBy  String?
+  performedAt  DateTime @default(now())
+
+  performer User? @relation(fields: [performedBy], references: [id])
+
+  @@map("audit_logs")
+}
+
+// Violation Domain Tables
+
+model BreachRiskAssessment {
+  id                     String         @id @default(uuid())
+  violationId            String
+  likelihood             RiskLikelihood
+  severity               RiskSeverity
+  computedRiskLevel      RiskSeverity
+  affectedDataCategories String[]
+  estimatedSubjectCount  Int?
+  estimatedRecordCount   Int?
+  crossBorder            Boolean        @default(false)
+  potentialConsequences  String
+  mitigatingFactors      String?
+  assessedBy             String
+  assessedAt             DateTime       @default(now())
+  supersedesId           String?
+
+  violation    Violation              @relation(fields: [violationId], references: [id], onDelete: Cascade)
+  assessor     User                   @relation("breachRiskAssessor", fields: [assessedBy], references: [id])
+  supersedes   BreachRiskAssessment?  @relation("breachRiskSupersedes", fields: [supersedesId], references: [id])
+  supersededBy BreachRiskAssessment[] @relation("breachRiskSupersedes")
+
+  @@index([violationId])
+  @@map("breach_risk_assessments")
+}
+
+model BreachNotificationFiling {
+  id              String                    @id @default(uuid())
+  violationId     String
+  phase           NotificationFilingPhase
+  filedAt         DateTime
+  regulator       String                    @default("CNIL")
+  referenceNumber String?
+  channel         NotificationFilingChannel
+  filedBy         String
+  createdAt       DateTime                  @default(now())
+
+  violation Violation @relation(fields: [violationId], references: [id], onDelete: Cascade)
+  filer     User      @relation("breachFilingFiler", fields: [filedBy], references: [id])
+
+  @@index([violationId])
+  @@map("breach_notification_filings")
+}
+
+model PersonsNotification {
+  id             String                    @id @default(uuid())
+  violationId    String
+  method         PersonsNotificationMethod
+  notifiedAt     DateTime
+  recipientScope String
+  sentBy         String
+  createdAt      DateTime                  @default(now())
+
+  violation Violation @relation(fields: [violationId], references: [id], onDelete: Cascade)
+  sender    User      @relation("personsNotificationSender", fields: [sentBy], references: [id])
+
+  @@index([violationId])
+  @@map("persons_notifications")
+}
+
+model RegulatorInteraction {
+  id              String                        @id @default(uuid())
+  violationId     String
+  direction       RegulatorInteractionDirection
+  kind            RegulatorInteractionKind
+  occurredAt      DateTime
+  regulator       String                        @default("CNIL")
+  referenceNumber String?
+  summary         String
+  recordedBy      String
+  createdAt       DateTime                      @default(now())
+
+  violation Violation @relation(fields: [violationId], references: [id], onDelete: Cascade)
+  recorder  User      @relation("regulatorInteractionRecorder", fields: [recordedBy], references: [id])
+
+  @@index([violationId])
+  @@map("regulator_interactions")
+}
+
+model RemediationActionItem {
+  id          String                      @id @default(uuid())
+  violationId String
+  title       String
+  description String?
+  ownerId     String
+  deadline    DateTime
+  doneAt      DateTime?
+  doneBy      String?
+  status      RemediationActionItemStatus @default(PENDING)
+  createdAt   DateTime                    @default(now())
+  updatedAt   DateTime                    @updatedAt
+
+  violation Violation @relation(fields: [violationId], references: [id], onDelete: Cascade)
+  owner     User      @relation("remediationActionOwner", fields: [ownerId], references: [id])
+  doer      User?     @relation("remediationActionDoer", fields: [doneBy], references: [id])
+
+  @@index([violationId])
+  @@map("remediation_action_items")
+}
+
+// Polymorphic Follow-Up Surface 
+
+model FollowUpTimeline {
+  id          String            @id @default(uuid())
+  entityType  EntityType
+  entityId    String
+  kind        TimelineEventKind
+  payload     Json
+  performedBy String?
+  performedAt DateTime          @default(now())
+
+  @@index([entityType, entityId, performedAt(sort: Desc)], map: "follow_up_timeline_entity_performedAt_idx")
+  @@index([entityType, entityId])
+  @@map("follow_up_timeline")
+}
+
+model FollowUpComment {
+  id         String            @id @default(uuid())
+  entityType EntityType
+  entityId   String
+  authorId   String
+  body       String
+  visibility CommentVisibility @default(INTERNAL)
+  createdAt  DateTime          @default(now())
+  editedAt   DateTime?
+
+  author User @relation(fields: [authorId], references: [id])
+
+  @@index([entityType, entityId])
+  @@map("follow_up_comments")
+}
+
+model FollowUpAttachment {
+  id                       String             @id @default(uuid())
+  entityType               EntityType
+  entityId                 String
+  filename                 String
+  mimeType                 String
+  sizeBytes                Int
+  storageKey               String?
+  sha256                   String
+  previousSha256           String?
+  category                 AttachmentCategory @default(OTHER)
+  uploadedBy               String
+  uploadedAt               DateTime           @default(now())
+  supersededByAttachmentId String?
+  deletedAt                DateTime?
+  deletedBy                String?
+  deletionReason           String?
+
+  uploader     User                 @relation("attachmentUploader", fields: [uploadedBy], references: [id])
+  deleter      User?                @relation("attachmentDeleter", fields: [deletedBy], references: [id])
+  supersededBy FollowUpAttachment?  @relation("attachmentSupersedes", fields: [supersededByAttachmentId], references: [id])
+  supersedes   FollowUpAttachment[] @relation("attachmentSupersedes")
+
+  @@index([entityType, entityId])
+  @@map("follow_up_attachments")
+}
+
+model FollowUpDecision {
+  id                     String       @id @default(uuid())
+  entityType             EntityType
+  entityId               String
+  kind                   DecisionKind
+  outcome                Json
+  rationale              String
+  inputsSnapshot         Json
+  decidedBy              String
+  decidedAt              DateTime     @default(now())
+  supersededByDecisionId String?
+
+  decider      User               @relation(fields: [decidedBy], references: [id])
+  supersededBy FollowUpDecision?  @relation("decisionSupersedes", fields: [supersededByDecisionId], references: [id])
+  supersedes   FollowUpDecision[] @relation("decisionSupersedes")
+
+  @@index([entityType, entityId])
+  @@map("follow_up_decisions")
+}
+
+model FollowUpContentRevision {
+  id         String               @id @default(uuid())
+  entityType EntityType
+  entityId   String
+  field      ContentRevisionField
+  version    Int
+  content    String
+  authorId   String
+  createdAt  DateTime             @default(now())
+
+  author                  User                     @relation("revisionAuthor", fields: [authorId], references: [id])
+  requesterCommunications RequesterCommunication[]
+
+  @@unique([entityType, entityId, field, version], map: "follow_up_content_revisions_entity_field_version_key")
+  @@index([entityType, entityId], map: "follow_up_content_revisions_entity_idx")
+  @@map("follow_up_content_revisions")
+}
+
+model RegulationRecital {
+  id            Int    @id @default(autoincrement())
+  recitalNumber Int    @unique
+  contentFr     String
+  contentEn     String
+  contentEs     String
+  contentDe     String
+  contentIt     String
+
+  @@map("regulation_recitals")
+}
+
+model RegulationArticle {
+  id            Int    @id @default(autoincrement())
+  articleNumber Int    @unique
+  chapter       String
+  titleFr       String
+  titleEn       String
+  contentFr     String
+  contentEn     String
+  contentEs     String
+  contentDe     String
+  contentIt     String
+
+  @@map("regulation_articles")
+}
+
+// Data Subject Requests 
+
+model DataSubjectRequest {
+  id     String    @id @default(uuid())
+  type   DsrType
+  status DsrStatus @default(RECEIVED)
+
+  requesterName    String
+  requesterEmail   String
+  requesterDetails String?
+  identityVerified Boolean @default(false)
+  identityNotes    String?
+
+  description     String?
+  affectedSystems String?
+  receivedAt      DateTime @default(now())
+  deadline        DateTime
+  extensionReason String?
+
+  acknowledgedAt         DateTime?
+  deadlineProfile        DsrDeadlineProfile  @default(STANDARD_30D)
+  extensionNotifiedAt    DateTime?
+  rejectionReason        DsrRejectionReason?
+  rejectionDetails       String?
+  recourseInformedAt     DateTime?
+  withdrawnAt            DateTime?
+  withdrawnReason        String?
+  partialFulfilmentNotes String?
+  feeApplied             Boolean             @default(false)
+  feeAmount              Decimal?
+
+  responseNotes String?
+  respondedAt   DateTime?
+  closedAt      DateTime?
+  closureReason String?
+
+  createdBy  String?
+  assignedTo String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  creator  User? @relation("dsrCreator", fields: [createdBy], references: [id])
+  assignee User? @relation("dsrAssignee", fields: [assignedTo], references: [id])
+
+  pauseIntervals          DsrPauseInterval[]
+  treatmentProcessingLogs DsrTreatmentProcessingLog[]
+  communications          RequesterCommunication[]
+
+  @@map("data_subject_requests")
+}
+
+// DSR Domain Tables 
+
+model DsrPauseInterval {
+  id            String         @id @default(uuid())
+  dsrId         String
+  pausedAt      DateTime
+  resumedAt     DateTime?
+  reason        DsrPauseReason
+  reasonDetails String?
+  startedBy     String
+
+  dsr     DataSubjectRequest @relation(fields: [dsrId], references: [id], onDelete: Cascade)
+  starter User               @relation("dsrPauseStarter", fields: [startedBy], references: [id])
+
+  @@index([dsrId])
+  @@map("dsr_pause_intervals")
+}
+
+model DsrTreatmentProcessingLog {
+  dsrId                   String
+  treatmentId             String
+  searchedAt              DateTime?
+  findingsSummary         String?
+  actionTaken             TreatmentProcessingActionTaken @default(NONE)
+  actionTakenAt           DateTime?
+  performedBy             String?
+  vendorPropagationStatus VendorPropagationStatus        @default(NOT_REQUIRED)
+  createdAt               DateTime                       @default(now())
+  updatedAt               DateTime                       @updatedAt
+
+  dsr       DataSubjectRequest @relation(fields: [dsrId], references: [id], onDelete: Cascade)
+  treatment Treatment          @relation(fields: [treatmentId], references: [id], onDelete: Cascade)
+  performer User?              @relation("dsrTreatmentProcessor", fields: [performedBy], references: [id])
+
+  @@id([dsrId, treatmentId])
+  @@map("dsr_treatment_processing_logs")
+}
+
+model RequesterCommunication {
+  id                String                        @id @default(uuid())
+  dsrId             String
+  kind              RequesterCommunicationKind
+  sentAt            DateTime
+  channel           RequesterCommunicationChannel
+  contentRevisionId String?
+  sentBy            String?
+  createdAt         DateTime                      @default(now())
+
+  dsr             DataSubjectRequest       @relation(fields: [dsrId], references: [id], onDelete: Cascade)
+  sender          User?                    @relation("requesterCommunicationSender", fields: [sentBy], references: [id])
+  contentRevision FollowUpContentRevision? @relation(fields: [contentRevisionId], references: [id])
+
+  @@index([dsrId])
+  @@map("requester_communications")
+}
+
+model ViolationTreatment {
+  violationId String
+  treatmentId String
+  violation   Violation @relation(fields: [violationId], references: [id], onDelete: Cascade)
+  treatment   Treatment @relation(fields: [treatmentId], references: [id], onDelete: Cascade)
+
+  @@id([violationId, treatmentId])
+  @@map("violation_treatments")
+}
+
+// Compliance Snapshots 
+
+model ComplianceSnapshot {
+  id                  String   @id @default(uuid())
+  score               Int
+  checklistScore      Int
+  freshnessScore      Int
+  violationScore      Int
+  treatmentsTotal     Int
+  treatmentsValidated Int
+  checklistCompleted  Int
+  checklistTotal      Int
+  openViolations      Int
+  snapshotDate        DateTime
+  createdAt           DateTime @default(now())
+
+  @@map("compliance_snapshots")
+}
+
+// Document Attachments 
+
+enum LinkedEntity {
+  TREATMENT
+  VIOLATION
+  CHECKLIST_ITEM
+}
+
+model Document {
+  id             String       @id @default(uuid())
+  filename       String
+  mimeType       String
+  sizeBytes      Int
+  s3Key          String
+  linkedEntity   LinkedEntity
+  linkedEntityId String
+  uploadedBy     String
+  uploadedAt     DateTime     @default(now())
+
+  uploader User @relation(fields: [uploadedBy], references: [id])
+
+  @@map("documents")
+}
+
+// Vendor/Processor Registry (Art. 28) 
+
+enum DpaStatus {
+  MISSING
+  DRAFT
+  SENT
+  SIGNED
+  EXPIRED
+}
+
+model Vendor {
+  id           String  @id @default(uuid())
+  name         String
+  description  String?
+  contactName  String?
+  contactEmail String?
+  country      String?
+
+  // DPA (Data Processing Agreement)
+  dpaStatus     DpaStatus @default(MISSING)
+  dpaSigned     DateTime?
+  dpaExpiry     DateTime?
+  dpaDocumentId String?
+
+  // Sub-processor info
+  isSubProcessor Boolean @default(false)
+  parentVendorId String?
+
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  creator       User               @relation("vendorCreator", fields: [createdBy], references: [id])
+  parentVendor  Vendor?            @relation("subProcessors", fields: [parentVendorId], references: [id])
+  subProcessors Vendor[]           @relation("subProcessors")
+  treatments    VendorTreatment[]
+  assessments   VendorAssessment[]
+
+  @@map("vendors")
+}
+
+model VendorTreatment {
+  vendorId    String
+  treatmentId String
+  vendor      Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  treatment   Treatment @relation(fields: [treatmentId], references: [id], onDelete: Cascade)
+
+  @@id([vendorId, treatmentId])
+}
+
+// Vendor Assessments 
+
+enum VendorAssessmentStatus {
+  PENDING
+  IN_PROGRESS
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+// Vendor Assessments 
+
+model VendorAssessment {
+  id          String                 @id @default(uuid())
+  vendorId    String
+  status      VendorAssessmentStatus @default(PENDING)
+  score       Int?
+  answers     Json                   @default("[]")
+  reviewedBy  String?
+  reviewedAt  DateTime?
+  reviewNotes String?
+  createdBy   String
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  creator  User   @relation("assessmentCreator", fields: [createdBy], references: [id])
+  reviewer User?  @relation("assessmentReviewer", fields: [reviewedBy], references: [id])
+
+  @@map("vendor_assessments")
+}
+
+// RSS Feeds 
+
+model RssFeed {
+  id         String    @id @default(uuid())
+  label      String
+  url        String    @unique
+  enabled    Boolean   @default(true)
+  lastSyncAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  updates RegulatoryUpdate[]
+
+  @@map("rss_feeds")
+}
+
+// Regulatory Updates 
+
+model RegulatoryUpdate {
+  id          String   @id @default(uuid())
+  feedId      String
+  guid        String   @unique
+  title       String
+  description String?
+  url         String?
+  source      String
+  publishedAt DateTime
+  impactLevel String?
+  status      String   @default("NEW")
+  saved       Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  feed RssFeed @relation(fields: [feedId], references: [id], onDelete: Cascade)
+
+  @@map("regulatory_updates")
+}
+
+// Screenings 
+
+model Screening {
+  id          String   @id @default(uuid())
+  title       String
+  responses   Json
+  score       Int
+  verdict     String
+  treatmentId String?  @unique
+  createdBy   String
+  createdAt   DateTime @default(now())
+
+  creator   User       @relation("screeningCreator", fields: [createdBy], references: [id])
+  treatment Treatment? @relation(fields: [treatmentId], references: [id])
+
+  @@map("screenings")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("password_reset_tokens")
+}
+
+model NotificationLog {
+  id             String   @id @default(uuid())
+  kind           String
+  recordId       String
+  leadTime       String
+  recipientEmail String
+  sentAt         DateTime @default(now())
+
+  @@unique([kind, recordId, leadTime])
+  @@index([kind, sentAt])
+  @@map("notification_log")
+}

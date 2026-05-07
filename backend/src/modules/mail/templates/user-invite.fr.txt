@@ -1,0 +1,13 @@
+Vous avez été invité(e) sur Article30
+
+Bonjour,
+
+Un administrateur vous a invité(e) à rejoindre Article30, le registre GDPR Article 30 utilisé par votre organisation pour suivre ses activités de traitement.
+
+Cliquez sur le lien ci-dessous dans les {{expiresInMinutes}} minutes pour définir votre mot de passe et finaliser la création de votre compte :
+
+{{resetUrl}}
+
+Si vous n'attendiez pas cette invitation, vous pouvez ignorer ce message.
+
+Article30

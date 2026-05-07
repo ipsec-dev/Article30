@@ -1,0 +1,19 @@
+[VEN] GDPR questionnaire received — {{shortRef}}
+
+Hello {{recipientFirstName}},
+
+The vendor {{vendorName}} has returned their data-protection questionnaire.
+
+  Vendor          {{vendorName}}
+  Submitted       {{submittedDate}}
+  Reference       {{shortRef}}
+
+Recommended action
+  Review the vendor's responses.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Manage your notifications: {{settingsUrl}}
+
+— {{orgCompanyName}}

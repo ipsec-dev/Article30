@@ -1,0 +1,21 @@
+[VIO] URGENT — Fenêtre CNIL 72h — {{shortRef}}
+
+Bonjour {{recipientFirstName}},
+
+Une violation de gravité {{severityLabel}} doit être notifiée à la CNIL sous 72 heures à compter de la prise de connaissance (Art. 33 RGPD).
+
+  Sévérité              {{severityLabel}}
+  Prise de connaissance {{awarenessDate}}
+  Échéance CNIL         {{cnilDeadlineDate}}
+  Reste                 {{leadTimeLabel}}
+  Référence             {{shortRef}}
+
+Action recommandée
+  Préparer la notification CNIL au plus tard sous 72 heures.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Gérer vos notifications : {{settingsUrl}}
+
+— {{orgCompanyName}}

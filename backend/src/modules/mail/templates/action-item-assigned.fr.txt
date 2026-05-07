@@ -1,0 +1,20 @@
+[ACT] Tâche assignée — {{shortRef}}
+
+Bonjour {{recipientFirstName}},
+
+Une tâche de remédiation vient de vous être assignée.
+
+  Tâche             {{taskTitle}}
+  Violation liée    {{violationTitle}}
+  Échéance          {{deadlineDate}}
+  Référence         {{shortRef}}
+
+Action recommandée
+  Mettre à jour la tâche dès qu'elle est traitée.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Gérer vos notifications : {{settingsUrl}}
+
+— {{orgCompanyName}}

@@ -1,0 +1,20 @@
+[VIO] Nouvelle violation {{severityLabel}} — {{shortRef}}
+
+Bonjour {{recipientFirstName}},
+
+Une nouvelle violation a été enregistrée pour {{orgCompanyName}} et attend votre qualification.
+
+  Sévérité        {{severityLabel}}
+  Découverte      {{discoveredDate}}
+  Catégories      {{categoriesLabel}}
+  Référence       {{shortRef}}
+
+Action recommandée
+  Qualifier la violation et lancer l'évaluation des risques.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Gérer vos notifications : {{settingsUrl}}
+
+— {{orgCompanyName}}

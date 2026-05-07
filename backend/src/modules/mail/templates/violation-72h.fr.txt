@@ -1,0 +1,20 @@
+[VIO] Rappel CNIL — {{leadTimeLabel}} — {{shortRef}}
+
+Bonjour {{recipientFirstName}},
+
+La violation {{severityLabel}} approche de l'échéance CNIL. Aucune notification n'a encore été enregistrée.
+
+  Sévérité        {{severityLabel}}
+  Échéance CNIL   {{cnilDeadlineDate}}
+  Reste           {{leadTimeLabel}}
+  Référence       {{shortRef}}
+
+Action recommandée
+  Finaliser la notification CNIL maintenant.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Gérer vos notifications : {{settingsUrl}}
+
+— {{orgCompanyName}}
