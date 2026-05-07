@@ -13,13 +13,18 @@ describe('ConfigProvider / useServerConfig', () => {
     (api.get as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       smtpEnabled: false,
       bootstrapAvailable: true,
+      version: '1.2.3',
     });
     const { result } = renderHook(() => useServerConfig(), {
       wrapper: ({ children }) => <ConfigProvider>{children}</ConfigProvider>,
     });
-    expect(result.current).toEqual({ smtpEnabled: true, bootstrapAvailable: false });
+    expect(result.current).toEqual({ smtpEnabled: true, bootstrapAvailable: false, version: '' });
     await waitFor(() =>
-      expect(result.current).toEqual({ smtpEnabled: false, bootstrapAvailable: true }),
+      expect(result.current).toEqual({
+        smtpEnabled: false,
+        bootstrapAvailable: true,
+        version: '1.2.3',
+      }),
     );
     expect(api.get).toHaveBeenCalledWith('/config');
   });
@@ -31,7 +36,7 @@ describe('ConfigProvider / useServerConfig', () => {
     });
     // Wait a tick for the rejection to flush.
     await new Promise(r => setTimeout(r, 0));
-    expect(result.current).toEqual({ smtpEnabled: true, bootstrapAvailable: false });
+    expect(result.current).toEqual({ smtpEnabled: true, bootstrapAvailable: false, version: '' });
   });
 
   it('throws when used outside the provider', () => {
