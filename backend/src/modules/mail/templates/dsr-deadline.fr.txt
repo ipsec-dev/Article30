@@ -1,0 +1,21 @@
+[DSR] Échéance dans {{leadTimeLabel}} — {{shortRef}}
+
+Bonjour {{recipientFirstName}},
+
+La demande {{dsrTypeLabel}} de {{requesterName}} arrive à échéance.
+
+  Type            {{dsrTypeLabel}}
+  Demandeur       {{requesterName}}
+  Échéance        {{deadlineDate}}
+  Reste           {{leadTimeLabel}}
+  Référence       {{shortRef}}
+
+Action recommandée
+  Traiter la demande avant l'échéance.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Gérer vos notifications : {{settingsUrl}}
+
+— {{orgCompanyName}}

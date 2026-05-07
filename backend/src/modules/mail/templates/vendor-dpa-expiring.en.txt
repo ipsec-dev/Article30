@@ -1,0 +1,20 @@
+[VEN] DPA expires in {{leadTimeLabel}} — {{shortRef}}
+
+Hello {{recipientFirstName}},
+
+The DPA with {{vendorName}} is approaching its expiry.
+
+  Vendor          {{vendorName}}
+  Expires         {{expiryDate}}
+  Remaining       {{leadTimeLabel}}
+  Reference       {{shortRef}}
+
+Recommended action
+  Renew the DPA before it expires.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Manage your notifications: {{settingsUrl}}
+
+— {{orgCompanyName}}

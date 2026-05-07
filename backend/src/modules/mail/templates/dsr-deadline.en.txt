@@ -1,0 +1,21 @@
+[DSR] Deadline in {{leadTimeLabel}} — {{shortRef}}
+
+Hello {{recipientFirstName}},
+
+The {{dsrTypeLabel}} from {{requesterName}} is approaching its deadline.
+
+  Type            {{dsrTypeLabel}}
+  Requester       {{requesterName}}
+  Deadline        {{deadlineDate}}
+  Remaining       {{leadTimeLabel}}
+  Reference       {{shortRef}}
+
+Recommended action
+  Handle the request before the deadline.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Manage your notifications: {{settingsUrl}}
+
+— {{orgCompanyName}}

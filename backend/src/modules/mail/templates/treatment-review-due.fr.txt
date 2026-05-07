@@ -1,0 +1,20 @@
+[TRT] Revue requise — {{shortRef}}
+
+Bonjour {{recipientFirstName}},
+
+Le traitement {{treatmentName}} arrive à sa date de revue.
+
+  Traitement      {{treatmentName}}
+  À revoir        {{reviewDate}}
+  Reste           {{leadTimeLabel}}
+  Référence       {{shortRef}}
+
+Action recommandée
+  Réviser le traitement et confirmer sa pertinence.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Gérer vos notifications : {{settingsUrl}}
+
+— {{orgCompanyName}}

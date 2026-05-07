@@ -1,0 +1,56 @@
+# Dev overlay. Apply explicitly:
+#   docker compose -f docker-compose.yml -f dev/compose.yml --env-file .env.dev up
+# Or use ./dev.sh.
+#
+# Adds: mailpit. Switches backend/frontend to their dev Dockerfile target,
+# enables hot-reload bind mounts, and clobbers env values that must differ
+# from prod (NODE_ENV, COOKIE_SECURE, CORS_ORIGIN, SMTP host).
+#
+# Relative paths (build context, bind mounts) are resolved against the
+# Compose project directory — i.e. the directory of the first `-f` file
+# (the repo root, holding docker-compose.yml) — NOT this file's directory.
+# So bind mounts use repo-relative paths like `./backend/src`, not `../`.
+
+services:
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - '127.0.0.1:1025:1025'
+      - '127.0.0.1:8025:8025'
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '--spider', 'http://localhost:8025']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      target: dev
+    environment:
+      NODE_ENV: development
+      COOKIE_SECURE: 'false'
+      CORS_ORIGIN: http://localhost:3000
+      SMTP_HOST: mailpit
+      SMTP_PORT: '1025'
+    volumes:
+      - ./backend/src:/app/backend/src
+      - ./backend/prisma:/app/backend/prisma
+      - ./shared/src:/app/shared/src
+    # The prod CMD runs `prisma migrate deploy && prisma db seed`. In dev
+    # we want pnpm dev (set by the dev Dockerfile target) — do NOT run
+    # migrations on container start; the dev workflow expects them to be
+    # applied externally (e.g., via dev.sh or `pnpm --filter backend exec
+    # prisma migrate dev`).
+    command: ['pnpm', 'dev']
+
+  frontend:
+    build:
+      target: dev
+    environment:
+      NODE_ENV: development
+      BACKEND_URL: http://backend:3001
+    volumes:
+      - ./frontend/src:/app/frontend/src
+      - ./frontend/public:/app/frontend/public
+      - ./shared/src:/app/shared/src
+    command: ['pnpm', 'dev']

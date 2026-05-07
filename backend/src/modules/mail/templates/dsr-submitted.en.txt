@@ -1,0 +1,21 @@
+[DSR] New request — {{shortRef}}
+
+Hello {{recipientFirstName}},
+
+A new data subject request has been recorded for {{orgCompanyName}} and is waiting for you.
+
+  Type            {{dsrTypeLabel}}
+  Requester       {{requesterName}} <{{requesterEmail}}>
+  Received        {{receivedDate}}
+  Deadline        {{deadlineDate}} ({{leadTimeLabel}})
+  Reference       {{shortRef}}
+
+Recommended action
+  Open the request to verify the requester's identity and start qualification.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Manage your notifications: {{settingsUrl}}
+
+— {{orgCompanyName}}

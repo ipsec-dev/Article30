@@ -1,0 +1,19 @@
+[VEN] Questionnaire RGPD reçu — {{shortRef}}
+
+Bonjour {{recipientFirstName}},
+
+Le sous-traitant {{vendorName}} a renvoyé son questionnaire de protection des données.
+
+  Sous-traitant   {{vendorName}}
+  Soumis le       {{submittedDate}}
+  Référence       {{shortRef}}
+
+Action recommandée
+  Examiner les réponses du sous-traitant.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Gérer vos notifications : {{settingsUrl}}
+
+— {{orgCompanyName}}

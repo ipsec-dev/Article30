@@ -1,0 +1,20 @@
+[TRT] Review due — {{shortRef}}
+
+Hello {{recipientFirstName}},
+
+The treatment {{treatmentName}} is due for review.
+
+  Treatment       {{treatmentName}}
+  Review by       {{reviewDate}}
+  Remaining       {{leadTimeLabel}}
+  Reference       {{shortRef}}
+
+Recommended action
+  Review the treatment and confirm its relevance.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Manage your notifications: {{settingsUrl}}
+
+— {{orgCompanyName}}

@@ -1,0 +1,20 @@
+[VEN] DPA expire dans {{leadTimeLabel}} — {{shortRef}}
+
+Bonjour {{recipientFirstName}},
+
+Le contrat de sous-traitance avec {{vendorName}} arrive à expiration.
+
+  Sous-traitant   {{vendorName}}
+  Expire le       {{expiryDate}}
+  Reste           {{leadTimeLabel}}
+  Référence       {{shortRef}}
+
+Action recommandée
+  Renouveler le DPA avant expiration.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Gérer vos notifications : {{settingsUrl}}
+
+— {{orgCompanyName}}

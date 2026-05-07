@@ -1,0 +1,56 @@
+{
+  "name": "article30",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "pnpm --parallel --filter backend --filter frontend dev",
+    "dev:prod": "pnpm build && NODE_ENV=production pnpm --parallel --filter backend --filter frontend start",
+    "build": "pnpm --filter shared build && pnpm --parallel --filter backend --filter frontend build",
+    "lint": "pnpm -r lint",
+    "generate:api": "pnpm --filter frontend generate:api",
+    "seed": "pnpm --filter backend seed",
+    "db:migrate": "pnpm --filter backend db:migrate",
+    "db:studio": "pnpm --filter backend db:studio",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "typecheck": "pnpm --filter @article30/shared build && pnpm -r --parallel exec tsc --noEmit",
+    "test": "pnpm --filter @article30/shared build && pnpm --filter @article30/backend test",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
+    "vite": "^8.0.10"
+  },
+  "lint-staged": {
+    "backend/src/**/*.ts": "backend/node_modules/.bin/eslint --config backend/eslint.config.mjs --fix",
+    "frontend/src/**/*.{ts,tsx}": "frontend/node_modules/.bin/eslint --config frontend/eslint.config.mjs --fix",
+    "shared/src/**/*.ts": "shared/node_modules/.bin/eslint --config shared/eslint.config.mjs --fix",
+    "**/*.{ts,tsx,js,mjs,json,md,css}": "prettier --write"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@10.33.4",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "prisma",
+      "bcrypt",
+      "@nestjs/core"
+    ],
+    "overrides": {
+      "ajv@8.17.1": "8.18.0",
+      "effect@3.18.4": "3.20.0",
+      "picomatch@4.0.2": "4.0.4",
+      "serialize-javascript@6.0.2": "7.0.5",
+      "@hono/node-server@<1.19.13": ">=1.19.13",
+      "fast-xml-parser@<5.7.0": ">=5.7.0"
+    }
+  }
+}

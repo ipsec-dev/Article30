@@ -1,0 +1,20 @@
+[VIO] New {{severityLabel}}-severity violation — {{shortRef}}
+
+Hello {{recipientFirstName}},
+
+A new violation has been recorded for {{orgCompanyName}} and is waiting for qualification.
+
+  Severity        {{severityLabel}}
+  Discovered      {{discoveredDate}}
+  Categories      {{categoriesLabel}}
+  Reference       {{shortRef}}
+
+Recommended action
+  Qualify the violation and start the risk assessment.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Manage your notifications: {{settingsUrl}}
+
+— {{orgCompanyName}}

@@ -1,0 +1,20 @@
+[ACT] Task assigned — {{shortRef}}
+
+Hello {{recipientFirstName}},
+
+A remediation task has just been assigned to you.
+
+  Task              {{taskTitle}}
+  Linked violation  {{violationTitle}}
+  Deadline          {{deadlineDate}}
+  Reference         {{shortRef}}
+
+Recommended action
+  Update the task as soon as it's handled.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Manage your notifications: {{settingsUrl}}
+
+— {{orgCompanyName}}

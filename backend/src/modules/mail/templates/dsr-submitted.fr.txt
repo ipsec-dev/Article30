@@ -1,0 +1,21 @@
+[DSR] Nouvelle demande — {{shortRef}}
+
+Bonjour {{recipientFirstName}},
+
+Une nouvelle demande de droits a été enregistrée pour {{orgCompanyName}} et attend votre prise en charge.
+
+  Type            {{dsrTypeLabel}}
+  Demandeur       {{requesterName}} <{{requesterEmail}}>
+  Reçue le        {{receivedDate}}
+  Échéance        {{deadlineDate}} ({{leadTimeLabel}})
+  Référence       {{shortRef}}
+
+Action recommandée
+  Ouvrir la demande pour vérifier l'identité du demandeur et lancer la qualification.
+  → {{recordUrl}}
+
+—
+{{footerOrientation}}
+Gérer vos notifications : {{settingsUrl}}
+
+— {{orgCompanyName}}

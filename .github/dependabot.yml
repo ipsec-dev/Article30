@@ -1,0 +1,116 @@
+# Dependabot version updates.
+#
+# Strategy: weekly batches, 3-day cooldown on every bump (filters
+# yanked-after-publish supply-chain attacks), aggressive grouping so
+# the busy maintainer reviews a handful of PRs/week. Major bumps fall
+# outside the groups and surface as individual PRs (handled by the
+# auto-merge workflow's update-type guard).
+
+version: 2
+
+updates:
+  # ---- npm (workspace root; pnpm-lock covers backend/frontend/shared) ----
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 10
+    labels:
+      - dependencies
+      - npm
+    commit-message:
+      # `prefix: chore` + `include: scope` produces clean
+      # `chore(deps): bump foo` for production deps and
+      # `chore(deps-dev): bump foo` for dev deps. Setting prefix to
+      # `chore(deps)` here would double up to `chore(deps)(deps):` —
+      # Dependabot appends its own ecosystem scope on top of the prefix.
+      prefix: chore
+      include: scope
+    cooldown:
+      default-days: 3
+    ignore:
+      # xlsx pinned at 0.18.5 by design — no upstream npm fix for the two
+      # HIGH advisories. See CHANGELOG.md Security section under
+      # [Unreleased]. Re-evaluate when SheetJS publishes on npm again.
+      - dependency-name: xlsx
+      # connect-redis pinned at 8.x. v9 drops the `ioredis` adapter and
+      # ships only `redis` (node-redis), incompatible with the ioredis
+      # client wired into the session store. See CHANGELOG.md 1.0.0 → Fixed.
+      - dependency-name: connect-redis
+    groups:
+      production-deps:
+        applies-to: version-updates
+        dependency-type: production
+        update-types:
+          - minor
+          - patch
+      dev-deps:
+        applies-to: version-updates
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+
+  # ---- GitHub Actions (workflows + composite actions under .github/) ----
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - github-actions
+    commit-message:
+      prefix: chore(ci)
+    cooldown:
+      default-days: 3
+    groups:
+      actions:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+
+  # ---- Docker (backend image) ----
+  - package-ecosystem: docker
+    directory: /backend
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+      - docker
+    commit-message:
+      prefix: chore(docker)
+    cooldown:
+      default-days: 3
+    groups:
+      docker-base:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+
+  # ---- Docker (frontend image) ----
+  - package-ecosystem: docker
+    directory: /frontend
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+      - docker
+    commit-message:
+      prefix: chore(docker)
+    cooldown:
+      default-days: 3
+    groups:
+      docker-base:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch

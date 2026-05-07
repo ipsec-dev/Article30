@@ -1,0 +1,247 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/*  Article30 design tokens  */
+:root {
+  /* surfaces */
+  --surface: #ffffff;
+  --surface-2: #f6f8fa;
+  --bg: #ffffff;
+  /* ink (text) */
+  --ink: #1f2328;
+  --ink-2: #424a53;
+  --ink-3: #656d76;
+  --ink-4: #8c959f; /* decorative / disabled only — fails WCAG AA for body-weight text */
+  /* borders — `--a30-border` / `--a30-accent` use the a30- prefix to avoid collision
+     with shadcn's `--border` / `--accent` aliases that the @theme inline block defines.
+     Tailwind class consumers (e.g. `border-border`) work transparently via that remap. */
+  --a30-border: #d1d9e0;
+  --border-2: #afb8c1;
+  /* indigo (primary, theme="ink") */
+  --primary: #4f46e5;
+  --primary-600: #4338ca;
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-fg: #ffffff;
+  --a30-accent: #c7d2fe;
+  /* semantic */
+  --success: #1a7f37;
+  --success-bg: #dafbe1;
+  --warn: #9a6700;
+  --warn-bg: #fff8c5;
+  --danger: #cf222e;
+  --danger-bg: #ffebe9;
+  --info: #0969da;
+  --info-bg: #ddf4ff;
+}
+
+.dark {
+  --surface: #0d1117;
+  --surface-2: #151b23;
+  --bg: #010409;
+  --ink: #f0f6fc;
+  --ink-2: #c9d1d9;
+  --ink-3: #8b949e;
+  --ink-4: #6e7681;
+  --a30-border: #2f353d;
+  --border-2: #444c56;
+  --primary: #818cf8;
+  --primary-600: #6366f1;
+  --primary-50: #1e1b4b;
+  --primary-100: #312e81;
+  --primary-fg: #0b1220;
+  --a30-accent: #4338ca;
+  --success: #4ade80;
+  --success-bg: #052e16;
+  --warn: #fbbf24;
+  --warn-bg: #451a03;
+  --danger: #f87171;
+  --danger-bg: #450a0a;
+  --info: #60a5fa;
+  --info-bg: #0c1f44;
+}
+
+/* Accent themes (only override --primary family) */
+[data-theme='forest'] {
+  --primary: #15803d;
+  --primary-600: #166534;
+  --primary-50: #dcfce7;
+  --primary-100: #bbf7d0;
+  --a30-accent: #86efac;
+}
+[data-theme='sand'] {
+  --primary: #854d0e;
+  --primary-600: #713f12;
+  --primary-50: #fef3c7;
+  --primary-100: #fde68a;
+  --a30-accent: #facc15;
+}
+[data-theme='slate'] {
+  --primary: #0f172a;
+  --primary-600: #020617;
+  --primary-50: #f1f5f9;
+  --primary-100: #e2e8f0;
+  --a30-accent: #94a3b8;
+}
+[data-theme='ink'] {
+  --primary: #4f46e5;
+  --primary-600: #4338ca;
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --a30-accent: #c7d2fe;
+}
+.dark[data-theme='ink'],
+.dark [data-theme='ink'] {
+  --primary: #818cf8;
+  --primary-600: #6366f1;
+  --primary-50: #1e1b4b;
+  --primary-100: #312e81;
+  --a30-accent: #4338ca;
+}
+.dark[data-theme='forest'],
+.dark [data-theme='forest'] {
+  --primary: #4ade80;
+  --primary-600: #22c55e;
+  --primary-50: #052e16;
+  --primary-100: #14532d;
+  --a30-accent: #86efac;
+}
+.dark[data-theme='sand'],
+.dark [data-theme='sand'] {
+  --primary: #fbbf24;
+  --primary-600: #f59e0b;
+  --primary-50: #451a03;
+  --primary-100: #78350f;
+  --a30-accent: #fde68a;
+}
+.dark[data-theme='slate'],
+.dark [data-theme='slate'] {
+  --primary: #94a3b8;
+  --primary-600: #64748b;
+  --primary-50: #0f172a;
+  --primary-100: #1e293b;
+  --a30-accent: #cbd5e1;
+}
+
+/*  shadcn alias remap → Article30 tokens  */
+@theme inline {
+  --radius-sm: 4px;
+  --radius-md: 5px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--ink);
+  --color-popover: var(--surface);
+  --color-popover-foreground: var(--ink);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-fg);
+  --color-secondary: var(--surface-2);
+  --color-secondary-foreground: var(--ink);
+  --color-muted: var(--surface-2);
+  --color-muted-foreground: var(--ink-3);
+  --color-accent: var(--primary-50);
+  --color-accent-foreground: var(--primary-600);
+  --color-destructive: var(--danger);
+  --color-border: var(--a30-border);
+  --color-input: var(--a30-border);
+  --color-ring: var(--primary);
+  /* Sidebar is intentionally always dark indigo — does NOT track [data-theme] or .dark.
+     The Article30 design treats the sidebar as its own visual scope. */
+  --color-sidebar: #0b1220;
+  --color-sidebar-foreground: #e2e8f0;
+  --color-sidebar-primary: var(--primary);
+  --color-sidebar-primary-foreground: #ffffff;
+  --color-sidebar-accent: rgba(99, 102, 241, 0.16);
+  --color-sidebar-accent-foreground: #c7d2fe;
+  --color-sidebar-border: rgba(148, 163, 184, 0.08);
+  --color-sidebar-ring: var(--primary);
+}
+
+/*  Article30 utility classes  */
+.a30-card {
+  background: var(--surface);
+  border: 1px solid var(--a30-border);
+  border-radius: 6px;
+}
+.a30-shadow {
+  box-shadow: none;
+}
+.hash-chain {
+  background-image: repeating-linear-gradient(135deg, currentColor 0 1px, transparent 1px 4px);
+}
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* density */
+[data-density='compact'] .dense-y {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+[data-density='comfortable'] .dense-y {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+[data-density='compact'] .dense-row {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+[data-density='comfortable'] .dense-row {
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+  /* Tailwind 4's preflight resets the native `cursor: pointer` on buttons to
+     `default`. Restore the expected affordance for any non-disabled button
+     and any anchor with an href (matching browser defaults). */
+  button:not(:disabled),
+  a[href] {
+    cursor: pointer;
+  }
+}
+
+@utility scrollbar-dark {
+  scrollbar-width: thin;
+  scrollbar-color: --alpha(var(--color-slate-600) / 60%) transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: --alpha(var(--color-slate-600) / 60%);
+    border-radius: 9999px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: --alpha(var(--color-slate-500) / 80%);
+  }
+}
