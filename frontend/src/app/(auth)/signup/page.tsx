@@ -85,7 +85,7 @@ export default function SignupPage() {
   return (
     <Card>
       <AuthCardHeader subtitleKey="auth.signup" />
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <CardContent className="flex flex-col gap-4">
           {error && (
             <p className="text-sm" style={{ color: 'var(--danger)' }}>
