@@ -26,6 +26,7 @@ jobs:
   lint:
     name: Lint, Format & Audit
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
 
@@ -67,6 +68,7 @@ jobs:
   commitlint:
     name: Commitlint
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v6
@@ -85,6 +87,7 @@ jobs:
   typecheck-build:
     name: Typecheck & Build
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     # Prisma 7's prisma.config.ts resolves `env('DATABASE_URL')` even at
     # `prisma generate` time. Generate doesn't actually connect, so a
     # well-formed placeholder is enough, the URL never reaches a server.
@@ -107,6 +110,7 @@ jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     services:
       postgres:
         image: postgres:18-alpine
@@ -183,6 +187,7 @@ jobs:
   e2e:
     name: E2E (Playwright)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     services:
       postgres:
         image: postgres:18-alpine
@@ -276,6 +281,7 @@ jobs:
   docker:
     name: Docker Build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
 
