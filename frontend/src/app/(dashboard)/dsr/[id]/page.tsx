@@ -477,7 +477,7 @@ export default function DsrDetailPage() {
         </CardContent>
       </Card>
 
-      {dsr && <FollowUpPanel entityType="DSR" entityId={dsr.id} />}
+      <FollowUpPanel entityType="DSR" entityId={dsr.id} />
     </div>
   );
 }
