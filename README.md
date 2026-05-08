@@ -26,7 +26,27 @@ The data model is **Article 30 turned into code** - a typed schema, DPO validati
 
 ---
 
-## Quick Start (development and testing)
+## Quick Start (production and testing)
+
+```bash
+git clone <repo-url>
+cd article30
+cp .env.prod.example .env.prod
+# Edit .env.prod
+docker compose --env-file .env.prod up -d
+docker compose --env-file .env.prod --profile admin run --rm -e ALLOW_SEED=1 backend-tools seed  # first run only
+```
+
+This pulls `ghcr.io/ipsec-dev/article30/{backend,frontend}` from GitHub Container Registry. No build step on the deploy host.
+
+| Service     | URL                     |
+| ----------- | ----------------------- |
+| Frontend    | <http://localhost:3000> |
+| Backend API | <http://localhost:3001> |
+
+For required hardening (reverse proxy with TLS, firewalled datastore ports, secret rotation, backups), version pinning + upgrades, and the build-from-source path, see [Production Deployment](https://github.com/ipsec-dev/Article30/wiki/Production).
+
+## Quick Start (development)
 
 ```bash
 git clone <repo-url>
@@ -51,29 +71,6 @@ The first user to sign up automatically gets the **Admin** role.
 
 For an explained walkthrough of each step, see [Local Development](https://github.com/ipsec-dev/Article30/wiki/Development).
 
-## Quick Start (production)
-
-```bash
-git clone <repo-url>
-cd article30
-cp .env.prod.example .env.prod
-# Edit .env.prod and set DB_PASSWORD, REDIS_PASSWORD, SESSION_SECRET,
-# AUDIT_HMAC_SECRET, S3_*, SMTP_*, CORS_ORIGIN, FRONTEND_URL,
-# NEXT_PUBLIC_API_URL. Optionally pin a version: ARTICLE30_VERSION=1.2.3 (default: latest).
-docker compose --env-file .env.prod up -d
-docker compose --env-file .env.prod --profile admin run --rm \
-  -e ALLOW_SEED=1 backend-tools seed  # first run only
-```
-
-This pulls `ghcr.io/ipsec-dev/article30/{backend,frontend}` from GitHub Container Registry. No build step on the deploy host. Admin scripts (seed, `password:reset`, etc.) run via the version-pinned `backend-tools` image - see [Production](https://github.com/ipsec-dev/Article30/wiki/Production#admin-operations).
-
-| Service     | URL                     |
-| ----------- | ----------------------- |
-| Frontend    | <http://localhost:3000> |
-| Backend API | <http://localhost:3001> |
-
-For required hardening (reverse proxy with TLS, firewalled datastore ports, secret rotation, backups), version pinning + upgrades, and the build-from-source path, see [Production Deployment](https://github.com/ipsec-dev/Article30/wiki/Production).
-
 ---
 
 ## Tech Stack
@@ -86,7 +83,7 @@ For required hardening (reverse proxy with TLS, firewalled datastore ports, secr
 | Database     | PostgreSQL 18                       |
 | ORM          | Prisma                              |
 | Sessions     | Redis 8                             |
-| Object store | RustFS (S3-compatible)              |
+| Object store | RustFS                              |
 | API          | REST + OpenAPI (generated client)   |
 | UI           | Tailwind CSS + shadcn/ui            |
 | Deployment   | Docker Compose (per-service images) |

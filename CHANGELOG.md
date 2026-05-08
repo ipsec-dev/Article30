@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/ipsec-dev/Article30/compare/v2.0.2...v2.0.3) (2026-05-08)
+
+
+### Bug Fixes
+
+* **backend:** include prisma.config.ts and runtime deps in prod image ([#28](https://github.com/ipsec-dev/Article30/issues/28)) ([3e97906](https://github.com/ipsec-dev/Article30/commit/3e979064681274748d4d4b43f09243f4c3c4b232))
+
 ## [2.0.2](https://github.com/ipsec-dev/Article30/compare/v2.0.1...v2.0.2) (2026-05-08)
 
 
