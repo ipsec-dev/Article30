@@ -1,3 +1,19 @@
+/**
+ * Seed contract - these rules keep `pnpm seed` safe to re-run on any DB
+ * version. Breaking them is what turns a routine bump into an incident.
+ *
+ *   1. Every seeded row has a stable business key (slug, number, url,
+ *      article id). Once a row is keyed by X, it stays keyed by X forever.
+ *      Changing the dedupe column upserts duplicates instead of updating.
+ *
+ *   2. Only "ensure exists" semantics: `upsert` or count-zero create. No
+ *      bare `update`, no `delete`/`deleteMany`. If you need either, that's
+ *      a migration or a backfill, not a seed.
+ *
+ *   3. Idempotent values only. Don't put Date.now(), process.env.X, or
+ *      other moving values into the upsert payload's `update` branch -
+ *      it would rewrite existing rows on every run.
+ */
 import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import * as dotenv from 'dotenv';
@@ -24,6 +40,10 @@ if (!connectionString) {
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
 
 async function main() {
+  if (process.env.NODE_ENV === 'production' && process.env.ALLOW_SEED !== '1') {
+    throw new Error('refusing to seed in production without ALLOW_SEED=1');
+  }
+
   const rgpdPath = path.resolve(__dirname, './seed/rgpd.json');
   const rgpdData = JSON.parse(fs.readFileSync(rgpdPath, 'utf-8'));
 
