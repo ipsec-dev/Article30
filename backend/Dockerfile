@@ -56,6 +56,7 @@ COPY --chown=node:node --from=build /app/package.json /app/pnpm-workspace.yaml .
 COPY --chown=node:node --from=build /app/backend/package.json ./backend/
 COPY --chown=node:node --from=build /app/backend/dist ./backend/dist
 COPY --chown=node:node --from=build /app/backend/prisma ./backend/prisma
+COPY --chown=node:node --from=build /app/backend/prisma.config.ts ./backend/prisma.config.ts
 COPY --chown=node:node --from=build /app/shared/package.json ./shared/
 COPY --chown=node:node --from=build /app/shared/dist ./shared/dist
 USER node
