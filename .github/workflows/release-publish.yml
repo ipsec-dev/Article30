@@ -23,7 +23,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: [backend, frontend]
+        # Each leg builds one image at the same semver as the runtime images.
+        # `backend-tools` reuses backend/Dockerfile's `tools` target so admin
+        # scripts (seed, password:reset, etc.) stay in lockstep with the
+        # backend's prisma schema and code.
+        include:
+          - name: backend
+            file: backend/Dockerfile
+            target: prod
+          - name: frontend
+            file: frontend/Dockerfile
+            target: prod
+          - name: backend-tools
+            file: backend/Dockerfile
+            target: tools
     steps:
       - uses: actions/checkout@v6
 
@@ -40,7 +53,7 @@ jobs:
       - id: meta
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
         with:
-          images: ghcr.io/ipsec-dev/article30/${{ matrix.image }}
+          images: ghcr.io/ipsec-dev/article30/${{ matrix.name }}
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
@@ -51,14 +64,14 @@ jobs:
         uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
         with:
           context: .
-          file: ${{ matrix.image }}/Dockerfile
-          target: prod
+          file: ${{ matrix.file }}
+          target: ${{ matrix.target }}
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=${{ matrix.image }}-prod
-          cache-to: type=gha,mode=max,scope=${{ matrix.image }}-prod
+          cache-from: type=gha,scope=${{ matrix.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.name }}
           provenance: mode=max
           sbom: true
 
