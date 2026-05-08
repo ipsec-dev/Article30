@@ -1,7 +1,13 @@
 name: article30
 
-# Production-correct base. Plain `docker compose up` runs prod.
-# For dev, overlay dev/compose.yml: docker compose -f docker-compose.yml -f dev/compose.yml --env-file .env.dev up
+# Production base - pulls release images from GHCR. Plain
+#   docker compose --env-file .env.prod up -d
+# pulls ghcr.io/ipsec-dev/article30/{backend,frontend} at ARTICLE30_VERSION
+# (default: latest) and starts the stack.
+#
+# Overlays in build/:
+#   - build/dev.compose.yml  (dev: hot reload, mailpit, dev Dockerfile target)
+#   - build/prod.compose.yml (build prod images from local source)
 
 x-default-logging: &default-logging
   driver: json-file
@@ -61,10 +67,10 @@ services:
       retries: 5
 
   backend:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
-      target: prod
+    image: ghcr.io/ipsec-dev/article30/backend:${ARTICLE30_VERSION:-latest}
+    env_file:
+      - path: .env.prod
+        required: false
     restart: unless-stopped
     logging: *default-logging
     depends_on:
@@ -98,10 +104,10 @@ services:
       start_period: 20s
 
   frontend:
-    build:
-      context: .
-      dockerfile: frontend/Dockerfile
-      target: prod
+    image: ghcr.io/ipsec-dev/article30/frontend:${ARTICLE30_VERSION:-latest}
+    env_file:
+      - path: .env.prod
+        required: false
     restart: unless-stopped
     logging: *default-logging
     depends_on:
