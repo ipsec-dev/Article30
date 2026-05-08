@@ -5,6 +5,7 @@ const BACKEND_URL =
 
 const nextConfig: NextConfig = {
   output: process.env.NEXT_OUTPUT === 'standalone' ? 'standalone' : undefined,
+  poweredByHeader: false,
   rewrites: async () => [
     {
       source: '/api/:path*',
