@@ -54,7 +54,7 @@ export default function LoginPage() {
     <div className="flex flex-col gap-4">
       <Card className="a30-card">
         <AuthCardHeader subtitleKey="auth.login" />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <CardContent className="flex flex-col gap-4">
             {error && (
               <p className="text-sm" style={{ color: 'var(--danger)' }}>
