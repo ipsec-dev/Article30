@@ -28,6 +28,8 @@ docs/
 .playwright-mcp/
 .eslintcache
 .claude/
+__pycache__/
+*.pyc
 
 # Editors
 .vscode/
