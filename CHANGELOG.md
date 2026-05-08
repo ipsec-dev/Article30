@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/ipsec-dev/Article30/compare/v1.0.1...v1.0.2) (2026-05-08)
+
+
+### Maintenance & Dependencies
+
+* clean up CodeQL Quality findings ([#16](https://github.com/ipsec-dev/Article30/issues/16)) ([5a13f2f](https://github.com/ipsec-dev/Article30/commit/5a13f2ff2c0f76714de89286df7bb7610ea6ec42))
+
 ## [1.0.1](https://github.com/ipsec-dev/Article30/compare/v1.0.0...v1.0.1) (2026-05-08)
 
 
