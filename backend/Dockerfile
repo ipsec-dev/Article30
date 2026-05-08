@@ -38,4 +38,4 @@ USER node
 EXPOSE 3001
 WORKDIR /app/backend
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD wget -qO- http://127.0.0.1:3001/health > /dev/null 2>&1 || exit 1
-CMD ["sh", "-c", "npx prisma migrate deploy && npx prisma db seed && node dist/src/main"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/main"]
