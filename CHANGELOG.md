@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.1.0](https://github.com/ipsec-dev/Article30/compare/v2.0.3...v2.1.0) (2026-05-08)
+
+
+### Features
+
+* **ops:** publish backend-tools admin image ([#32](https://github.com/ipsec-dev/Article30/issues/32)) ([35c5a44](https://github.com/ipsec-dev/Article30/commit/35c5a445c1bd1594a671dfab0926da8f698ef30a))
+
+### Maintenance & Dependencies
+
+* **backend:** document seed contract and add prod guard ([#31](https://github.com/ipsec-dev/Article30/issues/31)) ([cb9a8d7](https://github.com/ipsec-dev/Article30/commit/cb9a8d763f676294f39f4a3a7cdbf11ea81ab06f))
+
+### Build System
+
+* **backend:** add tools image stage for admin scripts ([#31](https://github.com/ipsec-dev/Article30/issues/31)) ([cb9a8d7](https://github.com/ipsec-dev/Article30/commit/cb9a8d763f676294f39f4a3a7cdbf11ea81ab06f))
+* **compose:** add backend-tools admin-profile service ([#31](https://github.com/ipsec-dev/Article30/issues/31)) ([cb9a8d7](https://github.com/ipsec-dev/Article30/commit/cb9a8d763f676294f39f4a3a7cdbf11ea81ab06f))
+
 ## [2.0.3](https://github.com/ipsec-dev/Article30/compare/v2.0.2...v2.0.3) (2026-05-08)
 
 
