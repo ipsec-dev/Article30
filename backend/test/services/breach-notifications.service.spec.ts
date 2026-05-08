@@ -30,7 +30,7 @@ describe('BreachNotificationsService', () => {
     const timeline = new TimelineService(prisma, validator);
     svc = new BreachNotificationsService(prisma, validator, timeline);
 
-    const org = await prisma.organization.create({ data: { slug: `bn-${Date.now()}` } });
+    await prisma.organization.create({ data: { slug: `bn-${Date.now()}` } });
 
     const user = await prisma.user.create({
       data: {

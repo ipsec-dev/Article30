@@ -34,7 +34,7 @@ describe('AttachmentsService', () => {
     const timeline = new TimelineService(prisma, validator);
     svc = new AttachmentsService(prisma, validator, timeline, storage);
 
-    const org = await prisma.organization.create({ data: { slug: `at-${Date.now()}` } });
+    await prisma.organization.create({ data: { slug: `at-${Date.now()}` } });
     const user = await prisma.user.create({
       data: {
         firstName: 'at',

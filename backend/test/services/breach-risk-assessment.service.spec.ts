@@ -22,7 +22,7 @@ describe('BreachRiskAssessmentService', () => {
     const timeline = new TimelineService(prisma, validator);
     svc = new BreachRiskAssessmentService(prisma, validator, timeline);
 
-    const org = await prisma.organization.create({ data: { slug: `bra-${Date.now()}` } });
+    await prisma.organization.create({ data: { slug: `bra-${Date.now()}` } });
     const user = await prisma.user.create({
       data: {
         firstName: 'bra',

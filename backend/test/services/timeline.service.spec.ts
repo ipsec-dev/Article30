@@ -19,7 +19,7 @@ describe('TimelineService', () => {
     prisma = module.get(PrismaService);
     svc = new TimelineService(prisma, new EntityValidator(prisma));
 
-    const org = await prisma.organization.create({ data: { slug: `tl-${Date.now()}` } });
+    await prisma.organization.create({ data: { slug: `tl-${Date.now()}` } });
     const user = await prisma.user.create({
       data: {
         firstName: 'tl',
