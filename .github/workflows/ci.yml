@@ -3,18 +3,8 @@ name: CI
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - '**/*.md'
-      - 'LICENSE'
-      - '.gitignore'
-      - '.prettierignore'
   pull_request:
     branches: [main]
-    paths-ignore:
-      - '**/*.md'
-      - 'LICENSE'
-      - '.gitignore'
-      - '.prettierignore'
 
 permissions: read-all
 
@@ -23,8 +13,31 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  # Classifies the diff so docs-only changes can short-circuit downstream jobs
+  # without using top-level `paths-ignore` (which makes required status checks
+  # stall on docs-only PRs because the workflow never runs).
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: actions/checkout@v6
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            code:
+              - '!**/*.md'
+              - '!LICENSE'
+              - '!.gitignore'
+              - '!.prettierignore'
+
   lint:
     name: Lint, Format & Audit
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -67,9 +80,10 @@ jobs:
 
   commitlint:
     name: Commitlint
+    needs: changes
+    if: github.event_name == 'pull_request' && needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v6
         with:
@@ -86,6 +100,8 @@ jobs:
 
   typecheck-build:
     name: Typecheck & Build
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     # Prisma 7's prisma.config.ts resolves `env('DATABASE_URL')` even at
@@ -109,6 +125,8 @@ jobs:
 
   test:
     name: Tests
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -186,6 +204,8 @@ jobs:
 
   e2e:
     name: E2E (Playwright)
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -280,6 +300,8 @@ jobs:
 
   docker:
     name: Docker Build
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
