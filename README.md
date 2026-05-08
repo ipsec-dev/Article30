@@ -61,10 +61,11 @@ cp .env.prod.example .env.prod
 # AUDIT_HMAC_SECRET, S3_*, SMTP_*, CORS_ORIGIN, FRONTEND_URL,
 # NEXT_PUBLIC_API_URL. Optionally pin a version: ARTICLE30_VERSION=1.2.3 (default: latest).
 docker compose --env-file .env.prod up -d
-docker compose --env-file .env.prod exec backend pnpm seed  # first run only
+docker compose --env-file .env.prod --profile admin run --rm \
+  -e ALLOW_SEED=1 backend-tools seed  # first run only
 ```
 
-This pulls `ghcr.io/ipsec-dev/article30/{backend,frontend}` from GitHub Container Registry. No build step on the deploy host.
+This pulls `ghcr.io/ipsec-dev/article30/{backend,frontend}` from GitHub Container Registry. No build step on the deploy host. Admin scripts (seed, `password:reset`, etc.) run via the version-pinned `backend-tools` image - see [Production](https://github.com/ipsec-dev/Article30/wiki/Production#admin-operations).
 
 | Service     | URL                     |
 | ----------- | ----------------------- |
