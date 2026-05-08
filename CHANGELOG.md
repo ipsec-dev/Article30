@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/ipsec-dev/Article30/compare/v2.0.1...v2.0.2) (2026-05-08)
+
+
+### Bug Fixes
+
+* **organization:** allow saving annualTurnover by handling BigInt at the boundaries ([#26](https://github.com/ipsec-dev/Article30/issues/26)) ([aa0775e](https://github.com/ipsec-dev/Article30/commit/aa0775e9eb8fefef47d0299fcb356d5fc6822374))
+
 ## [2.0.1](https://github.com/ipsec-dev/Article30/compare/v2.0.0...v2.0.1) (2026-05-08)
 
 
