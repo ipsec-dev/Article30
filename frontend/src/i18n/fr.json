@@ -661,14 +661,14 @@
   "assessment.approve": "Approuver",
   "assessment.reject": "Rejeter",
 
-  "nav.isoMapping": "Correspondance ISO",
+  "nav.isoMapping": "ISO 27k",
   "iso.title": "Correspondance ISO 27001/27701",
   "iso.27001": "ISO 27001",
   "iso.27701": "ISO 27701",
   "iso.control": "Contrôle",
   "iso.checklistItems": "Éléments de la checklist",
 
-  "nav.regulatoryUpdates": "Veille réglementaire",
+  "nav.regulatoryUpdates": "Veille",
   "regulatory.title": "Veille réglementaire",
   "regulatory.empty": "Aucune veille. Cliquez sur Synchroniser pour récupérer les dernières actualités.",
   "regulatory.source": "Source",
