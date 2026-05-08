@@ -140,8 +140,13 @@ export function MobileNav({ user, regulatoryNewCount }: Readonly<MobileNavProps>
         className="fixed left-0 right-0 top-0 z-40 flex h-12 items-center gap-3 px-4"
         style={{ background: 'var(--color-sidebar)' }}
       >
-        <button onClick={handleOpen} className="text-white">
-          <Menu className="size-5" />
+        <button
+          type="button"
+          onClick={handleOpen}
+          aria-label={t('nav.openMenu')}
+          className="text-white"
+        >
+          <Menu aria-hidden="true" className="size-5" />
         </button>
         <span className="text-sm font-semibold text-white">{t('app.title')}</span>
       </div>
@@ -165,11 +170,13 @@ export function MobileNav({ user, regulatoryNewCount }: Readonly<MobileNavProps>
         <div className="flex h-12 items-center justify-between px-4">
           <span className="text-sm font-semibold text-white">{t('app.title')}</span>
           <button
+            type="button"
             onClick={handleClose}
+            aria-label={t('nav.closeMenu')}
             className="hover:text-white"
             style={{ color: 'var(--ink-3)' }}
           >
-            <X className="size-5" />
+            <X aria-hidden="true" className="size-5" />
           </button>
         </div>
 

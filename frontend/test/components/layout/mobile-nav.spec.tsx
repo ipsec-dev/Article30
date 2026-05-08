@@ -150,7 +150,7 @@ describe('MobileNav', () => {
     // Open drawer so the nav links become visible.
     await user.click(screen.getAllByRole('button')[0]);
 
-    const regLink = screen.getByRole('link', { name: /Veille réglementaire|Regulatory Watch/i });
+    const regLink = screen.getByRole('link', { name: /^Veille|Regulatory Watch/i });
     expect(within(regLink).getByText('3')).toBeInTheDocument();
   });
 

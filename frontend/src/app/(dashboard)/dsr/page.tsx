@@ -208,7 +208,12 @@ function PublicFormInfo({ publicFormUrl, copied, onCopy, t }: PublicFormInfoProp
         >
           {publicFormUrl}
         </code>
-        <Button variant="outline" size="sm" onClick={onCopy}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onCopy}
+          aria-label={t(copied ? 'dsr.linkCopied' : 'dsr.copyLink')}
+        >
           {copyIcon}
         </Button>
         <a

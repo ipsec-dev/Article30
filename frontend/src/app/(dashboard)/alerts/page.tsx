@@ -94,7 +94,7 @@ export default function AlertsPage() {
     );
   } else {
     content = (
-      <div className="mt-6 space-y-3">
+      <div className="mt-6 space-y-4">
         {data.items.map(item => {
           const Icon = TYPE_ICONS[item.type] ?? AlertTriangle;
           const overdue = isOverdue(item.dueDate);

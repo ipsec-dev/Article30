@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.0.2](https://github.com/ipsec-dev/Article30/compare/v2.0.1...v2.0.2) (2026-05-08)
+
+
+### Bug Fixes
+
+* **organization:** allow saving annualTurnover by handling BigInt at the boundaries ([#26](https://github.com/ipsec-dev/Article30/issues/26)) ([aa0775e](https://github.com/ipsec-dev/Article30/commit/aa0775e9eb8fefef47d0299fcb356d5fc6822374))
+* **frontend:** reveal page title and description under mobile top bar ([#25](https://github.com/ipsec-dev/Article30/issues/25)) ([55c36f0](https://github.com/ipsec-dev/Article30/commit/55c36f02c64e5726fca1b0aa0d3bab28070a1f8a))
+* **frontend:** add accessible names to icon-only buttons ([#25](https://github.com/ipsec-dev/Article30/issues/25)) ([55c36f0](https://github.com/ipsec-dev/Article30/commit/55c36f02c64e5726fca1b0aa0d3bab28070a1f8a))
+* **frontend:** restore spacing between auth form fields and submit button ([#25](https://github.com/ipsec-dev/Article30/issues/25)) ([55c36f0](https://github.com/ipsec-dev/Article30/commit/55c36f02c64e5726fca1b0aa0d3bab28070a1f8a))
+
+### Maintenance & Dependencies
+
+* **i18n:** shorten navbar labels for ISO and regulatory watch ([#25](https://github.com/ipsec-dev/Article30/issues/25)) ([55c36f0](https://github.com/ipsec-dev/Article30/commit/55c36f02c64e5726fca1b0aa0d3bab28070a1f8a))
+
+## [2.0.1](https://github.com/ipsec-dev/Article30/compare/v2.0.0...v2.0.1) (2026-05-08)
+
+
+### Performance Improvements
+
+* slim backend prod image and stop leaking X-Powered-By ([#22](https://github.com/ipsec-dev/Article30/issues/22)) ([c75ad68](https://github.com/ipsec-dev/Article30/commit/c75ad68838924af41b77cfd7a3f43a54d9198131))
+
 ## [2.0.0](https://github.com/ipsec-dev/Article30/compare/v1.0.2...v2.0.0) (2026-05-08)
 
 
