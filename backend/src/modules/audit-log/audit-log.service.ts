@@ -34,6 +34,27 @@ function auditHmac(input: string): string {
   return createHmac('sha256', secret).update(input).digest('hex');
 }
 
+// Prisma returns BigInt for fields like Organization.annualTurnover, but
+// JSON.stringify() cannot serialize BigInt and Postgres JSONB cannot store
+// it either. Coerce BigInt to its decimal string form before hashing and
+// persistence; verify() then re-hashes the stored string and matches.
+function toJsonSafe(value: unknown): unknown {
+  if (typeof value === 'bigint') {
+    return value.toString();
+  }
+  if (Array.isArray(value)) {
+    return value.map(toJsonSafe);
+  }
+  if (value !== null && typeof value === 'object' && value.constructor === Object) {
+    const result: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      result[k] = toJsonSafe(v);
+    }
+    return result;
+  }
+  return value;
+}
+
 // Postgres JSONB does not preserve key order, so JSON.stringify() produces
 // non-deterministic output after a round-trip and breaks the HMAC chain on
 // verify(). Sort keys recursively before stringifying.
@@ -85,6 +106,12 @@ export class AuditLogService {
     newValue?: Prisma.InputJsonValue | null;
     performedBy: string | null; // null for public @Public() events
   }) {
+    // Normalize BigInt and other non-JSON values once, then use the same
+    // sanitized payload for both the hash input and the JSONB column so
+    // verify() can rebuild the same hash from what is stored.
+    const oldValueSafe = toJsonSafe(params.oldValue ?? null) as Prisma.InputJsonValue | null;
+    const newValueSafe = toJsonSafe(params.newValue ?? null) as Prisma.InputJsonValue | null;
+
     // Serializable isolation: two concurrent writes must not both observe
     // the same "latest hash" and fork the chain. Postgres aborts one of
     // the conflicting transactions with P2034; we retry those transparently.
@@ -106,8 +133,8 @@ export class AuditLogService {
               params.action,
               params.entity,
               params.entityId,
-              stableStringify(params.oldValue ?? null),
-              stableStringify(params.newValue ?? null),
+              stableStringify(oldValueSafe),
+              stableStringify(newValueSafe),
               params.performedBy,
               performedAt.toISOString(),
             ].join('|');
@@ -120,8 +147,8 @@ export class AuditLogService {
                 entity: params.entity,
                 entityId: params.entityId,
                 performedBy: params.performedBy,
-                oldValue: params.oldValue ?? Prisma.JsonNull,
-                newValue: params.newValue ?? Prisma.JsonNull,
+                oldValue: oldValueSafe ?? Prisma.JsonNull,
+                newValue: newValueSafe ?? Prisma.JsonNull,
                 hash,
                 previousHash,
                 performedAt,
