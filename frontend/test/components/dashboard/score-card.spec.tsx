@@ -78,7 +78,7 @@ describe('<ScoreCard />', () => {
   });
 
   it('uses success color when violations is 0', () => {
-    const { container } = render(
+    render(
       <ScoreCard
         score={100}
         checklist={{ answered: 0, total: 0 }}
@@ -87,8 +87,6 @@ describe('<ScoreCard />', () => {
         snapshots={SNAPSHOTS}
       />,
     );
-    const violationsValue = container.querySelector('span.num.text-\\[14px\\]:last-of-type');
-    // best-effort selector; fall back to text presence (multiple "0"s may exist)
     expect(screen.getAllByText('0').length).toBeGreaterThanOrEqual(1);
   });
 });

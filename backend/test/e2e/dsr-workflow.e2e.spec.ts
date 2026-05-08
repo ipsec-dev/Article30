@@ -75,7 +75,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     });
 
     it('AUDITOR is rejected with 403 on transition', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      await seedUser(testApp.prisma, Role.DPO);
       const dsr = await seedDsrInOrg();
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -155,7 +155,7 @@ describe('dsr-workflow.controller (e2e)', () => {
   // 5. AUDITOR read-only endpoints (pauses, communications, processing)
   describe('AUDITOR read-only sub-resources', () => {
     it('AUDITOR can read pauses list (200)', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      await seedUser(testApp.prisma, Role.DPO);
       const dsr = await seedDsrInOrg();
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -166,7 +166,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     });
 
     it('AUDITOR can read communications list (200)', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      await seedUser(testApp.prisma, Role.DPO);
       const dsr = await seedDsrInOrg();
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -177,7 +177,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     });
 
     it('AUDITOR can read treatment-processing list (200)', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      await seedUser(testApp.prisma, Role.DPO);
       const dsr = await seedDsrInOrg();
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -191,7 +191,7 @@ describe('dsr-workflow.controller (e2e)', () => {
   // 6. AUDITOR rejected on write endpoints
   describe('AUDITOR rejected on write endpoints', () => {
     it('AUDITOR is rejected with 403 on POST /:id/communications', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      await seedUser(testApp.prisma, Role.DPO);
       const dsr = await seedDsrInOrg();
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -231,7 +231,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     });
 
     it('AUDITOR is rejected with 403 on PATCH /:id/treatments/:tid/processing', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      const { user: dpo } = await seedUser(testApp.prisma, Role.DPO);
       const dsr = await seedDsrInOrg();
       const treatment = await seedTreatmentInOrg(dpo.id);
 

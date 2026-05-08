@@ -29,7 +29,7 @@ describe('RemediationService', () => {
     const notifications = noopNotificationService();
     svc = new RemediationService(prisma, validator, timeline, notifications);
 
-    const org = await prisma.organization.create({ data: { slug: `rem-${Date.now()}` } });
+    await prisma.organization.create({ data: { slug: `rem-${Date.now()}` } });
 
     const user = await prisma.user.create({
       data: {
