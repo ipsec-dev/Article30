@@ -206,6 +206,36 @@ jobs:
           path: ${{ matrix.package }}/coverage/
           retention-days: 14
 
+  # Rollup of the `test` matrix - emits a single check named "Tests" so the
+  # branch-protection ruleset can require one stable name regardless of how
+  # the matrix grows. Adding a new matrix leg (shared, integration, etc.)
+  # will not require touching the ruleset.
+  tests:
+    name: Tests
+    needs: [changes, test]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Aggregate matrix outcome
+        env:
+          CHANGES_RESULT: ${{ needs.changes.result }}
+          TEST_RESULT: ${{ needs.test.result }}
+        run: |
+          echo "changes: $CHANGES_RESULT, test: $TEST_RESULT"
+          # `changes` must succeed - it's the gate; if it failed we don't
+          # know whether tests should have run. `test` must be either
+          # success (all legs passed) or skipped (legitimately gated off
+          # for a docs-only PR by `code == 'false'`).
+          if [ "$CHANGES_RESULT" != "success" ]; then
+            echo "::error::changes job did not succeed"
+            exit 1
+          fi
+          case "$TEST_RESULT" in
+            success|skipped) exit 0 ;;
+            *) echo "::error::test matrix result: $TEST_RESULT"; exit 1 ;;
+          esac
+
   e2e:
     name: E2E (Playwright)
     needs: changes
