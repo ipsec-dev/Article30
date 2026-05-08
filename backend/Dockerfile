@@ -70,3 +70,15 @@ EXPOSE 3001
 WORKDIR /app/backend
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD wget -qO- http://127.0.0.1:3001/health > /dev/null 2>&1 || exit 1
 CMD ["sh", "-c", "node node_modules/prisma/build/index.js migrate deploy && node dist/src/main"]
+
+# --- tools: admin/runner image for one-off backend scripts (seed,
+# password:reset, notifications:backfill, etc). Reuses the `build` stage so
+# it carries pnpm, devDeps (ts-node), the generated prisma client, source,
+# and shared/dist. Published alongside the runtime image at the same semver
+# (see release-publish.yml matrix), so admin tooling never drifts from the
+# schema it ships against. Run via:
+#   docker compose --profile admin run --rm backend-tools <pkg-script>
+FROM build AS tools
+WORKDIR /app/backend
+ENTRYPOINT ["pnpm"]
+CMD ["--help"]
