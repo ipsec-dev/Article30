@@ -97,6 +97,29 @@ describe('organization.controller (e2e)', () => {
       expect(res.status).toBe(400);
     });
 
+    it('round-trips annualTurnover through the BigInt column as a JSON number', async () => {
+      const { user, password } = await seedUser(testApp.prisma, Role.ADMIN);
+      const { agent, csrfToken } = await loginAs(testApp.app, user.email, password);
+      const res = await agent
+        .patch('/api/organization')
+        .set('x-xsrf-token', csrfToken)
+        .send({ annualTurnover: 1_500_000_000 });
+      expect(res.status).toBe(200);
+      expect(res.body.annualTurnover).toBe(1_500_000_000);
+
+      const row = await testApp.prisma.organization.findFirst();
+      expect(row?.annualTurnover).toBe(1_500_000_000n);
+
+      const fetched = await agent.get('/api/organization');
+      expect(fetched.status).toBe(200);
+      expect(fetched.body.annualTurnover).toBe(1_500_000_000);
+
+      const auditRows = await testApp.prisma.auditLog.findMany({
+        where: { entity: 'organization', action: 'UPDATE' },
+      });
+      expect(auditRows.length).toBeGreaterThan(0);
+    });
+
     it('returns 400 when freshnessThresholdMonths violates @Min(1)', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.ADMIN);
       const { agent, csrfToken } = await loginAs(testApp.app, user.email, password);
