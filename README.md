@@ -32,9 +32,9 @@ The data model is **Article 30 turned into code** - a typed schema, DPO validati
 git clone <repo-url>
 cd article30
 cp .env.prod.example .env.prod
-# Edit .env.prod with production values
+# Edit .env.prod
 docker compose --env-file .env.prod up -d
-docker compose --env-file .env.prod exec backend pnpm seed  # first run only
+docker compose --env-file .env.prod --profile admin run --rm -e ALLOW_SEED=1 backend-tools seed  # first run only
 ```
 
 This pulls `ghcr.io/ipsec-dev/article30/{backend,frontend}` from GitHub Container Registry. No build step on the deploy host.

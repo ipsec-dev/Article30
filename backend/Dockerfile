@@ -3,11 +3,14 @@
 # --- deps: install workspace deps once, build shared package ---
 FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS deps
 RUN corepack enable
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 WORKDIR /app
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json .npmrc ./
 COPY shared/package.json ./shared/package.json
 COPY backend/package.json ./backend/package.json
-RUN pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile
 COPY shared/ ./shared/
 RUN pnpm --filter @article30/shared build
 
@@ -36,13 +39,16 @@ RUN pnpm --filter @article30/backend build
 # whitelisted in pnpm.onlyBuiltDependencies (bcrypt, prisma, etc.).
 FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS prod-deps
 RUN corepack enable
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 WORKDIR /app
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json .npmrc ./
 COPY shared/package.json ./shared/package.json
 COPY backend/package.json ./backend/package.json
 COPY backend/prisma ./backend/prisma
 ENV CI=true
-RUN pnpm install --frozen-lockfile --prod --ignore-scripts \
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile --prod --ignore-scripts \
  && pnpm rebuild \
  && DATABASE_URL=postgresql://placeholder:placeholder@localhost:5432/placeholder \
     pnpm --filter @article30/backend exec prisma generate
@@ -64,3 +70,15 @@ EXPOSE 3001
 WORKDIR /app/backend
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD wget -qO- http://127.0.0.1:3001/health > /dev/null 2>&1 || exit 1
 CMD ["sh", "-c", "node node_modules/prisma/build/index.js migrate deploy && node dist/src/main"]
+
+# --- tools: admin/runner image for one-off backend scripts (seed,
+# password:reset, notifications:backfill, etc). Reuses the `build` stage so
+# it carries pnpm, devDeps (ts-node), the generated prisma client, source,
+# and shared/dist. Published alongside the runtime image at the same semver
+# (see release-publish.yml matrix), so admin tooling never drifts from the
+# schema it ships against. Run via:
+#   docker compose --profile admin run --rm backend-tools <pkg-script>
+FROM build AS tools
+WORKDIR /app/backend
+ENTRYPOINT ["pnpm"]
+CMD ["--help"]

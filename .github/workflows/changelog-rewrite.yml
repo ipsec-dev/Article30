@@ -19,6 +19,7 @@ jobs:
   rewrite:
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/create-github-app-token@v2
         id: app-token
