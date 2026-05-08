@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/ipsec-dev/Article30/compare/v2.0.0...v2.0.1) (2026-05-08)
+
+
+### Performance Improvements
+
+* slim backend prod image and stop leaking X-Powered-By ([#22](https://github.com/ipsec-dev/Article30/issues/22)) ([c75ad68](https://github.com/ipsec-dev/Article30/commit/c75ad68838924af41b77cfd7a3f43a54d9198131))
+
 ## [2.0.0](https://github.com/ipsec-dev/Article30/compare/v1.0.2...v2.0.0) (2026-05-08)
 
 
