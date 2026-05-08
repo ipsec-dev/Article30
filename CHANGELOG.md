@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/ipsec-dev/Article30/compare/v1.0.2...v2.0.0) (2026-05-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* switch prod deploy to GHCR-pull canonical path ([#18](https://github.com/ipsec-dev/Article30/issues/18))
+
+### Maintenance & Dependencies
+
+* switch prod deploy to GHCR-pull canonical path ([#18](https://github.com/ipsec-dev/Article30/issues/18)) ([7cf034a](https://github.com/ipsec-dev/Article30/commit/7cf034a37d1919235c1bb72c767d86a371fe5ee7))
+
 ## [1.0.2](https://github.com/ipsec-dev/Article30/compare/v1.0.1...v1.0.2) (2026-05-08)
 
 
