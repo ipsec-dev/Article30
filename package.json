@@ -16,7 +16,7 @@
     "format:check": "prettier . --check",
     "typecheck": "pnpm --filter @article30/shared build && pnpm -r --parallel exec tsc --noEmit",
     "test": "pnpm --filter @article30/shared build && pnpm --filter @article30/backend test",
-    "prepare": "husky"
+    "prepare": "command -v husky >/dev/null 2>&1 && husky || true"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.3",
