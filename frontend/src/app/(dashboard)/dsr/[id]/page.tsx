@@ -456,7 +456,7 @@ export default function DsrDetailPage() {
       {/* Meta */}
       <DsrMetaCard dsr={dsr} effectiveDeadline={effectiveDeadline} t={t} />
 
-      {dsr && <DsrWorkflowTab dsrId={dsr.id} />}
+      <DsrWorkflowTab dsrId={dsr.id} />
 
       {/* Domain panels */}
       <Card>
