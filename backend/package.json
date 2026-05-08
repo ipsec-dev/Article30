@@ -12,7 +12,7 @@
     "pdf:samples": "pnpm build && node scripts/sample-pdfs.js",
     "notifications:backfill": "pnpm build && node scripts/notifications-backfill.js",
     "trigger:test-mails": "pnpm build && node scripts/trigger-test-mails.js",
-    "db:migrate": "prisma migrate dev",
+    "db:migrate": "prisma generate && prisma migrate dev",
     "db:studio": "prisma studio",
     "test": "vitest run",
     "test:watch": "vitest",
