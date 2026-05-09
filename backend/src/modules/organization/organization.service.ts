@@ -25,6 +25,21 @@ const NOTIFICATION_SETTINGS_DEFAULTS: Record<NotificationKey, boolean> = Object.
 
 export type NotificationSettings = Record<NotificationKey, boolean>;
 
+// annualTurnover is stored as BigInt for column safety, but the shared API
+// contract exposes it as `number | null` and Express's res.json cannot
+// serialize a BigInt. Coerce on the way out. Number is safe up to ~9e15
+// EUR which exceeds any realistic annual turnover; the same Number-based
+// limit already exists on the write path (Number.parseInt in the form).
+function serializeOrganization<T extends { annualTurnover: bigint | null }>(
+  org: T,
+): Omit<T, 'annualTurnover'> & { annualTurnover: number | null } {
+  const { annualTurnover, ...rest } = org;
+  return {
+    ...rest,
+    annualTurnover: annualTurnover === null ? null : Number(annualTurnover),
+  };
+}
+
 @Injectable()
 export class OrganizationService {
   private readonly logger = new Logger(OrganizationService.name);
@@ -35,21 +50,24 @@ export class OrganizationService {
   ) {}
 
   async get() {
-    return this.prisma.organization.findFirst();
+    const org = await this.prisma.organization.findFirst();
+    return org === null ? null : serializeOrganization(org);
   }
 
   async update(dto: UpdateOrganizationDto) {
     const existing = await this.prisma.organization.findFirst();
     this.logger.log({ event: 'organization.settings.updated' });
     if (!existing) {
-      return this.prisma.organization.create({
+      const created = await this.prisma.organization.create({
         data: { slug: `org-${Date.now()}`, ...dto },
       });
+      return serializeOrganization(created);
     }
-    return this.prisma.organization.update({
+    const updated = await this.prisma.organization.update({
       where: { id: existing.id },
       data: dto,
     });
+    return serializeOrganization(updated);
   }
 
   async getNotificationSettings(): Promise<NotificationSettings> {

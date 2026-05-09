@@ -98,14 +98,14 @@ describe('Sidebar', () => {
   it('shows the regulatory-updates badge when regulatoryNewCount > 0', () => {
     renderWithI18n(<Sidebar user={makeUser()} regulatoryNewCount={7} />);
 
-    const regLink = screen.getByRole('link', { name: /Veille réglementaire|Regulatory Watch/i });
+    const regLink = screen.getByRole('link', { name: /^Veille|Regulatory Watch/i });
     expect(within(regLink).getByText('7')).toBeInTheDocument();
   });
 
   it('hides the regulatory-updates badge when count is 0 or undefined', () => {
     const { rerender } = renderWithI18n(<Sidebar user={makeUser()} regulatoryNewCount={0} />);
 
-    let regLink = screen.getByRole('link', { name: /Veille réglementaire|Regulatory Watch/i });
+    let regLink = screen.getByRole('link', { name: /^Veille|Regulatory Watch/i });
     // No numeric badge should appear inside the link.
     expect(within(regLink).queryByText('0')).toBeNull();
 
@@ -114,7 +114,7 @@ describe('Sidebar', () => {
         <Sidebar user={makeUser()} />
       </I18nProvider>,
     );
-    regLink = screen.getByRole('link', { name: /Veille réglementaire|Regulatory Watch/i });
+    regLink = screen.getByRole('link', { name: /^Veille|Regulatory Watch/i });
     // The badge span is not rendered when the count prop is undefined.
     // The link's text should only contain the label, no stray digits.
     expect(regLink.textContent).not.toMatch(/\d/);

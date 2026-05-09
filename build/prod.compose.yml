@@ -1,0 +1,25 @@
+# Build-from-source prod overlay. Apply explicitly:
+#   docker compose -f docker-compose.yml -f build/prod.compose.yml --env-file .env.prod up -d --build
+#
+# Use this when:
+#   - You need to test a local change to backend/frontend code with
+#     prod-target containers without waiting for a GHCR release.
+#   - Your environment cannot pull from ghcr.io.
+#
+# Image tags: backend/frontend get explicit `:local` tags so the local
+# build does not pollute the GHCR `:latest` tag the base file references.
+
+services:
+  backend:
+    image: article30-backend:local
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      target: prod
+
+  frontend:
+    image: article30-frontend:local
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      target: prod

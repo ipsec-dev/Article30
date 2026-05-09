@@ -1,15 +1,17 @@
 # Dev overlay. Apply explicitly:
-#   docker compose -f docker-compose.yml -f dev/compose.yml --env-file .env.dev up
-# Or use ./dev.sh.
+#   docker compose -f docker-compose.yml -f build/dev.compose.yml --env-file .env.dev up
 #
 # Adds: mailpit. Switches backend/frontend to their dev Dockerfile target,
 # enables hot-reload bind mounts, and clobbers env values that must differ
 # from prod (NODE_ENV, COOKIE_SECURE, CORS_ORIGIN, SMTP host).
 #
-# Relative paths (build context, bind mounts) are resolved against the
-# Compose project directory — i.e. the directory of the first `-f` file
-# (the repo root, holding docker-compose.yml) — NOT this file's directory.
-# So bind mounts use repo-relative paths like `./backend/src`, not `../`.
+# Image tags: backend/frontend get explicit `:dev` tags so a `compose build`
+# does not pollute the GHCR `:latest` tag the base file references.
+#
+# Relative paths (build context, bind mounts) resolve against the Compose
+# project directory - i.e. the directory of the first `-f` file (the repo
+# root, holding docker-compose.yml) - NOT this file's directory. So bind
+# mounts use repo-relative paths like `./backend/src`, not `../`.
 
 services:
   mailpit:
@@ -24,7 +26,10 @@ services:
       retries: 5
 
   backend:
+    image: article30-backend:dev
     build:
+      context: .
+      dockerfile: backend/Dockerfile
       target: dev
     environment:
       NODE_ENV: development
@@ -36,15 +41,17 @@ services:
       - ./backend/src:/app/backend/src
       - ./backend/prisma:/app/backend/prisma
       - ./shared/src:/app/shared/src
-    # The prod CMD runs `prisma migrate deploy && prisma db seed`. In dev
-    # we want pnpm dev (set by the dev Dockerfile target) — do NOT run
-    # migrations on container start; the dev workflow expects them to be
-    # applied externally (e.g., via dev.sh or `pnpm --filter backend exec
-    # prisma migrate dev`).
+    # The prod CMD runs `prisma migrate deploy`. In dev we want pnpm dev
+    # (set by the dev Dockerfile target) - do NOT run migrations on
+    # container start; the dev workflow expects them to be applied
+    # externally (e.g., `pnpm --filter backend exec prisma migrate dev`).
     command: ['pnpm', 'dev']
 
   frontend:
+    image: article30-frontend:dev
     build:
+      context: .
+      dockerfile: frontend/Dockerfile
       target: dev
     environment:
       NODE_ENV: development

@@ -127,6 +127,8 @@ export function EntryCard({
           <button
             type="button"
             onClick={handleToggleSavedClick}
+            aria-label={t(entry.saved ? 'regulatory.removeFromSaved' : 'regulatory.saveForLater')}
+            aria-pressed={entry.saved}
             style={{ color: 'var(--ink-3)' }}
             className="hover:text-amber-500"
           >

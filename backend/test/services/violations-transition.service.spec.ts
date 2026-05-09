@@ -37,7 +37,7 @@ describe('ViolationsService.transition()', () => {
     const notifications = noopNotificationService();
     svc = new ViolationsService(prisma, validator, decisions, breachNotifications, notifications);
 
-    const org = await prisma.organization.create({ data: { slug: `tr-${Date.now()}` } });
+    await prisma.organization.create({ data: { slug: `tr-${Date.now()}` } });
 
     const user = await prisma.user.create({
       data: {
