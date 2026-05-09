@@ -4,6 +4,8 @@ Web application for managing a GDPR/RGPD processing activities register (Article
 
 The data model is **Article 30 turned into code** - a typed schema, DPO validation workflow, tamper-evident audit log, and structured links between the register and the operational surfaces (DSR intake, vendor DPAs, breach log, DPIA screening) that exercise it. See [Project overview](https://github.com/ipsec-dev/Article30/wiki/Home) for the full framing and Article 30 mapping.
 
+![Dashboard](images/Dashboard.png)
+
 ---
 
 ## Features
@@ -26,6 +28,26 @@ The data model is **Article 30 turned into code** - a typed schema, DPO validati
 
 ---
 
+## Screenshots
+
+### Processing Register
+
+![Processing register](images/Registre.png)
+
+### Violation Tracking
+
+![Violation tracking](images/Violation.png)
+
+### Vendor Register (DPA tracking)
+
+![Vendor register](images/Sous-traitants.png)
+
+### Compliance Posture
+
+![Compliance posture](images/Conformit%C3%A9.png)
+
+---
+
 ## Quick Start (production and testing)
 
 ```bash
@@ -37,14 +59,12 @@ docker compose --env-file .env.prod up -d
 docker compose --env-file .env.prod --profile admin run --rm -e ALLOW_SEED=1 backend-tools seed  # first run only
 ```
 
-This pulls `ghcr.io/ipsec-dev/article30/{backend,frontend}` from GitHub Container Registry. No build step on the deploy host.
-
 | Service     | URL                     |
 | ----------- | ----------------------- |
 | Frontend    | <http://localhost:3000> |
 | Backend API | <http://localhost:3001> |
 
-For required hardening (reverse proxy with TLS, firewalled datastore ports, secret rotation, backups), version pinning + upgrades, and the build-from-source path, see [Production Deployment](https://github.com/ipsec-dev/Article30/wiki/Production).
+For more details on the production setup, see [Production](https://github.com/ipsec-dev/Article30/wiki/Production).
 
 ## Quick Start (development)
 
