@@ -64,7 +64,7 @@ docker compose --env-file .env.prod --profile admin run --rm -e ALLOW_SEED=1 bac
 | Frontend    | <http://localhost:3000> |
 | Backend API | <http://localhost:3001> |
 
-For required hardening (reverse proxy with TLS, firewalled datastore ports, secret rotation, backups), version pinning + upgrades, and the build-from-source path, see [Production Deployment](https://github.com/ipsec-dev/Article30/wiki/Production).
+For more details on the production setup, see [Production](https://github.com/ipsec-dev/Article30/wiki/Production).
 
 ## Quick Start (development)
 
