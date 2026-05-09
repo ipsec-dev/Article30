@@ -2,7 +2,7 @@
   "name": "article30",
   "private": true,
   "license": "AGPL-3.0-only",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "dev": "pnpm --filter @article30/shared build && pnpm --parallel --filter backend --filter frontend dev",
     "dev:prod": "pnpm build && NODE_ENV=production pnpm --parallel --filter backend --filter frontend start",
