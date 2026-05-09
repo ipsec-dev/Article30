@@ -1,4 +1,4 @@
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { ThrottlerStorage } from '@nestjs/throttler';
 import { Role } from '@article30/shared';
 import { cleanupDatabase } from '../helpers';
@@ -114,9 +114,19 @@ describe('organization.controller (e2e)', () => {
       expect(fetched.status).toBe(200);
       expect(fetched.body.annualTurnover).toBe(1_500_000_000);
 
-      const auditRows = await testApp.prisma.auditLog.findMany({
-        where: { entity: 'organization', action: 'UPDATE' },
-      });
+      // AuditLogInterceptor writes audit rows fire-and-forget after the
+      // response, so poll briefly until the row appears (the HMAC chain write
+      // can take ~10ms+ under P2034 retry).
+      const auditRows = await vi.waitFor(
+        async () => {
+          const rows = await testApp.prisma.auditLog.findMany({
+            where: { entity: 'organization', action: 'UPDATE' },
+          });
+          if (rows.length === 0) throw new Error('audit row not yet written');
+          return rows;
+        },
+        { timeout: 5000, interval: 50 },
+      );
       expect(auditRows.length).toBeGreaterThan(0);
     });
 
