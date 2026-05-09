@@ -19,7 +19,7 @@ describe('ContentRevisionsService', () => {
     prisma = module.get(PrismaService);
     svc = new ContentRevisionsService(prisma, new EntityValidator(prisma));
 
-    const org = await prisma.organization.create({ data: { slug: `cr-${Date.now()}` } });
+    await prisma.organization.create({ data: { slug: `cr-${Date.now()}` } });
     const user = await prisma.user.create({
       data: {
         firstName: 'cr',

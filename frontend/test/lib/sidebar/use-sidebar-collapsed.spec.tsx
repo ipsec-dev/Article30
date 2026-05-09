@@ -25,6 +25,16 @@ const STORAGE_KEY = 'article30-sidebar-collapsed';
   });
 }
 
+function dispatchStorageEvent(key: string, newValue: string | null): void {
+  // Use a plain Event with patched fields rather than `new StorageEvent(type, init)`.
+  // CodeQL flags the StorageEventInit form as "superfluous trailing arguments" against
+  // its DOM model, and the patched fields are sufficient for the cross-tab listener.
+  const event = new Event('storage');
+  Object.defineProperty(event, 'key', { value: key, configurable: true });
+  Object.defineProperty(event, 'newValue', { value: newValue, configurable: true });
+  window.dispatchEvent(event);
+}
+
 beforeEach(() => {
   window.localStorage.clear();
   // Reset the CSS variable between tests
@@ -85,13 +95,8 @@ describe('useSidebarCollapsed', () => {
     expect(result.current.collapsed).toBe(false);
 
     act(() => {
-      // Simulate a cross-tab storage write (omit storageArea — jsdom rejects stub objects)
-      window.dispatchEvent(
-        new StorageEvent('storage', {
-          key: STORAGE_KEY,
-          newValue: 'true',
-        }),
-      );
+      // Simulate a cross-tab storage write
+      dispatchStorageEvent(STORAGE_KEY, 'true');
     });
 
     expect(result.current.collapsed).toBe(true);
@@ -102,12 +107,7 @@ describe('useSidebarCollapsed', () => {
     const { result } = renderHook(() => useSidebarCollapsed());
 
     act(() => {
-      window.dispatchEvent(
-        new StorageEvent('storage', {
-          key: 'some-other-key',
-          newValue: 'true',
-        }),
-      );
+      dispatchStorageEvent('some-other-key', 'true');
     });
 
     // Must remain at default

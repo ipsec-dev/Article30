@@ -3,18 +3,8 @@ name: CI
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - '**/*.md'
-      - 'LICENSE'
-      - '.gitignore'
-      - '.prettierignore'
   pull_request:
     branches: [main]
-    paths-ignore:
-      - '**/*.md'
-      - 'LICENSE'
-      - '.gitignore'
-      - '.prettierignore'
 
 permissions: read-all
 
@@ -23,9 +13,33 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  # Classifies the diff so docs-only changes can short-circuit downstream jobs
+  # without using top-level `paths-ignore` (which makes required status checks
+  # stall on docs-only PRs because the workflow never runs).
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: actions/checkout@v6
+      - id: filter
+        uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3.0.3
+        with:
+          filters: |
+            code:
+              - '!**/*.md'
+              - '!LICENSE'
+              - '!.gitignore'
+              - '!.prettierignore'
+
   lint:
     name: Lint, Format & Audit
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
 
@@ -66,8 +80,10 @@ jobs:
 
   commitlint:
     name: Commitlint
+    needs: changes
+    if: github.event_name == 'pull_request' && needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
         with:
@@ -84,7 +100,10 @@ jobs:
 
   typecheck-build:
     name: Typecheck & Build
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     # Prisma 7's prisma.config.ts resolves `env('DATABASE_URL')` even at
     # `prisma generate` time. Generate doesn't actually connect, so a
     # well-formed placeholder is enough, the URL never reaches a server.
@@ -105,8 +124,15 @@ jobs:
         run: pnpm build
 
   test:
-    name: Tests
+    name: Tests (${{ matrix.package }})
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [backend, frontend]
     services:
       postgres:
         image: postgres:18-alpine
@@ -148,6 +174,7 @@ jobs:
       - uses: ./.github/actions/setup
 
       - name: Install psql client
+        if: matrix.package == 'backend'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq postgresql-client
@@ -156,33 +183,65 @@ jobs:
         run: pnpm --filter @article30/shared build
 
       - name: Generate Prisma client
+        if: matrix.package == 'backend'
         run: pnpm --filter backend exec prisma generate
 
-      - name: Run backend tests with coverage
-        run: pnpm --filter @article30/backend test:coverage
+      - name: Run tests with coverage
+        run: pnpm --filter @article30/${{ matrix.package }} test:coverage
 
-      - name: Upload backend coverage HTML report
+      - name: Upload coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@75cd11691c0faa626561e295848008c8a7dddffe # v5.5.4
+        with:
+          files: ${{ matrix.package }}/coverage/lcov.info
+          flags: ${{ matrix.package }}
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload coverage HTML report
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: backend-coverage-html
-          path: backend/coverage/
+          name: ${{ matrix.package }}-coverage-html
+          path: ${{ matrix.package }}/coverage/
           retention-days: 14
 
-      - name: Run frontend tests with coverage
-        run: pnpm --filter @article30/frontend test:coverage
-
-      - name: Upload frontend coverage HTML report
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: frontend-coverage-html
-          path: frontend/coverage/
-          retention-days: 14
+  # Rollup of the `test` matrix - emits a single check named "Tests" so the
+  # branch-protection ruleset can require one stable name regardless of how
+  # the matrix grows. Adding a new matrix leg (shared, integration, etc.)
+  # will not require touching the ruleset.
+  tests:
+    name: Tests
+    needs: [changes, test]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Aggregate matrix outcome
+        env:
+          CHANGES_RESULT: ${{ needs.changes.result }}
+          TEST_RESULT: ${{ needs.test.result }}
+        run: |
+          echo "changes: $CHANGES_RESULT, test: $TEST_RESULT"
+          # `changes` must succeed - it's the gate; if it failed we don't
+          # know whether tests should have run. `test` must be either
+          # success (all legs passed) or skipped (legitimately gated off
+          # for a docs-only PR by `code == 'false'`).
+          if [ "$CHANGES_RESULT" != "success" ]; then
+            echo "::error::changes job did not succeed"
+            exit 1
+          fi
+          case "$TEST_RESULT" in
+            success|skipped) exit 0 ;;
+            *) echo "::error::test matrix result: $TEST_RESULT"; exit 1 ;;
+          esac
 
   e2e:
     name: E2E (Playwright)
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     services:
       postgres:
         image: postgres:18-alpine
@@ -275,15 +334,40 @@ jobs:
 
   docker:
     name: Docker Build
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
 
       - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
+
+      # Persists the BuildKit `id=pnpm` cache mount used by both Dockerfiles
+      # across CI runs. Without this, a `pnpm-lock.yaml` bump invalidates the
+      # `pnpm install` layer and the store gets re-downloaded from scratch
+      # (cause of the 19m frontend-image outlier observed on release commits).
+      - name: Cache pnpm store (for BuildKit)
+        id: pnpm-cache
+        uses: actions/cache@v5
+        with:
+          path: pnpm-cache
+          key: pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-store-
+
+      - name: Inject pnpm store cache into BuildKit
+        uses: reproducible-containers/buildkit-cache-dance@1b8ab18fbda5ad3646e3fcc9ed9dd41ce2f297b4 # v3.3.2
+        with:
+          cache-map: |
+            {
+              "pnpm-cache": "/pnpm/store"
+            }
+          skip-extraction: ${{ steps.pnpm-cache.outputs.cache-hit }}
 
       - name: Build backend image
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
         with:
           context: .
           file: backend/Dockerfile
@@ -293,7 +377,7 @@ jobs:
           cache-to: type=gha,mode=max,scope=backend
 
       - name: Build frontend image
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
         with:
           context: .
           file: frontend/Dockerfile

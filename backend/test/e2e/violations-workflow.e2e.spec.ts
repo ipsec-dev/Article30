@@ -63,7 +63,7 @@ describe('violations-workflow.controller (e2e)', () => {
     });
 
     it('AUDITOR is rejected with 403 on transition', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      const { user: dpo } = await seedUser(testApp.prisma, Role.DPO);
       const v = await seedViolationInOrg(dpo.id);
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -100,7 +100,7 @@ describe('violations-workflow.controller (e2e)', () => {
     });
 
     it('AUDITOR is rejected with 403 on POST risk-assessment', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      const { user: dpo } = await seedUser(testApp.prisma, Role.DPO);
       const v = await seedViolationInOrg(dpo.id);
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -122,7 +122,7 @@ describe('violations-workflow.controller (e2e)', () => {
   // 3. GET /:id/risk-assessment
   describe('GET /api/violations/:id/risk-assessment', () => {
     it('AUDITOR can read current risk assessment', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      const { user: dpo } = await seedUser(testApp.prisma, Role.DPO);
       const v = await seedViolationInOrg(dpo.id);
 
       // Seed assessment directly in DB
@@ -150,7 +150,7 @@ describe('violations-workflow.controller (e2e)', () => {
   // 4. GET /:id/filings
   describe('GET /api/violations/:id/filings', () => {
     it('AUDITOR can read filings list (empty initially)', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      const { user: dpo } = await seedUser(testApp.prisma, Role.DPO);
       const v = await seedViolationInOrg(dpo.id);
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -183,7 +183,7 @@ describe('violations-workflow.controller (e2e)', () => {
     });
 
     it('AUDITOR is rejected with 403 on POST action-items', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      const { user: dpo } = await seedUser(testApp.prisma, Role.DPO);
       const v = await seedViolationInOrg(dpo.id);
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -247,7 +247,7 @@ describe('violations-workflow.controller (e2e)', () => {
     });
 
     it('EDITOR (WRITE_ROLES but not VALIDATE_ROLES) is rejected on regulator-interactions POST', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      const { user: dpo } = await seedUser(testApp.prisma, Role.DPO);
       const v = await seedViolationInOrg(dpo.id);
 
       const { user: editor, password: editorPwd } = await seedUser(testApp.prisma, Role.EDITOR);
@@ -268,7 +268,7 @@ describe('violations-workflow.controller (e2e)', () => {
   // 8. GET /:id/regulator-interactions
   describe('GET /api/violations/:id/regulator-interactions', () => {
     it('AUDITOR can read regulator interactions list', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      const { user: dpo } = await seedUser(testApp.prisma, Role.DPO);
       const v = await seedViolationInOrg(dpo.id);
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -282,7 +282,7 @@ describe('violations-workflow.controller (e2e)', () => {
   // 9. GET /:id/action-items
   describe('GET /api/violations/:id/action-items', () => {
     it('AUDITOR can read action items list', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      const { user: dpo } = await seedUser(testApp.prisma, Role.DPO);
       const v = await seedViolationInOrg(dpo.id);
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
@@ -296,7 +296,7 @@ describe('violations-workflow.controller (e2e)', () => {
   // 10. GET /:id/persons-notifications
   describe('GET /api/violations/:id/persons-notifications', () => {
     it('AUDITOR can read persons-notifications list (empty initially)', async () => {
-      const { user: dpo, password: dpoPwd } = await seedUser(testApp.prisma, Role.DPO);
+      const { user: dpo } = await seedUser(testApp.prisma, Role.DPO);
       const v = await seedViolationInOrg(dpo.id);
 
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);

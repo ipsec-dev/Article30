@@ -172,7 +172,7 @@ export default function DashboardLayout({ children }: Readonly<{ children: React
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       <Sidebar user={user} regulatoryNewCount={regulatoryNewCount} />
       <MobileNav user={user} regulatoryNewCount={regulatoryNewCount} />
-      <main className="ml-0 min-h-screen transition-[margin] duration-150 md:ml-[var(--sidebar-width,232px)]">
+      <main className="ml-0 min-h-screen pt-12 transition-[margin] duration-150 md:ml-[var(--sidebar-width,232px)] md:pt-0">
         <Topbar
           title={t(titleEntry.titleKey)}
           breadcrumb={titleEntry.breadcrumbKeys?.map(k => t(k))}

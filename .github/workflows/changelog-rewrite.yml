@@ -1,0 +1,45 @@
+name: Changelog Rewrite
+
+# Re-renders release-please's changelog from each PR's inner commits, so multi-commit
+# squash-merged PRs render every conventional entry. Runs after Release Please completes
+# and updates whichever surface release-please just wrote: open release PR or published Release.
+
+on:
+  workflow_run:
+    workflows: [Release Please]
+    types: [completed]
+
+permissions: {}
+
+concurrency:
+  group: changelog-rewrite-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  rewrite:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ secrets.RELEASE_BOT_APP_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          sparse-checkout: .github/scripts
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
+      - name: Apply rewritten changelog
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_REPO: ${{ github.repository }}
+          # Pin to the SHA that triggered the Release Please run we're reacting to,
+          # so a concurrent push to main can't widen our PR range past what
+          # release-please saw when it set the manifest versions.
+          GH_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: python3 .github/scripts/apply_changelog.py

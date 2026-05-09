@@ -22,7 +22,7 @@ describe('CommentsService', () => {
     const timeline = new TimelineService(prisma, validator);
     svc = new CommentsService(prisma, validator, timeline);
 
-    const org = await prisma.organization.create({ data: { slug: `cm-${Date.now()}` } });
+    await prisma.organization.create({ data: { slug: `cm-${Date.now()}` } });
     const user = await prisma.user.create({
       data: {
         firstName: 'cm',

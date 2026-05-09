@@ -456,7 +456,7 @@ export default function DsrDetailPage() {
       {/* Meta */}
       <DsrMetaCard dsr={dsr} effectiveDeadline={effectiveDeadline} t={t} />
 
-      {dsr && <DsrWorkflowTab dsrId={dsr.id} />}
+      <DsrWorkflowTab dsrId={dsr.id} />
 
       {/* Domain panels */}
       <Card>
@@ -477,7 +477,7 @@ export default function DsrDetailPage() {
         </CardContent>
       </Card>
 
-      {dsr && <FollowUpPanel entityType="DSR" entityId={dsr.id} />}
+      <FollowUpPanel entityType="DSR" entityId={dsr.id} />
     </div>
   );
 }

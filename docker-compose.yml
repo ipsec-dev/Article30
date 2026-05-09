@@ -1,7 +1,13 @@
 name: article30
 
-# Production-correct base. Plain `docker compose up` runs prod.
-# For dev, overlay dev/compose.yml: docker compose -f docker-compose.yml -f dev/compose.yml --env-file .env.dev up
+# Production base - pulls release images from GHCR. Plain
+#   docker compose --env-file .env.prod up -d
+# pulls ghcr.io/ipsec-dev/article30/{backend,frontend} at ARTICLE30_VERSION
+# (default: latest) and starts the stack.
+#
+# Overlays in build/:
+#   - build/dev.compose.yml  (dev: hot reload, mailpit, dev Dockerfile target)
+#   - build/prod.compose.yml (build prod images from local source)
 
 x-default-logging: &default-logging
   driver: json-file
@@ -61,10 +67,10 @@ services:
       retries: 5
 
   backend:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
-      target: prod
+    image: ghcr.io/ipsec-dev/article30/backend:${ARTICLE30_VERSION:-latest}
+    env_file:
+      - path: .env.prod
+        required: false
     restart: unless-stopped
     logging: *default-logging
     depends_on:
@@ -74,7 +80,7 @@ services:
         condition: service_healthy
       rustfs:
         condition: service_healthy
-    environment:
+    environment: &backend-env
       DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/article30
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
       SESSION_SECRET: ${SESSION_SECRET}
@@ -98,10 +104,10 @@ services:
       start_period: 20s
 
   frontend:
-    build:
-      context: .
-      dockerfile: frontend/Dockerfile
-      target: prod
+    image: ghcr.io/ipsec-dev/article30/frontend:${ARTICLE30_VERSION:-latest}
+    env_file:
+      - path: .env.prod
+        required: false
     restart: unless-stopped
     logging: *default-logging
     depends_on:
@@ -111,6 +117,30 @@ services:
       BACKEND_URL: http://backend:3001
     ports:
       - '127.0.0.1:3000:3000'
+
+  # Admin / one-off operations. Not started by `compose up` (profiles: [admin]).
+  # Pinned to ARTICLE30_VERSION so admin tooling stays in lockstep with the
+  # backend's prisma schema. Run with:
+  #   docker compose --env-file .env.prod --profile admin run --rm \
+  #     -e ALLOW_SEED=1 backend-tools seed
+  #   docker compose --env-file .env.prod --profile admin run --rm \
+  #     backend-tools password:reset --user user@example.com
+  backend-tools:
+    image: ghcr.io/ipsec-dev/article30/backend-tools:${ARTICLE30_VERSION:-latest}
+    profiles: [admin]
+    env_file:
+      - path: .env.prod
+        required: false
+    logging: *default-logging
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rustfs:
+        condition: service_healthy
+    environment: *backend-env
+    restart: 'no'
 
 volumes:
   pgdata:

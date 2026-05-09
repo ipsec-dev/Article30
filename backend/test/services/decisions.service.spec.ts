@@ -22,7 +22,7 @@ describe('DecisionsService', () => {
     const timeline = new TimelineService(prisma, validator);
     svc = new DecisionsService(prisma, validator, timeline);
 
-    const org = await prisma.organization.create({ data: { slug: `dc-${Date.now()}` } });
+    await prisma.organization.create({ data: { slug: `dc-${Date.now()}` } });
     const user = await prisma.user.create({
       data: {
         firstName: 'dc',
