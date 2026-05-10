@@ -165,16 +165,90 @@ describe('documents.controller (e2e)', () => {
   // ------------------------ GET /:id/download --------------------------
 
   describe('GET /api/documents/:id/download', () => {
-    it('returns 200 with a signed url for an approved user', async () => {
+    it('streams the bytes for an approved DPO with the right headers', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.DPO);
       const treatment = await seedTreatment(testApp.prisma, user.id);
       const doc = await seedDocument(testApp.prisma, 'TREATMENT', treatment.id, user.id);
       const { agent } = await loginAs(testApp.app, user.email, password);
-      const res = await agent.get(`/api/documents/${doc.id}/download`);
+
+      const res = await agent.get(`/api/documents/${doc.id}/download`).buffer(true);
+
       expect(res.status).toBe(200);
-      expect(typeof res.body.url).toBe('string');
-      expect(res.body.url).toBe('https://test.local/signed');
-      expect(res.body.filename).toBe(doc.filename);
+      expect(res.headers['content-type']).toContain('application/pdf'); // Document.mimeType from seed
+      expect(res.headers['content-disposition']).toContain('inline');
+      expect(res.headers['content-disposition']).toContain(encodeURIComponent(doc.filename));
+      expect(res.headers['accept-ranges']).toBe('bytes');
+      expect(res.headers['cache-control']).toContain('no-store');
+      expect(res.headers['x-content-type-options']).toBe('nosniff');
+    });
+
+    it('returns 206 with Content-Range when a Range header is sent', async () => {
+      const { user, password } = await seedUser(testApp.prisma, Role.DPO);
+      const treatment = await seedTreatment(testApp.prisma, user.id);
+      const doc = await seedDocument(testApp.prisma, 'TREATMENT', treatment.id, user.id);
+      const { agent } = await loginAs(testApp.app, user.email, password);
+
+      const res = await agent
+        .get(`/api/documents/${doc.id}/download`)
+        .set('Range', 'bytes=0-4')
+        .buffer(true);
+
+      expect(res.status).toBe(206);
+      expect(res.headers['content-range']).toMatch(/^bytes 0-/);
+    });
+
+    it('returns 404 for PROCESS_OWNER who does not own the linked treatment', async () => {
+      const { user: ownerOther } = await seedUser(testApp.prisma, Role.PROCESS_OWNER, {
+        email: 'other-po@example.test',
+      });
+      const treatment = await seedTreatment(testApp.prisma, ownerOther.id);
+      const doc = await seedDocument(testApp.prisma, 'TREATMENT', treatment.id, ownerOther.id);
+
+      const { user: self, password } = await seedUser(testApp.prisma, Role.PROCESS_OWNER, {
+        email: 'self-po@example.test',
+      });
+      const { agent } = await loginAs(testApp.app, self.email, password);
+
+      const res = await agent.get(`/api/documents/${doc.id}/download`);
+      expect(res.status).toBe(404);
+    });
+
+    it('returns 200 for an AUDITOR (no ownership scoping)', async () => {
+      const { user: ownerOther } = await seedUser(testApp.prisma, Role.PROCESS_OWNER, {
+        email: 'other-po-2@example.test',
+      });
+      const treatment = await seedTreatment(testApp.prisma, ownerOther.id);
+      const doc = await seedDocument(testApp.prisma, 'TREATMENT', treatment.id, ownerOther.id);
+
+      const { user: auditor, password } = await seedUser(testApp.prisma, Role.AUDITOR);
+      const { agent } = await loginAs(testApp.app, auditor.email, password);
+
+      const res = await agent.get(`/api/documents/${doc.id}/download`).buffer(true);
+      expect(res.status).toBe(200);
+    });
+
+    it('returns 404 for a non-existent document', async () => {
+      const { user, password } = await seedUser(testApp.prisma, Role.DPO);
+      const { agent } = await loginAs(testApp.app, user.email, password);
+      const res = await agent.get(`/api/documents/00000000-0000-0000-0000-000000000000/download`);
+      expect(res.status).toBe(404);
+    });
+
+    it('encodes RFC 8187 reserved chars in Content-Disposition for filenames with apostrophes', async () => {
+      const { user, password } = await seedUser(testApp.prisma, Role.DPO);
+      const treatment = await seedTreatment(testApp.prisma, user.id);
+      const doc = await seedDocument(testApp.prisma, 'TREATMENT', treatment.id, user.id, {
+        filename: "O'Reilly's policy.pdf",
+      });
+      const { agent } = await loginAs(testApp.app, user.email, password);
+
+      const res = await agent.get(`/api/documents/${doc.id}/download`).buffer(true);
+
+      expect(res.status).toBe(200);
+      // Apostrophes must be percent-encoded (%27) so they do not terminate the language tag
+      expect(res.headers['content-disposition']).toBe(
+        "inline; filename*=UTF-8''O%27Reilly%27s%20policy.pdf",
+      );
     });
   });
 

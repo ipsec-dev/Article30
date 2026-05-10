@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Headers,
   NotFoundException,
   Param,
   Post,
@@ -10,7 +11,7 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { AttachmentCategory, EntityType } from '@prisma/client';
@@ -21,6 +22,16 @@ import { RequestUser } from '../../common/types/request-user';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AttachmentsService } from './attachments.service';
 import { StorageService } from '../documents/storage.service';
+import { assertCanReadFollowUpAttachment } from '../../common/authorization/document-access';
+
+const RFC8187_RESERVED = /[!'()*]/g;
+
+function encodeRfc8187(value: string): string {
+  return encodeURIComponent(value).replace(
+    RFC8187_RESERVED,
+    c => `%${c.charCodeAt(0).toString(16).toUpperCase()}`,
+  );
+}
 
 @ApiTags('follow-up')
 @Controller('follow-up/attachments')
@@ -32,9 +43,7 @@ export class AttachmentsController {
   ) {}
 
   // Order matters: more-specific routes (`:id/download`, `:id` Delete) must
-  // be declared BEFORE the polymorphic `:entityType/:entityId` Get, otherwise
-  // Express matches them as a 2-param entityType/entityId and 404s on the
-  // entity validator (review #2).
+  // be declared BEFORE the polymorphic `:entityType/:entityId` Get.
 
   @Post()
   @Roles(...FOLLOW_UP_WRITE_ROLES)
@@ -59,15 +68,41 @@ export class AttachmentsController {
 
   @Get(':id/download')
   @Roles(...FOLLOW_UP_READ_ROLES)
-  async download(@Param('id') id: string, @Res() res: Response) {
+  @ApiOkResponse({
+    description: 'Streams the file. Returns 206 with Content-Range when a Range header is sent.',
+    content: { '*/*': { schema: { type: 'string', format: 'binary' } } },
+  })
+  async download(
+    @Param('id') id: string,
+    @Headers('range') range: string | undefined,
+    @CurrentUser() user: RequestUser,
+    @Res() res: Response,
+  ) {
     const attachment = await this.prisma.followUpAttachment.findFirst({
       where: { id, deletedAt: null },
     });
     if (!attachment || !attachment.storageKey) {
       throw new NotFoundException('Attachment not found');
     }
-    const url = await this.storage.getPresignedUrl(attachment.storageKey);
-    res.redirect(url);
+
+    await assertCanReadFollowUpAttachment(user, attachment, this.prisma);
+
+    const obj = await this.storage.getObject(attachment.storageKey, range);
+
+    res.status(obj.statusCode);
+    res.setHeader('Content-Type', attachment.mimeType);
+    res.setHeader('Content-Length', String(obj.contentLength));
+    res.setHeader('Accept-Ranges', 'bytes');
+    if (obj.contentRange) res.setHeader('Content-Range', obj.contentRange);
+    if (obj.etag) res.setHeader('ETag', obj.etag);
+    res.setHeader(
+      'Content-Disposition',
+      `inline; filename*=UTF-8''${encodeRfc8187(attachment.filename)}`,
+    );
+    res.setHeader('Cache-Control', 'private, no-store');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+
+    obj.body.pipe(res);
   }
 
   @Delete(':id')

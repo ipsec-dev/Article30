@@ -93,14 +93,12 @@ export class DocumentsService {
     });
   }
 
-  async getDownloadUrl(id: string) {
+  async findById(id: string) {
     const document = await this.prisma.document.findUnique({ where: { id } });
     if (!document) {
       throw new NotFoundException('Document not found');
     }
-
-    const url = await this.storage.getPresignedUrl(document.s3Key);
-    return { url, filename: document.filename };
+    return document;
   }
 
   async delete(id: string) {

@@ -70,7 +70,18 @@ export async function createTestApp(): Promise<TestApp> {
     .useValue({
       onModuleInit: async () => {},
       upload: async (_key: string, _buffer: Buffer, _mimeType: string) => {},
-      getPresignedUrl: async (_key: string) => 'https://test.local/signed',
+      getObject: async (_key: string, range?: string) => {
+        const { Readable } = await import('node:stream');
+        const bytes = Buffer.from('proxied-bytes');
+        return {
+          body: Readable.from(bytes),
+          contentType: 'application/pdf',
+          contentLength: bytes.length,
+          contentRange: range ? `bytes 0-${bytes.length - 1}/${bytes.length}` : undefined,
+          etag: '"deadbeef"',
+          statusCode: range ? 206 : 200,
+        };
+      },
       delete: async (_key: string) => {},
     })
     .compile();
