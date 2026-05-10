@@ -161,13 +161,8 @@ export function DocumentList({ linkedEntity, linkedEntityId }: DocumentListProps
     }
   }
 
-  const handleDownload = useCallback(async (docId: string) => {
-    try {
-      const res = await api.get<{ url: string; filename: string }>(`/documents/${docId}/download`);
-      globalThis.open(res.url, '_blank');
-    } catch {
-      // error handled by api client
-    }
+  const handleDownload = useCallback((docId: string) => {
+    globalThis.open(`/api/documents/${docId}/download`, '_blank', 'noopener');
   }, []);
 
   const handleDelete = useCallback(

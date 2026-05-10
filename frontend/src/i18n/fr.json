@@ -412,6 +412,7 @@
   "roleMatrix.capability.organization.edit": "Modifier les paramètres de l'organisation, flux RSS, synchroniser la veille",
   "roleMatrix.capability.organization.notifications": "Configurer les notifications par e-mail",
   "roleMatrix.capability.screening.write": "Créer ou convertir des screenings",
+  "roleMatrix.capability.docs.read": "Télécharger des documents",
   "roleMatrix.capability.docs.write": "Téléverser ou supprimer des documents",
   "roleMatrix.capability.vendor.write": "Créer ou modifier des sous-traitants et évaluations",
   "roleMatrix.capability.vendor.delete": "Supprimer des sous-traitants",

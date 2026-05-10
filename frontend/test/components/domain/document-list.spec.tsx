@@ -17,7 +17,7 @@ import type { DocumentDto, UserDto } from '@article30/shared';
 // `credentials: 'include'`, and a manually-built `X-XSRF-TOKEN` header read from
 // the `XSRF-TOKEN` cookie. On success the component re-fetches the list.
 // - Delete: window.confirm() → api.delete(`/documents/:id`) → local state filter.
-// - Download: api.get(`/documents/:id/download`) → { url, filename } → window.open(url, '_blank').
+// - Download: window.open('/api/documents/:id/download', '_blank', 'noopener') - same-origin, no JSON round-trip.
 
 const { apiMock, authMock } = vi.hoisted(() => ({
   apiMock: {
@@ -289,25 +289,20 @@ describe('DocumentList', () => {
     expect(screen.getByText('A.pdf')).toBeInTheDocument();
   });
 
-  it('opens the signed download URL in a new tab when Download is clicked', async () => {
+  it('opens the same-origin download URL in a new tab when Download is clicked', async () => {
     authMock.getMe.mockResolvedValueOnce(makeUser(Role.DPO));
     apiMock.get.mockResolvedValueOnce([makeDoc({ id: 'doc-X', filename: 'X.pdf' })]);
 
     renderList();
     await screen.findByText('X.pdf');
 
-    apiMock.get.mockResolvedValueOnce({
-      url: 'https://signed.test/X.pdf?sig=abc',
-      filename: 'X.pdf',
-    });
-
     const downloadButton = screen.getByRole('button', { name: /Télécharger|Download/i });
     await userEvent.click(downloadButton);
 
-    await waitFor(() => {
-      expect(apiMock.get).toHaveBeenCalledWith('/documents/doc-X/download');
-    });
-    expect(window.open).toHaveBeenCalledWith('https://signed.test/X.pdf?sig=abc', '_blank');
+    // No JSON round-trip; we open the same-origin streaming endpoint directly.
+    expect(apiMock.get).toHaveBeenCalledTimes(1); // only the initial list fetch
+    expect(apiMock.get).not.toHaveBeenCalledWith('/documents/doc-X/download');
+    expect(window.open).toHaveBeenCalledWith('/api/documents/doc-X/download', '_blank', 'noopener');
   });
 
   it('threads linkedEntity and linkedEntityId into the initial list query string', async () => {
