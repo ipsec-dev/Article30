@@ -51,13 +51,19 @@ The data model is **Article 30 turned into code** - a typed schema, DPO validati
 ## Quick Start (production and testing)
 
 ```bash
-git clone <repo-url>
+git clone git@github.com:ipsec-dev/Article30.git
 cd article30
 cp .env.prod.example .env.prod
 # Edit .env.prod
 docker compose --env-file .env.prod up -d
 docker compose --env-file .env.prod --profile admin run --rm -e ALLOW_SEED=1 backend-tools seed  # first run only
 ```
+
+> **Reclaim disk after seeding.** `backend-tools` is ~1.25 GB and only needed for one-off admin scripts (seed, password reset, backfills). If you don't anticipate needing it, you can remove it; Docker will re-pull it next time you `compose run backend-tools`.
+>
+> ```bash
+> docker image rm ghcr.io/ipsec-dev/article30/backend-tools:${ARTICLE30_VERSION:-latest}
+> ```
 
 | Service     | URL                     |
 | ----------- | ----------------------- |
@@ -69,7 +75,7 @@ For more details on the production setup, see [Production](https://github.com/ip
 ## Quick Start (development)
 
 ```bash
-git clone <repo-url>
+git clone git@github.com:ipsec-dev/Article30.git
 cd article30
 pnpm install
 cp .env.dev.example .env.dev
