@@ -17,7 +17,9 @@ import type { DocumentDto, UserDto } from '@article30/shared';
 // `credentials: 'include'`, and a manually-built `X-XSRF-TOKEN` header read from
 // the `XSRF-TOKEN` cookie. On success the component re-fetches the list.
 // - Delete: window.confirm() → api.delete(`/documents/:id`) → local state filter.
-// - Download: window.open('/api/documents/:id/download', '_blank', 'noopener') - same-origin, no JSON round-trip.
+// - Download: builds a programmatic <a href="/api/documents/:id/download" download={filename}>
+//   and clicks it - same-origin, no JSON round-trip; the `download` attribute overrides
+//   the backend's Content-Disposition: inline so the browser saves instead of previewing.
 
 const { apiMock, authMock } = vi.hoisted(() => ({
   apiMock: {
@@ -289,20 +291,37 @@ describe('DocumentList', () => {
     expect(screen.getByText('A.pdf')).toBeInTheDocument();
   });
 
-  it('opens the same-origin download URL in a new tab when Download is clicked', async () => {
+  it('forces a download via a programmatic anchor click when Download is pressed', async () => {
     authMock.getMe.mockResolvedValueOnce(makeUser(Role.DPO));
     apiMock.get.mockResolvedValueOnce([makeDoc({ id: 'doc-X', filename: 'X.pdf' })]);
 
     renderList();
     await screen.findByText('X.pdf');
 
-    const downloadButton = screen.getByRole('button', { name: /Télécharger|Download/i });
-    await userEvent.click(downloadButton);
+    // Spy on anchor.click so we can capture the synthesised <a> the handler creates.
+    const anchorClicks: HTMLAnchorElement[] = [];
+    const originalClick = HTMLAnchorElement.prototype.click;
+    HTMLAnchorElement.prototype.click = function () {
+      anchorClicks.push(this);
+    };
 
-    // No JSON round-trip; we open the same-origin streaming endpoint directly.
-    expect(apiMock.get).toHaveBeenCalledTimes(1); // only the initial list fetch
-    expect(apiMock.get).not.toHaveBeenCalledWith('/documents/doc-X/download');
-    expect(window.open).toHaveBeenCalledWith('/api/documents/doc-X/download', '_blank', 'noopener');
+    try {
+      const downloadButton = screen.getByRole('button', { name: /Télécharger|Download/i });
+      await userEvent.click(downloadButton);
+
+      // No JSON round-trip; the handler builds and clicks a same-origin <a download>.
+      expect(apiMock.get).toHaveBeenCalledTimes(1); // only the initial list fetch
+      expect(apiMock.get).not.toHaveBeenCalledWith('/documents/doc-X/download');
+      expect(window.open).not.toHaveBeenCalled();
+
+      expect(anchorClicks).toHaveLength(1);
+      const a = anchorClicks[0];
+      expect(a.getAttribute('href')).toBe('/api/documents/doc-X/download');
+      expect(a.getAttribute('download')).toBe('X.pdf');
+      expect(a.getAttribute('rel')).toBe('noopener');
+    } finally {
+      HTMLAnchorElement.prototype.click = originalClick;
+    }
   });
 
   it('threads linkedEntity and linkedEntityId into the initial list query string', async () => {
