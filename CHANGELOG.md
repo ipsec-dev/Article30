@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.0](https://github.com/ipsec-dev/Article30/compare/v1.0.2...v1.1.0) (2026-05-11)
+
+
+### Features
+
+* **shared:** add DOCUMENT_READ_ROLES constant and docs.read capability ([#46](https://github.com/ipsec-dev/Article30/issues/46)) ([4ad9403](https://github.com/ipsec-dev/Article30/commit/4ad94036b6e6f3e2cea0e878a94c0588f7f33aa0))
+* **storage:** add getObject streaming primitive with Range support ([#46](https://github.com/ipsec-dev/Article30/issues/46)) ([4ad9403](https://github.com/ipsec-dev/Article30/commit/4ad94036b6e6f3e2cea0e878a94c0588f7f33aa0))
+* **authorization:** per-entity read helpers for documents and follow-up attachments ([#46](https://github.com/ipsec-dev/Article30/issues/46)) ([4ad9403](https://github.com/ipsec-dev/Article30/commit/4ad94036b6e6f3e2cea0e878a94c0588f7f33aa0))
+* **documents:** stream document and attachment downloads with ownership checks ([#46](https://github.com/ipsec-dev/Article30/issues/46)) ([4ad9403](https://github.com/ipsec-dev/Article30/commit/4ad94036b6e6f3e2cea0e878a94c0588f7f33aa0))
+* **frontend:** open documents via same-origin proxy URL directly ([#46](https://github.com/ipsec-dev/Article30/issues/46)) ([4ad9403](https://github.com/ipsec-dev/Article30/commit/4ad94036b6e6f3e2cea0e878a94c0588f7f33aa0))
+
+### Bug Fixes
+
+* **frontend:** force download via anchor download attribute instead of new tab ([#46](https://github.com/ipsec-dev/Article30/issues/46)) ([4ad9403](https://github.com/ipsec-dev/Article30/commit/4ad94036b6e6f3e2cea0e878a94c0588f7f33aa0))
+
 ## [1.0.2](https://github.com/ipsec-dev/Article30/compare/v1.0.1...v1.0.2) (2026-05-09)
 
 
