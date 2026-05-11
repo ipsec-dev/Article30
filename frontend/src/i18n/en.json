@@ -412,6 +412,7 @@
   "roleMatrix.capability.organization.edit": "Edit organization settings, RSS feeds, sync regulatory updates",
   "roleMatrix.capability.organization.notifications": "Configure notification email toggles",
   "roleMatrix.capability.screening.write": "Create or convert screenings",
+  "roleMatrix.capability.docs.read": "Download documents",
   "roleMatrix.capability.docs.write": "Upload or delete documents",
   "roleMatrix.capability.vendor.write": "Create or edit vendors and assessments",
   "roleMatrix.capability.vendor.delete": "Delete vendors",

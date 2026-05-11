@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { Readable } from 'node:stream';
 import { StorageService } from '../../src/modules/documents/storage.service';
 
-const { sendSpy, getSignedUrlSpy } = vi.hoisted(() => ({
+const { sendSpy } = vi.hoisted(() => ({
   sendSpy: vi.fn(),
-  getSignedUrlSpy: vi.fn().mockResolvedValue('https://signed.example.test/x'),
 }));
 
 vi.mock('@aws-sdk/client-s3', () => ({
@@ -30,10 +30,6 @@ vi.mock('@aws-sdk/client-s3', () => ({
     this.__cmd = 'Head';
     this.input = input;
   }),
-}));
-
-vi.mock('@aws-sdk/s3-request-presigner', () => ({
-  getSignedUrl: getSignedUrlSpy,
 }));
 
 const ORIG_ENV = { ...process.env };
@@ -122,11 +118,69 @@ describe('StorageService', () => {
       expect(cmd.__cmd).toBe('Delete');
     });
 
-    it('getPresignedUrl calls the presigner helper and returns the URL', async () => {
-      getSignedUrlSpy.mockClear();
-      const url = await service.getPresignedUrl('treatment/abc.pdf');
-      expect(url).toBe('https://signed.example.test/x');
-      expect(getSignedUrlSpy).toHaveBeenCalledTimes(1);
+    it('getObject returns body, headers, and 200 status when no Range is given', async () => {
+      const bytes = Buffer.from('hello-bytes');
+      sendSpy.mockResolvedValueOnce({
+        Body: Readable.from(bytes),
+        ContentType: 'application/pdf',
+        ContentLength: bytes.length,
+        ETag: '"abc"',
+      });
+
+      const result = await service.getObject('treatment/abc.pdf');
+
+      expect(sendSpy).toHaveBeenCalledTimes(1);
+      const cmd = sendSpy.mock.calls[0][0] as { __cmd: string; input: Record<string, unknown> };
+      expect(cmd.__cmd).toBe('Get');
+      expect(cmd.input.Key).toBe('treatment/abc.pdf');
+      expect(cmd.input.Range).toBeUndefined();
+      expect(result.statusCode).toBe(200);
+      expect(result.contentType).toBe('application/pdf');
+      expect(result.contentLength).toBe(bytes.length);
+      expect(result.contentRange).toBeUndefined();
+      expect(result.etag).toBe('"abc"');
+      expect(result.body).toBeInstanceOf(Readable);
+    });
+
+    it('getObject forwards the Range header and returns 206 + ContentRange', async () => {
+      sendSpy.mockResolvedValueOnce({
+        Body: Readable.from(Buffer.from('hello')),
+        ContentType: 'application/pdf',
+        ContentLength: 5,
+        ContentRange: 'bytes 0-4/100',
+      });
+
+      const result = await service.getObject('treatment/abc.pdf', 'bytes=0-4');
+
+      const cmd = sendSpy.mock.calls[0][0] as { input: Record<string, unknown> };
+      expect(cmd.input.Range).toBe('bytes=0-4');
+      expect(result.statusCode).toBe(206);
+      expect(result.contentRange).toBe('bytes 0-4/100');
+    });
+
+    it('getObject maps NoSuchKey to NotFoundException', async () => {
+      const { NotFoundException } = await import('@nestjs/common');
+      const err = new Error('not found');
+      (err as Error & { name: string }).name = 'NoSuchKey';
+      sendSpy.mockRejectedValueOnce(err);
+
+      await expect(service.getObject('missing/key')).rejects.toBeInstanceOf(NotFoundException);
+    });
+
+    it('getObject maps InvalidRange to HTTP 416', async () => {
+      const { HttpException, HttpStatus } = await import('@nestjs/common');
+      const err = new Error('bad range');
+      (err as Error & { name: string }).name = 'InvalidRange';
+      sendSpy.mockRejectedValueOnce(err);
+
+      let caught: unknown;
+      await service.getObject('k', 'bytes=999-999').catch(e => {
+        caught = e;
+      });
+      expect(caught).toBeInstanceOf(HttpException);
+      expect((caught as InstanceType<typeof HttpException>).getStatus()).toBe(
+        HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE,
+      );
     });
   });
 
@@ -135,7 +189,7 @@ describe('StorageService', () => {
       delete process.env.S3_ENDPOINT;
       await service.onModuleInit();
       await expect(service.delete('k')).rejects.toThrow(/Set S3_ENDPOINT/);
-      await expect(service.getPresignedUrl('k')).rejects.toThrow(/Set S3_ENDPOINT/);
+      await expect(service.getObject('k')).rejects.toThrow(/Set S3_ENDPOINT/);
     });
   });
 });

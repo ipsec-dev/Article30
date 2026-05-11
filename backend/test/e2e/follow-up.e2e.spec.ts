@@ -134,4 +134,75 @@ describe('follow-up.controllers (e2e)', () => {
       expect(res.status).toBe(403);
     });
   });
+
+  describe('GET /api/follow-up/attachments/:id/download', () => {
+    async function seedAttachment(
+      prisma: TestApp['prisma'],
+      entityType: 'VIOLATION' | 'DSR',
+      entityId: string,
+      uploadedBy: string,
+    ) {
+      return prisma.followUpAttachment.create({
+        data: {
+          entityType,
+          entityId,
+          filename: 'evidence.pdf',
+          mimeType: 'application/pdf',
+          sizeBytes: 13,
+          storageKey: `follow-up/${entityType.toLowerCase()}/${entityId}/k`,
+          sha256: 'a'.repeat(64),
+          previousSha256: null,
+          category: 'EVIDENCE',
+          uploadedBy,
+        },
+      });
+    }
+
+    it('streams the bytes for a DPO viewing a VIOLATION attachment', async () => {
+      const { user, password } = await seedUser(testApp.prisma, Role.DPO);
+      const v = await seedViolation(testApp.prisma, user.id);
+      const a = await seedAttachment(testApp.prisma, 'VIOLATION', v.id, user.id);
+      const { agent } = await loginAs(testApp.app, user.email, password);
+
+      const res = await agent.get(`/api/follow-up/attachments/${a.id}/download`).buffer(true);
+      expect(res.status).toBe(200);
+      expect(res.headers['content-type']).toContain('application/pdf');
+      expect(res.headers['content-disposition']).toContain('inline');
+    });
+
+    it('returns 404 for a soft-deleted attachment', async () => {
+      const { user, password } = await seedUser(testApp.prisma, Role.DPO);
+      const v = await seedViolation(testApp.prisma, user.id);
+      const a = await seedAttachment(testApp.prisma, 'VIOLATION', v.id, user.id);
+      await testApp.prisma.followUpAttachment.update({
+        where: { id: a.id },
+        data: {
+          deletedAt: new Date(),
+          storageKey: null,
+          deletedBy: user.id,
+          deletionReason: 'test',
+        },
+      });
+      const { agent } = await loginAs(testApp.app, user.email, password);
+
+      const res = await agent.get(`/api/follow-up/attachments/${a.id}/download`);
+      expect(res.status).toBe(404);
+    });
+
+    it('returns 404 for PROCESS_OWNER on a VIOLATION they do not own', async () => {
+      const { user: other } = await seedUser(testApp.prisma, Role.PROCESS_OWNER, {
+        email: 'po-other@x.test',
+      });
+      const v = await seedViolation(testApp.prisma, other.id);
+      const a = await seedAttachment(testApp.prisma, 'VIOLATION', v.id, other.id);
+
+      const { user: self, password } = await seedUser(testApp.prisma, Role.PROCESS_OWNER, {
+        email: 'po-self@x.test',
+      });
+      const { agent } = await loginAs(testApp.app, self.email, password);
+
+      const res = await agent.get(`/api/follow-up/attachments/${a.id}/download`);
+      expect(res.status).toBe(404);
+    });
+  });
 });

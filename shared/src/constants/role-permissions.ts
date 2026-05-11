@@ -3,6 +3,7 @@ import {
   ADMIN_ROLES,
   AUDIT_ROLES,
   DELETE_ROLES,
+  DOCUMENT_READ_ROLES,
   DSR_ROLES,
   EXPORT_ROLES,
   FOLLOW_UP_READ_ROLES,
@@ -189,6 +190,12 @@ export const ROLE_PERMISSION_MATRIX: readonly RoleCapability[] = [
       { method: 'POST', path: '/api/screenings' },
       { method: 'POST', path: '/api/screenings/:id/convert' },
     ],
+  },
+  {
+    id: 'docs.read',
+    labelKey: 'roleMatrix.capability.docs.read',
+    allowedRoles: DOCUMENT_READ_ROLES,
+    routes: [{ method: 'GET', path: '/api/documents/:id/download' }],
   },
   {
     id: 'docs.write',

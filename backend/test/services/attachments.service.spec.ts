@@ -14,7 +14,6 @@ function makeStorageStub(): StorageService {
   return {
     upload: vi.fn().mockResolvedValue(undefined),
     delete: vi.fn().mockResolvedValue(undefined),
-    getPresignedUrl: vi.fn().mockResolvedValue('https://test/url'),
   } as unknown as StorageService;
 }
 

@@ -51,7 +51,6 @@ describe('DocumentsService', () => {
           provide: StorageService,
           useValue: {
             upload: vi.fn().mockResolvedValue(undefined),
-            getPresignedUrl: vi.fn().mockResolvedValue('https://presigned-url.example.com/doc'),
             delete: vi.fn().mockResolvedValue(undefined),
           },
         },
@@ -172,6 +171,26 @@ describe('DocumentsService', () => {
       expect(docs.length).toBe(2);
       expect(docs[0].uploader).toBeDefined();
       expect(docs[0].linkedEntity).toBe('VIOLATION');
+    });
+  });
+
+  describe('findById()', () => {
+    it('returns the document', async () => {
+      const user = await seedUser();
+      const file = createMockFile();
+      const created = await service.upload(
+        file,
+        { linkedEntity: LinkedEntity.TREATMENT, linkedEntityId: 'treat-1' },
+        user.id,
+      );
+      const found = await service.findById(created.id);
+      expect(found.id).toBe(created.id);
+    });
+
+    it('throws NotFoundException for a missing id', async () => {
+      await expect(service.findById('00000000-0000-0000-0000-000000000000')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 

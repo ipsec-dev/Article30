@@ -1,13 +1,21 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  OnModuleInit,
+  NotFoundException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
+import { Readable } from 'node:stream';
 import {
   S3Client,
   PutObjectCommand,
   GetObjectCommand,
+  GetObjectCommandOutput,
   DeleteObjectCommand,
   CreateBucketCommand,
   HeadBucketCommand,
 } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 @Injectable()
 export class StorageService implements OnModuleInit {
@@ -70,10 +78,46 @@ export class StorageService implements OnModuleInit {
     );
   }
 
-  async getPresignedUrl(key: string): Promise<string> {
-    const command = new GetObjectCommand({ Bucket: this.bucket, Key: key });
-    const PRESIGNED_URL_EXPIRY_SECONDS = 900;
-    return getSignedUrl(this.ensureClient(), command, { expiresIn: PRESIGNED_URL_EXPIRY_SECONDS });
+  async getObject(
+    key: string,
+    range?: string,
+  ): Promise<{
+    body: Readable;
+    contentType: string;
+    contentLength: number;
+    contentRange?: string;
+    etag?: string;
+    statusCode: 200 | 206;
+  }> {
+    let response: GetObjectCommandOutput;
+    try {
+      response = await this.ensureClient().send(
+        new GetObjectCommand({ Bucket: this.bucket, Key: key, Range: range }),
+      );
+    } catch (err: unknown) {
+      const name = (err as { name?: string })?.name;
+      if (name === 'NoSuchKey' || name === 'NotFound') {
+        throw new NotFoundException('Object not found');
+      }
+      if (name === 'InvalidRange') {
+        throw new HttpException(
+          'Range Not Satisfiable',
+          HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE,
+        );
+      }
+      throw err;
+    }
+    if (!response.Body) {
+      throw new Error(`S3 GetObject returned no body for key: ${key}`);
+    }
+    return {
+      body: response.Body as Readable,
+      contentType: response.ContentType ?? 'application/octet-stream',
+      contentLength: response.ContentLength ?? 0,
+      contentRange: response.ContentRange,
+      etag: response.ETag ?? undefined,
+      statusCode: response.ContentRange ? 206 : 200,
+    };
   }
 
   async delete(key: string): Promise<void> {

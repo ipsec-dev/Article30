@@ -30,3 +30,12 @@ export const FOLLOW_UP_WRITE_ROLES = [
   Role.EDITOR,
   Role.PROCESS_OWNER,
 ] as const;
+
+/** Roles that can READ documents linked to treatments / violations / checklist items. */
+export const DOCUMENT_READ_ROLES = [
+  Role.ADMIN,
+  Role.DPO,
+  Role.EDITOR,
+  Role.PROCESS_OWNER,
+  Role.AUDITOR,
+] as const;

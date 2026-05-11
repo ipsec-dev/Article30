@@ -35,12 +35,15 @@ interface DocumentRowProps {
   doc: DocumentDto;
   t: (key: string) => string;
   canWrite: boolean;
-  onDownload: (docId: string) => void;
+  onDownload: (docId: string, filename: string) => void;
   onDelete: (docId: string) => void;
 }
 
 function DocumentRow({ doc, t, canWrite, onDownload, onDelete }: Readonly<DocumentRowProps>) {
-  const handleDownloadClick = useCallback(() => onDownload(doc.id), [doc.id, onDownload]);
+  const handleDownloadClick = useCallback(
+    () => onDownload(doc.id, doc.filename),
+    [doc.id, doc.filename, onDownload],
+  );
   const handleDeleteClick = useCallback(() => onDelete(doc.id), [doc.id, onDelete]);
 
   return (
@@ -161,13 +164,18 @@ export function DocumentList({ linkedEntity, linkedEntityId }: DocumentListProps
     }
   }
 
-  const handleDownload = useCallback(async (docId: string) => {
-    try {
-      const res = await api.get<{ url: string; filename: string }>(`/documents/${docId}/download`);
-      globalThis.open(res.url, '_blank');
-    } catch {
-      // error handled by api client
-    }
+  const handleDownload = useCallback((docId: string, filename: string) => {
+    // The backend serves files with Content-Disposition: inline so they preview
+    // when navigated to directly (e.g. <img src>). The Download button should
+    // actually download, so we use the HTML `download` attribute - browsers
+    // honour it for same-origin URLs and override the inline disposition.
+    const a = document.createElement('a');
+    a.href = `/api/documents/${docId}/download`;
+    a.download = filename;
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }, []);
 
   const handleDelete = useCallback(
