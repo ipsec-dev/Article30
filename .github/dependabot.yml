@@ -51,7 +51,7 @@ updates:
       # Re-evaluate when DefinitelyTyped ships @types/archiver@8.
       # Patch/minor v7 updates are still allowed for security fixes.
       - dependency-name: archiver
-        update-types: ["version-update:semver-major"]
+        update-types: ['version-update:semver-major']
     groups:
       production-deps:
         applies-to: version-updates
