@@ -38,6 +38,16 @@ updates:
       # ships only `redis` (node-redis), incompatible with the ioredis
       # client wired into the session store. See CHANGELOG.md 1.0.0 → Fixed.
       - dependency-name: connect-redis
+      # archiver majors pinned at 7.x. v8 ships pure ESM with a new
+      # named-export API (`new ZipArchive({...})` replaces the v7
+      # default factory), and `@types/archiver` only publishes up to
+      # v7.0.0 as of 2026-05-12. Adopting v8 today would require a
+      # hand-rolled type shim plus a migration of
+      # `backend/src/modules/compliance/audit-package.service.ts`.
+      # Re-evaluate when DefinitelyTyped ships @types/archiver@8.
+      # Patch/minor v7 updates are still allowed for security fixes.
+      - dependency-name: archiver
+        update-types: ["version-update:semver-major"]
     groups:
       production-deps:
         applies-to: version-updates
