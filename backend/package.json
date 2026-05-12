@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@article30/shared": "workspace:*",
-    "@aws-sdk/client-s3": "^3.1043.0",
+    "@aws-sdk/client-s3": "^3.1045.0",
     "@nestjs/common": "^11.1.19",
     "@nestjs/core": "^11.1.19",
     "@nestjs/platform-express": "^11.1.19",
@@ -66,7 +66,7 @@
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.19.0",
     "@types/multer": "^2.1.0",
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.6.2",
     "@types/nodemailer": "^8.0.0",
     "@types/pdfkit": "^0.17.6",
     "@types/pg": "^8.20.0",
