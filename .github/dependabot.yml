@@ -20,12 +20,16 @@ updates:
       - dependencies
       - npm
     commit-message:
-      # `prefix: chore` + `include: scope` produces clean
-      # `chore(deps): bump foo` for production deps and
-      # `chore(deps-dev): bump foo` for dev deps. Setting prefix to
-      # `chore(deps)` here would double up to `chore(deps)(deps):` —
-      # Dependabot appends its own ecosystem scope on top of the prefix.
-      prefix: chore
+      # Impact-weighted policy: production npm deps ship to users and
+      # need a release-please patch bump, so they get `fix`. Dev deps
+      # (vitest, eslint, prettier, etc.) do not ship and stay silent
+      # under `chore`. `include: scope` makes Dependabot append its
+      # own ecosystem scope, producing `fix(deps): bump foo` for
+      # production and `chore(deps-dev): bump bar` for dev. Setting
+      # prefix to `fix(deps)` here would double up to `fix(deps)(deps):`
+      # because Dependabot appends the ecosystem scope on top.
+      prefix: fix
+      prefix-development: chore
       include: scope
     cooldown:
       default-days: 3
@@ -84,7 +88,9 @@ updates:
       - dependencies
       - docker
     commit-message:
-      prefix: chore(docker)
+      # Docker base image bumps change the published artifact byte-for-byte,
+      # so they get `fix(docker)` to trigger a release-please patch bump.
+      prefix: fix(docker)
     cooldown:
       default-days: 3
     groups:
@@ -105,7 +111,9 @@ updates:
       - dependencies
       - docker
     commit-message:
-      prefix: chore(docker)
+      # Docker base image bumps change the published artifact byte-for-byte,
+      # so they get `fix(docker)` to trigger a release-please patch bump.
+      prefix: fix(docker)
     cooldown:
       default-days: 3
     groups:
