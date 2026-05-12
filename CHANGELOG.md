@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.1](https://github.com/ipsec-dev/Article30/compare/v1.1.0...v1.1.1) (2026-05-12)
+
+
+### Maintenance & Dependencies
+
+* **ci:** impact-weighted prefixes for dependabot commits ([#55](https://github.com/ipsec-dev/Article30/issues/55)) ([2874df7](https://github.com/ipsec-dev/Article30/commit/2874df7ec3d96acce52690a9c4925fa4417f0275))
+* **ci:** pin archiver at v7 until @types/archiver@8 ships ([#56](https://github.com/ipsec-dev/Article30/issues/56)) ([500f576](https://github.com/ipsec-dev/Article30/commit/500f5762bf4a98366b2bf67a910bfcb0198327d2))
+* **deps-dev:** bump @commitlint/cli from 20.5.3 to 21.0.0 ([#52](https://github.com/ipsec-dev/Article30/issues/52)) ([f9e8f1e](https://github.com/ipsec-dev/Article30/commit/f9e8f1e2ea16ee2ff85570c5bd5fee70acb23244))
+* **deps-dev:** bump @commitlint/config-conventional ([#51](https://github.com/ipsec-dev/Article30/issues/51)) ([c6bbebf](https://github.com/ipsec-dev/Article30/commit/c6bbebf46f8b2cc10b475d07918fe9a586ab77ac))
+* **deps-dev:** bump the dev-deps group with 6 updates ([#50](https://github.com/ipsec-dev/Article30/issues/50)) ([9d87038](https://github.com/ipsec-dev/Article30/commit/9d870385a8c32069098f601a292cc219bb09b921))
+* **deps:** bump next from 16.2.4 to 16.2.6 ([#48](https://github.com/ipsec-dev/Article30/issues/48)) ([7212161](https://github.com/ipsec-dev/Article30/commit/72121614c9b828ec04b01302b8797bb87c19b3d4))
+* **deps:** bump the production-deps group with 3 updates ([#49](https://github.com/ipsec-dev/Article30/issues/49)) ([e7d6678](https://github.com/ipsec-dev/Article30/commit/e7d667888308dc7646a31aa61fb5af10d3603b41))
+* extend lint-staged glob to cover yml and yaml ([#57](https://github.com/ipsec-dev/Article30/issues/57)) ([d118daf](https://github.com/ipsec-dev/Article30/commit/d118daf97bc934c28598c6259ef3d3dd24d3a95a))
+
 ## [1.1.0](https://github.com/ipsec-dev/Article30/compare/v1.0.2...v1.1.0) (2026-05-11)
 
 
