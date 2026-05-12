@@ -30,7 +30,7 @@
     "backend/src/**/*.ts": "backend/node_modules/.bin/eslint --config backend/eslint.config.mjs --fix",
     "frontend/src/**/*.{ts,tsx}": "frontend/node_modules/.bin/eslint --config frontend/eslint.config.mjs --fix",
     "shared/src/**/*.ts": "shared/node_modules/.bin/eslint --config shared/eslint.config.mjs --fix",
-    "**/*.{ts,tsx,js,mjs,json,md,css}": "prettier --write"
+    "**/*.{ts,tsx,js,mjs,json,md,css,yml,yaml}": "prettier --write"
   },
   "engines": {
     "node": ">=24"
