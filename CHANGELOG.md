@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.2](https://github.com/ipsec-dev/Article30/compare/v1.1.1...v1.1.2) (2026-05-19)
+
+
+### Bug Fixes
+
+* **deps:** bump brace-expansion from 1.1.14 to 5.0.6 ([#58](https://github.com/ipsec-dev/Article30/issues/58)) ([e7afcf1](https://github.com/ipsec-dev/Article30/commit/e7afcf1ef985138802a2193537bbd85852cb6637))
+* **deps:** bump sanitize-html from 2.17.3 to 2.17.4 ([#59](https://github.com/ipsec-dev/Article30/issues/59)) ([2f2dcd7](https://github.com/ipsec-dev/Article30/commit/2f2dcd71a77c96d899f51ca489bdd685e2abae6d))
+
+
+### Maintenance & Dependencies
+
+* **ci:** bump reproducible-containers/buildkit-cache-dance ([#60](https://github.com/ipsec-dev/Article30/issues/60)) ([6533d47](https://github.com/ipsec-dev/Article30/commit/6533d47f8f8242330ec5af4a5ff67a68f31ad9fb))
+
 ## [1.1.1](https://github.com/ipsec-dev/Article30/compare/v1.1.0...v1.1.1) (2026-05-12)
 
 
