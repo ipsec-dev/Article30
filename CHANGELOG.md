@@ -5,9 +5,8 @@
 
 ### Bug Fixes
 
-* **deps:** bump brace-expansion from 1.1.14 to 5.0.6 ([#58](https://github.com/ipsec-dev/Article30/issues/58)) ([e7afcf1](https://github.com/ipsec-dev/Article30/commit/e7afcf1ef985138802a2193537bbd85852cb6637))
 * **deps:** bump sanitize-html from 2.17.3 to 2.17.4 ([#59](https://github.com/ipsec-dev/Article30/issues/59)) ([2f2dcd7](https://github.com/ipsec-dev/Article30/commit/2f2dcd71a77c96d899f51ca489bdd685e2abae6d))
-
+* **deps:** bump brace-expansion from 1.1.14 to 5.0.6 ([#58](https://github.com/ipsec-dev/Article30/issues/58)) ([e7afcf1](https://github.com/ipsec-dev/Article30/commit/e7afcf1ef985138802a2193537bbd85852cb6637))
 
 ### Maintenance & Dependencies
 
