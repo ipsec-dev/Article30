@@ -19,12 +19,12 @@
     "prepare": "command -v husky >/dev/null 2>&1 && husky || true"
   },
   "devDependencies": {
-    "@commitlint/cli": "^21.0.0",
-    "@commitlint/config-conventional": "^21.0.0",
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
     "husky": "^9.1.7",
-    "lint-staged": "^17.0.3",
+    "lint-staged": "^17.0.4",
     "prettier": "^3.8.3",
-    "vite": "^8.0.11"
+    "vite": "^8.0.13"
   },
   "lint-staged": {
     "backend/src/**/*.ts": "backend/node_modules/.bin/eslint --config backend/eslint.config.mjs --fix",
