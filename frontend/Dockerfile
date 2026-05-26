@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.7
 
 # --- deps: install workspace deps once, build shared package ---
-FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS deps
+FROM node:26-alpine@sha256:7c6af15abe4e3de859690e7db171d0d711bf37d27528eddfe625b2fe89e097f8 AS deps
 RUN corepack enable
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -30,7 +30,7 @@ ENV NEXT_OUTPUT=standalone
 RUN pnpm --filter @article30/frontend build
 
 # --- prod: runtime image ---
-FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS prod
+FROM node:26-alpine@sha256:7c6af15abe4e3de859690e7db171d0d711bf37d27528eddfe625b2fe89e097f8 AS prod
 WORKDIR /app
 COPY --chown=node:node --from=build /app/frontend/.next/standalone ./
 COPY --chown=node:node --from=build /app/frontend/.next/static ./frontend/.next/static
