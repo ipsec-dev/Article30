@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.7
 
 # --- deps: install workspace deps once, build shared package ---
-FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS deps
+FROM node:26-alpine@sha256:7c6af15abe4e3de859690e7db171d0d711bf37d27528eddfe625b2fe89e097f8 AS deps
 RUN corepack enable
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -37,7 +37,7 @@ RUN pnpm --filter @article30/backend build
 # packages. --ignore-scripts skips the root `prepare` (which runs husky, a
 # devDep). `pnpm rebuild` then runs install scripts for the prod packages
 # whitelisted in pnpm.onlyBuiltDependencies (bcrypt, prisma, etc.).
-FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS prod-deps
+FROM node:26-alpine@sha256:7c6af15abe4e3de859690e7db171d0d711bf37d27528eddfe625b2fe89e097f8 AS prod-deps
 RUN corepack enable
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -54,7 +54,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm --filter @article30/backend exec prisma generate
 
 # --- prod: runtime image ---
-FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS prod
+FROM node:26-alpine@sha256:7c6af15abe4e3de859690e7db171d0d711bf37d27528eddfe625b2fe89e097f8 AS prod
 WORKDIR /app
 COPY --chown=node:node --from=prod-deps /app/node_modules ./node_modules
 COPY --chown=node:node --from=prod-deps /app/backend/node_modules ./backend/node_modules
