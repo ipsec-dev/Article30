@@ -5,8 +5,7 @@ const CHARACTER_CLASSES: ReadonlyArray<RegExp> = [/[a-z]/, /[A-Z]/, /\d/, /[!-/:
 type PolicyFailureReason = 'not_a_string' | 'length' | 'complexity';
 
 export type PolicyResult =
-  | { ok: true }
-  | { ok: false; reason: PolicyFailureReason; message: string };
+  { ok: true } | { ok: false; reason: PolicyFailureReason; message: string };
 
 export { PASSWORD_POLICY };
 
