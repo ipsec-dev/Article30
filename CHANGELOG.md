@@ -5,25 +5,25 @@
 
 ### Bug Fixes
 
-* **deps:** bump the production-deps group across 1 directory with 14 updates ([#78](https://github.com/ipsec-dev/Article30/issues/78)) ([af4ae91](https://github.com/ipsec-dev/Article30/commit/af4ae91c2c153272f62618f45658f9f9773671fe))
 * **deps:** bump the production-deps group with 7 updates ([#68](https://github.com/ipsec-dev/Article30/issues/68)) ([2f47dd7](https://github.com/ipsec-dev/Article30/commit/2f47dd7b3e04349628985064624306d873dd6af1))
 * **deps:** bump the production-deps group with 9 updates ([#71](https://github.com/ipsec-dev/Article30/issues/71)) ([68a99d4](https://github.com/ipsec-dev/Article30/commit/68a99d424df5216a57389299649e012a911a0e07))
+* **deps:** bump the production-deps group across 1 directory with 14 updates ([#78](https://github.com/ipsec-dev/Article30/issues/78)) ([af4ae91](https://github.com/ipsec-dev/Article30/commit/af4ae91c2c153272f62618f45658f9f9773671fe))
 * **deps:** clear hono, multer and nodemailer high-severity advisories ([#86](https://github.com/ipsec-dev/Article30/issues/86)) ([9eff763](https://github.com/ipsec-dev/Article30/commit/9eff763add69f884e89d17bacb81de8b88cbd83a))
-
 
 ### Maintenance & Dependencies
 
-* **ci:** bump actions/cache from 5 to 6 ([#82](https://github.com/ipsec-dev/Article30/issues/82)) ([0ee5eba](https://github.com/ipsec-dev/Article30/commit/0ee5eba3719ea71fab0eb5baa8de03e2ce8e6ce1))
-* **ci:** bump actions/checkout from 6.0.3 to 7.0.0 ([#81](https://github.com/ipsec-dev/Article30/issues/81)) ([f6b3a92](https://github.com/ipsec-dev/Article30/commit/f6b3a928515363deae20646e90100dbada151063))
-* **ci:** bump actions/checkout in the actions group ([#73](https://github.com/ipsec-dev/Article30/issues/73)) ([33d9299](https://github.com/ipsec-dev/Article30/commit/33d9299aa2873c48f107bea3b0886f2f8a300001))
-* **ci:** bump codecov/codecov-action from 6.0.1 to 7.0.0 ([#76](https://github.com/ipsec-dev/Article30/issues/76)) ([ee8651e](https://github.com/ipsec-dev/Article30/commit/ee8651ed6430541802aa5ac94dc4c877adc54d6a))
-* **ci:** bump the actions group with 2 updates ([#70](https://github.com/ipsec-dev/Article30/issues/70)) ([ba9d09a](https://github.com/ipsec-dev/Article30/commit/ba9d09a0795f1aabf6a5fb88657bff43bcbf62ea))
-* **ci:** bump the actions group with 5 updates ([#67](https://github.com/ipsec-dev/Article30/issues/67)) ([b029aee](https://github.com/ipsec-dev/Article30/commit/b029aee6ddccabdd06f3dce0baaaa2617e4d71d6))
 * **deps-dev:** bump postcss from 8.5.14 to 8.5.15 ([#64](https://github.com/ipsec-dev/Article30/issues/64)) ([569e45d](https://github.com/ipsec-dev/Article30/commit/569e45d598c7c1a0896415f3fe83624a6fb0ce22))
-* **deps-dev:** bump postcss from 8.5.15 to 8.5.16 ([#88](https://github.com/ipsec-dev/Article30/issues/88)) ([7bf508d](https://github.com/ipsec-dev/Article30/commit/7bf508d6ffe53de9bc174dad06656ed27c3b76d7))
-* **deps-dev:** bump the dev-deps group across 1 directory with 12 updates ([#77](https://github.com/ipsec-dev/Article30/issues/77)) ([7b27a26](https://github.com/ipsec-dev/Article30/commit/7b27a260486db95234231a4c4add4316f67c86b8))
-* **deps-dev:** bump the dev-deps group with 5 updates ([#72](https://github.com/ipsec-dev/Article30/issues/72)) ([2d03782](https://github.com/ipsec-dev/Article30/commit/2d03782f4bd5670305a054f50524b0f37c605246))
+* **ci:** bump the actions group with 5 updates ([#67](https://github.com/ipsec-dev/Article30/issues/67)) ([b029aee](https://github.com/ipsec-dev/Article30/commit/b029aee6ddccabdd06f3dce0baaaa2617e4d71d6))
 * **deps-dev:** bump the dev-deps group with 7 updates ([#69](https://github.com/ipsec-dev/Article30/issues/69)) ([3a52fd4](https://github.com/ipsec-dev/Article30/commit/3a52fd47b656af933f19e68d7ad14772656ce4f6))
+* **deps-dev:** sync lockfile for @nestjs/testing bump ([#69](https://github.com/ipsec-dev/Article30/issues/69)) ([3a52fd4](https://github.com/ipsec-dev/Article30/commit/3a52fd47b656af933f19e68d7ad14772656ce4f6))
+* **ci:** bump the actions group with 2 updates ([#70](https://github.com/ipsec-dev/Article30/issues/70)) ([ba9d09a](https://github.com/ipsec-dev/Article30/commit/ba9d09a0795f1aabf6a5fb88657bff43bcbf62ea))
+* **deps-dev:** bump the dev-deps group with 5 updates ([#72](https://github.com/ipsec-dev/Article30/issues/72)) ([2d03782](https://github.com/ipsec-dev/Article30/commit/2d03782f4bd5670305a054f50524b0f37c605246))
+* **ci:** bump actions/checkout in the actions group ([#73](https://github.com/ipsec-dev/Article30/issues/73)) ([33d9299](https://github.com/ipsec-dev/Article30/commit/33d9299aa2873c48f107bea3b0886f2f8a300001))
+* **deps-dev:** bump the dev-deps group across 1 directory with 12 updates ([#77](https://github.com/ipsec-dev/Article30/issues/77)) ([7b27a26](https://github.com/ipsec-dev/Article30/commit/7b27a260486db95234231a4c4add4316f67c86b8))
+* **deps-dev:** bump postcss from 8.5.15 to 8.5.16 ([#88](https://github.com/ipsec-dev/Article30/issues/88)) ([7bf508d](https://github.com/ipsec-dev/Article30/commit/7bf508d6ffe53de9bc174dad06656ed27c3b76d7))
+* **ci:** bump codecov/codecov-action from 6.0.1 to 7.0.0 ([#76](https://github.com/ipsec-dev/Article30/issues/76)) ([ee8651e](https://github.com/ipsec-dev/Article30/commit/ee8651ed6430541802aa5ac94dc4c877adc54d6a))
+* **ci:** bump actions/checkout from 6.0.3 to 7.0.0 ([#81](https://github.com/ipsec-dev/Article30/issues/81)) ([f6b3a92](https://github.com/ipsec-dev/Article30/commit/f6b3a928515363deae20646e90100dbada151063))
+* **ci:** bump actions/cache from 5 to 6 ([#82](https://github.com/ipsec-dev/Article30/issues/82)) ([0ee5eba](https://github.com/ipsec-dev/Article30/commit/0ee5eba3719ea71fab0eb5baa8de03e2ce8e6ce1))
 
 ## [1.1.2](https://github.com/ipsec-dev/Article30/compare/v1.1.1...v1.1.2) (2026-05-19)
 
