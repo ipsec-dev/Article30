@@ -68,8 +68,7 @@ export class AuditLogInterceptor implements NestInterceptor {
 
       try {
         const model = (this.prisma as unknown as Record<string, unknown>)[modelName] as
-          | { findUnique?: (args: unknown) => Promise<unknown> }
-          | undefined;
+          { findUnique?: (args: unknown) => Promise<unknown> } | undefined;
         if (!model?.findUnique) {
           return undefined;
         }
