@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Sweep for fix/feat commits that reached main via a GITHUB_TOKEN merge (e.g.
+  # Dependabot auto-merge), which don't fire the push trigger. Keeps the app
+  # token in this trusted context instead of the Dependabot PR context.
+  schedule:
+    - cron: '37 */6 * * *'
 
 # App-token auth (not GITHUB_TOKEN) so the release PR triggers CI - GITHUB_TOKEN events don't fire downstream workflows.
 permissions: {}
