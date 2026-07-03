@@ -52,12 +52,7 @@ export interface DsrPause {
 }
 
 export type TreatmentProcessingActionTaken =
-  | 'NONE'
-  | 'ACCESS_EXPORT'
-  | 'RECTIFIED'
-  | 'DELETED'
-  | 'RESTRICTED'
-  | 'NOT_APPLICABLE';
+  'NONE' | 'ACCESS_EXPORT' | 'RECTIFIED' | 'DELETED' | 'RESTRICTED' | 'NOT_APPLICABLE';
 
 export type VendorPropagationStatus = 'NOT_REQUIRED' | 'PENDING' | 'PROPAGATED' | 'REFUSED';
 

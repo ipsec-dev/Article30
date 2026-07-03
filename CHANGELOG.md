@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/ipsec-dev/Article30/compare/v1.1.3...v1.1.4) (2026-07-03)
+
+
+### Bug Fixes
+
+* **deps:** bump the production-deps group across 1 directory with 9 updates ([#89](https://github.com/ipsec-dev/Article30/issues/89)) ([639eb8e](https://github.com/ipsec-dev/Article30/commit/639eb8ef475c50f8f23f976459554a9acdd7bad5))
+
 ## [1.1.3](https://github.com/ipsec-dev/Article30/compare/v1.1.2...v1.1.3) (2026-07-03)
 
 
