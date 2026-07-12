@@ -67,6 +67,7 @@ export function TweaksPanel({ tweaks, onChange }: TweaksPanelProps) {
           </div>
         </div>
         <label className="relative inline-flex cursor-pointer items-center">
+          <span className="sr-only">Mode sombre</span>
           <input
             type="checkbox"
             checked={tweaks.dark}

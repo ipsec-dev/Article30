@@ -25,10 +25,20 @@ export function LanguageCard() {
           {t('settings.language.description')}
         </p>
         <div className="flex gap-2">
-          <button onClick={handleSetFr} className={baseClass} style={styleFor(locale === 'fr')}>
+          <button
+            type="button"
+            onClick={handleSetFr}
+            className={baseClass}
+            style={styleFor(locale === 'fr')}
+          >
             Français
           </button>
-          <button onClick={handleSetEn} className={baseClass} style={styleFor(locale === 'en')}>
+          <button
+            type="button"
+            onClick={handleSetEn}
+            className={baseClass}
+            style={styleFor(locale === 'en')}
+          >
             English
           </button>
         </div>

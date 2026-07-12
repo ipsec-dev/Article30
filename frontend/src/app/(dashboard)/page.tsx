@@ -103,6 +103,7 @@ function mapAlerts(alerts: AlertsResult | null) {
   if (!alerts) return [];
   const mapped = alerts.items.map(item => ({
     type: item.type,
+    entityId: typeof item.entityId === 'string' ? item.entityId : undefined,
     severity: deriveSeverity(item),
     title: typeof item.title === 'string' ? item.title : undefined,
     subtitle: typeof item.subtitle === 'string' ? item.subtitle : undefined,

@@ -50,6 +50,7 @@ function FeedRow({ feed, t, onToggle, onDelete }: FeedRowProps) {
       </td>
       <td className="py-2 pr-4">
         <button
+          type="button"
           onClick={handleToggle}
           className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${pillClass}`}
         >
@@ -61,6 +62,7 @@ function FeedRow({ feed, t, onToggle, onDelete }: FeedRowProps) {
       </td>
       <td className="py-2">
         <button
+          type="button"
           onClick={handleDelete}
           className="hover:text-red-500 transition-colors"
           style={{ color: 'var(--ink-3)' }}

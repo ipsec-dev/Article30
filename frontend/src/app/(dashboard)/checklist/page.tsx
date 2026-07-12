@@ -155,6 +155,15 @@ interface ScreeningRowProps {
 
 function ScreeningRow({ screening, onNavigate, verdictLabel }: Readonly<ScreeningRowProps>) {
   const handleClick = useCallback(() => onNavigate(screening.id), [onNavigate, screening.id]);
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLTableRowElement>) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleClick();
+      }
+    },
+    [handleClick],
+  );
   let treatmentName = '—';
   if (screening.treatment) {
     treatmentName = screening.treatment.name;
@@ -170,6 +179,9 @@ function ScreeningRow({ screening, onNavigate, verdictLabel }: Readonly<Screenin
         (e.currentTarget as HTMLTableRowElement).style.background = '';
       }}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
     >
       <td className="px-4 py-3 font-medium" style={{ color: 'var(--ink)' }}>
         {screening.title}

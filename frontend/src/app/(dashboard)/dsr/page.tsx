@@ -260,6 +260,7 @@ function DsrFilterBar({
           background: 'var(--surface)',
           color: 'var(--ink)',
         }}
+        aria-label={t('common.status')}
         value={filterStatus}
         onChange={onFilterStatusChange}
       >
@@ -278,6 +279,7 @@ function DsrFilterBar({
           background: 'var(--surface)',
           color: 'var(--ink)',
         }}
+        aria-label={t('common.type')}
         value={filterType}
         onChange={onFilterTypeChange}
       >

@@ -7,6 +7,7 @@ type AlertSeverity = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
 
 interface AttentionAlert {
   type: string;
+  entityId?: string;
   severity?: AlertSeverity;
   title?: string;
   subtitle?: string;
@@ -66,7 +67,7 @@ export function AttentionBand({ alerts, total }: AttentionBandProps) {
           const kind = SEVERITY_KIND[severityKey(alert)];
           return (
             <li
-              key={`${alert.type}-${i}`}
+              key={`${alert.type}-${alert.entityId ?? ''}`}
               className="dense-row flex items-center gap-4 px-5"
               style={{ borderTop: i ? '1px solid var(--a30-border)' : 'none' }}
             >
