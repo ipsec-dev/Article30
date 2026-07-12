@@ -16,6 +16,6 @@
   "rules": {
     "react-doctor/exhaustive-deps": "off",
     "react-doctor/control-has-associated-label": "off",
-    "react-doctor/label-has-associated-control": "off"
-  }
+    "react-doctor/label-has-associated-control": "off",
+  },
 }
