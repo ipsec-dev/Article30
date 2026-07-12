@@ -113,9 +113,11 @@ function RecipientRow({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <Label className="text-xs">Type</Label>
+          <Label htmlFor={`recipient-type-${index}`} className="text-xs">
+            Type
+          </Label>
           <Select value={recipient.type} onValueChange={handleTypeChange}>
-            <SelectTrigger className="mt-1 w-full">
+            <SelectTrigger id={`recipient-type-${index}`} className="mt-1 w-full">
               <SelectValue placeholder={typePlaceholder} />
             </SelectTrigger>
             <SelectContent>
@@ -128,8 +130,11 @@ function RecipientRow({
           </Select>
         </div>
         <div>
-          <Label className="text-xs">{precisionLabel}</Label>
+          <Label htmlFor={`recipient-precision-${index}`} className="text-xs">
+            {precisionLabel}
+          </Label>
           <Input
+            id={`recipient-precision-${index}`}
             value={recipient.precision || ''}
             onChange={handlePrecisionChange}
             placeholder={precisionPlaceholder}
