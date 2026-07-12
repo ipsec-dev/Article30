@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.7](https://github.com/ipsec-dev/Article30/compare/v1.1.6...v1.1.7) (2026-07-12)
+
+
+### Bug Fixes
+
+* **frontend:** resolve React Doctor findings (correctness, a11y, perf) ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+
 ## [1.1.6](https://github.com/ipsec-dev/Article30/compare/v1.1.5...v1.1.6) (2026-07-12)
 
 
