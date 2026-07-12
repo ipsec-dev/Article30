@@ -7,13 +7,12 @@
 
 * **deps:** bump the production-deps group with 3 updates ([#96](https://github.com/ipsec-dev/Article30/issues/96)) ([fd7b5b9](https://github.com/ipsec-dev/Article30/commit/fd7b5b9246ddd8585886110c79509e1a451334f6))
 
-
 ### Maintenance & Dependencies
 
 * **ci:** bump the actions group with 6 updates ([#95](https://github.com/ipsec-dev/Article30/issues/95)) ([0c5d691](https://github.com/ipsec-dev/Article30/commit/0c5d691dc60ad5aaad05e06a377d6062b33b5be9))
+* **deps-dev:** bump the dev-deps group with 3 updates ([#97](https://github.com/ipsec-dev/Article30/issues/97)) ([906ec14](https://github.com/ipsec-dev/Article30/commit/906ec148a6f7b3f793d5ccca20d514ed7d4b99f1))
 * **deps-dev:** bump @types/node from 25.9.3 to 26.1.1 ([#98](https://github.com/ipsec-dev/Article30/issues/98)) ([3ac6688](https://github.com/ipsec-dev/Article30/commit/3ac6688a224e586dcb9894d2eaba773415ce8b4d))
 * **deps-dev:** bump the dev-deps group across 1 directory with 7 updates ([#101](https://github.com/ipsec-dev/Article30/issues/101)) ([3ffbc11](https://github.com/ipsec-dev/Article30/commit/3ffbc1149a26cfc1b66a687985f4d0f43da76580))
-* **deps-dev:** bump the dev-deps group with 3 updates ([#97](https://github.com/ipsec-dev/Article30/issues/97)) ([906ec14](https://github.com/ipsec-dev/Article30/commit/906ec148a6f7b3f793d5ccca20d514ed7d4b99f1))
 
 ## [1.1.5](https://github.com/ipsec-dev/Article30/compare/v1.1.4...v1.1.5) (2026-07-03)
 
