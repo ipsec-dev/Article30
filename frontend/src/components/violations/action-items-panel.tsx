@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useI18n } from '@/i18n/context';
+import { formatDate } from '@/lib/dates';
 
 const STATUSES = ['PENDING', 'IN_PROGRESS', 'DONE', 'CANCELLED'] as const;
 
@@ -185,7 +186,7 @@ function ActionItemRow({
       )}
       <p className="mt-1 text-xs" style={{ color: 'var(--ink-3)' }}>
         {t('violation.actionItems.ownerDisplay')}: {item.ownerId.slice(0, 8)}… ·{' '}
-        {t('violation.actionItems.deadlineDisplay')}: {new Date(item.deadline).toLocaleDateString()}
+        {t('violation.actionItems.deadlineDisplay')}: {formatDate(item.deadline)}
       </p>
     </li>
   );

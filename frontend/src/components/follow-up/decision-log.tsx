@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useDecisions } from '@/lib/follow-up';
 import { useI18n } from '@/i18n/context';
 import type { EntityType } from '@/lib/follow-up/types';
+import { formatDateTime } from '@/lib/dates';
 
 interface DecisionLogProps {
   entityType: EntityType;
@@ -55,7 +56,7 @@ export function DecisionLog({ entityType, entityId }: DecisionLogProps) {
             >
               <div className="flex items-baseline justify-between gap-2">
                 <span className="font-medium">{d.kind}</span>
-                <span className="text-xs">{new Date(d.decidedAt).toLocaleString()}</span>
+                <span className="text-xs">{formatDateTime(d.decidedAt)}</span>
               </div>
               <p className="mt-1 whitespace-pre-wrap">{d.rationale}</p>
             </button>

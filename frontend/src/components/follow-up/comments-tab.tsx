@@ -5,6 +5,7 @@ import { useComments } from '@/lib/follow-up';
 import { useI18n } from '@/i18n/context';
 import type { EntityType } from '@/lib/follow-up';
 import { Button } from '@/components/ui/button';
+import { formatDateTime } from '@/lib/dates';
 
 export function CommentsTab({
   entityType,
@@ -46,7 +47,7 @@ export function CommentsTab({
                 {c.authorId}
               </span>
               <span className="text-xs" style={{ color: 'var(--ink-2)' }}>
-                {new Date(c.createdAt).toLocaleString()}
+                {formatDateTime(c.createdAt)}
               </span>
             </div>
             <p className="mt-1 whitespace-pre-wrap">{c.body}</p>

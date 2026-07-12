@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useI18n } from '@/i18n/context';
+import { formatDateTime } from '@/lib/dates';
 
 interface PausesPanelProps {
   dsrId: string;
@@ -22,7 +23,7 @@ const REASON_LABELS: Record<DsrPauseReason, string> = {
 };
 
 function formatDate(iso: string): string {
-  return new Date(iso).toLocaleString();
+  return formatDateTime(iso);
 }
 
 export function PausesPanel({ dsrId }: PausesPanelProps) {

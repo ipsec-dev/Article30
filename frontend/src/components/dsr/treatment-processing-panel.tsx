@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useI18n } from '@/i18n/context';
+import { formatDateTime } from '@/lib/dates';
 import type { PaginatedResponse, TreatmentDto } from '@article30/shared';
 
 interface TreatmentProcessingPanelProps {
@@ -41,7 +42,7 @@ function truncate(text: string | null, maxLen = 80): string {
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
-  return new Date(iso).toLocaleString();
+  return formatDateTime(iso);
 }
 
 interface EditRowFormProps {

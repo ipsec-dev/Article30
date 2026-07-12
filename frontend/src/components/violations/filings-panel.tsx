@@ -2,6 +2,7 @@
 
 import { useFilings } from '@/lib/violations';
 import { useI18n } from '@/i18n/context';
+import { formatDateTime } from '@/lib/dates';
 
 export function FilingsPanel({ violationId }: { violationId: string }) {
   const { t } = useI18n();
@@ -39,7 +40,7 @@ export function FilingsPanel({ violationId }: { violationId: string }) {
               style={{ border: '1px solid var(--a30-border)' }}
             >
               <span className="font-medium">{f.phase}</span> · {f.channel} ·{' '}
-              <span style={{ color: 'var(--ink-3)' }}>{new Date(f.filedAt).toLocaleString()}</span>
+              <span style={{ color: 'var(--ink-3)' }}>{formatDateTime(f.filedAt)}</span>
               {f.referenceNumber && (
                 <span
                   className="ml-2 rounded px-2 py-0.5 text-xs"
@@ -73,9 +74,7 @@ export function FilingsPanel({ violationId }: { violationId: string }) {
               style={{ border: '1px solid var(--a30-border)' }}
             >
               <span className="font-medium">{n.method}</span> ·{' '}
-              <span style={{ color: 'var(--ink-3)' }}>
-                {new Date(n.notifiedAt).toLocaleString()}
-              </span>
+              <span style={{ color: 'var(--ink-3)' }}>{formatDateTime(n.notifiedAt)}</span>
               <p className="mt-1 text-xs" style={{ color: 'var(--ink-2)' }}>
                 {n.recipientScope}
               </p>

@@ -3,6 +3,7 @@
 import { useTimeline } from '@/lib/follow-up';
 import { useI18n } from '@/i18n/context';
 import type { EntityType } from '@/lib/follow-up';
+import { formatDateTime } from '@/lib/dates';
 
 export function TimelineTab({
   entityType,
@@ -43,7 +44,7 @@ export function TimelineTab({
             {e.kind}
           </span>
           <span className="ml-2" style={{ color: 'var(--ink-2)' }}>
-            {new Date(e.performedAt).toLocaleString()}
+            {formatDateTime(e.performedAt)}
           </span>
         </li>
       ))}
