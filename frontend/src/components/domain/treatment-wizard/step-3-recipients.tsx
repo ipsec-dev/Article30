@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useFieldArray } from 'react-hook-form';
 import { useI18n } from '@/i18n/context';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -113,9 +113,11 @@ function RecipientRow({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <Label className="text-xs">Type</Label>
+          <Label htmlFor={`recipient-type-${index}`} className="text-xs">
+            Type
+          </Label>
           <Select value={recipient.type} onValueChange={handleTypeChange}>
-            <SelectTrigger className="mt-1 w-full">
+            <SelectTrigger id={`recipient-type-${index}`} className="mt-1 w-full">
               <SelectValue placeholder={typePlaceholder} />
             </SelectTrigger>
             <SelectContent>
@@ -128,8 +130,11 @@ function RecipientRow({
           </Select>
         </div>
         <div>
-          <Label className="text-xs">{precisionLabel}</Label>
+          <Label htmlFor={`recipient-precision-${index}`} className="text-xs">
+            {precisionLabel}
+          </Label>
           <Input
+            id={`recipient-precision-${index}`}
             value={recipient.precision || ''}
             onChange={handlePrecisionChange}
             placeholder={precisionPlaceholder}
@@ -327,57 +332,63 @@ function getStep3Labels(isFr: boolean): Step3Labels {
 
 export function Step3Recipients() {
   const { t, locale } = useI18n();
-  const { setValue, watch } = useFormContext<TreatmentWizardFormData>();
+  const { control, setValue, watch } = useFormContext<TreatmentWizardFormData>();
 
   const watchedRecipients = watch('recipients');
   const watchedTransfers = watch('transfers');
   const recipients = useMemo(() => watchedRecipients || [], [watchedRecipients]);
   const transfers = useMemo(() => watchedTransfers || [], [watchedTransfers]);
 
+  // useFieldArray gives each row a stable `id` that survives removal/reorder,
+  // so React keeps per-row state attached to the right row. An array-index key
+  // would reattach one row's state to the wrong data after a middle row is
+  // removed. Edits go through field-path setValue (not the array-replacing
+  // setValue) so the ids — and text-input focus — are preserved.
+  const {
+    fields: recipientFields,
+    append: appendRecipient,
+    remove: removeRecipientAt,
+  } = useFieldArray({ control, name: 'recipients' });
+  const {
+    fields: transferFields,
+    append: appendTransfer,
+    remove: removeTransferAt,
+  } = useFieldArray({ control, name: 'transfers' });
+
   const addRecipient = useCallback(() => {
-    setValue('recipients', [...recipients, createEmptyRecipient()]);
-  }, [recipients, setValue]);
+    appendRecipient(createEmptyRecipient());
+  }, [appendRecipient]);
 
   const removeRecipient = useCallback(
     (index: number) => {
-      setValue(
-        'recipients',
-        recipients.filter((_, i) => i !== index),
-      );
+      removeRecipientAt(index);
     },
-    [recipients, setValue],
+    [removeRecipientAt],
   );
 
   const updateRecipient = useCallback(
     (index: number, field: RecipientField, value: string) => {
-      const newRecipients = [...recipients];
-      newRecipients[index] = { ...newRecipients[index], [field]: value };
-      setValue('recipients', newRecipients);
+      setValue(`recipients.${index}.${field}`, value, { shouldDirty: true });
     },
-    [recipients, setValue],
+    [setValue],
   );
 
   const addTransfer = useCallback(() => {
-    setValue('transfers', [...transfers, createEmptyTransfer()]);
-  }, [transfers, setValue]);
+    appendTransfer(createEmptyTransfer());
+  }, [appendTransfer]);
 
   const removeTransfer = useCallback(
     (index: number) => {
-      setValue(
-        'transfers',
-        transfers.filter((_, i) => i !== index),
-      );
+      removeTransferAt(index);
     },
-    [transfers, setValue],
+    [removeTransferAt],
   );
 
   const updateTransfer = useCallback(
     (index: number, field: TransferField, value: string) => {
-      const newTransfers = [...transfers];
-      newTransfers[index] = { ...newTransfers[index], [field]: value };
-      setValue('transfers', newTransfers);
+      setValue(`transfers.${index}.${field}`, value, { shouldDirty: true });
     },
-    [transfers, setValue],
+    [setValue],
   );
 
   const isFr = locale === 'fr';
@@ -414,11 +425,11 @@ export function Step3Recipients() {
         )}
         {recipients.length > 0 && (
           <div className="space-y-3">
-            {recipients.map((recipient, index) => (
+            {recipientFields.map((field, index) => (
               <RecipientRow
-                key={`recipient-${index}`} // NOSONAR: rows are edited in-place by index, never reordered
+                key={field.id}
                 index={index}
-                recipient={recipient}
+                recipient={recipients[index]}
                 locale={locale}
                 onUpdate={updateRecipient}
                 onRemove={removeRecipient}
@@ -450,11 +461,11 @@ export function Step3Recipients() {
         )}
         {transfers.length > 0 && (
           <div className="space-y-4">
-            {transfers.map((transfer, index) => (
+            {transferFields.map((field, index) => (
               <TransferRow
-                key={`transfer-${index}`} // NOSONAR: rows are edited in-place by index, never reordered
+                key={field.id}
                 index={index}
-                transfer={transfer}
+                transfer={transfers[index]}
                 locale={locale}
                 onUpdate={updateTransfer}
                 onRemove={removeTransfer}

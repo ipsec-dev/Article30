@@ -64,6 +64,16 @@ const STRUCTURAL_ERROR_CODES = new Set<string>([
   'file_required',
 ]);
 
+function getCsrfToken(): string | null {
+  const match = /(?:^|;\s*)XSRF-TOKEN=([^;]*)/.exec(document.cookie);
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function csrfHeaders(): Record<string, string> {
+  const token = getCsrfToken();
+  return token ? { 'X-XSRF-TOKEN': token } : {};
+}
+
 export function TreatmentImportDialog({ open, onClose, onComplete }: TreatmentImportDialogProps) {
   const { t } = useI18n();
   const [file, setFile] = useState<File | null>(null);
@@ -80,16 +90,6 @@ export function TreatmentImportDialog({ open, onClose, onComplete }: TreatmentIm
     setFile(e.target.files?.[0] ?? null);
     setPreview(null);
   };
-
-  function getCsrfToken(): string | null {
-    const match = /(?:^|;\s*)XSRF-TOKEN=([^;]*)/.exec(document.cookie);
-    return match ? decodeURIComponent(match[1]) : null;
-  }
-
-  function csrfHeaders(): Record<string, string> {
-    const token = getCsrfToken();
-    return token ? { 'X-XSRF-TOKEN': token } : {};
-  }
 
   const handlePreview = async () => {
     if (!file) return;

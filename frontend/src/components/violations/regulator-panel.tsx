@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useI18n } from '@/i18n/context';
+import { formatDateTime } from '@/lib/dates';
 
 const KINDS = [
   'FILING_INITIAL',
@@ -80,9 +81,7 @@ export function RegulatorPanel({ violationId }: { violationId: string }) {
               style={{ border: '1px solid var(--a30-border)' }}
             >
               <span className="font-medium">{i.direction}</span> · {i.kind} ·{' '}
-              <span style={{ color: 'var(--ink-3)' }}>
-                {new Date(i.occurredAt).toLocaleString()}
-              </span>
+              <span style={{ color: 'var(--ink-3)' }}>{formatDateTime(i.occurredAt)}</span>
               <p className="mt-1 whitespace-pre-wrap text-xs" style={{ color: 'var(--ink-2)' }}>
                 {i.summary}
               </p>

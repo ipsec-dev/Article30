@@ -209,11 +209,14 @@ function EditForm({ item, state, users, saving, t, onSave, onCancel }: EditFormP
           />
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div>
-              <label className="mb-1 block text-xs font-medium text-muted-foreground">
+              <label
+                htmlFor={`cl-assignedTo-${item.id}`}
+                className="mb-1 block text-xs font-medium text-muted-foreground"
+              >
                 {t('checklist.assignedTo')}
               </label>
               <Select value={pendingAssignedTo} onValueChange={setPendingAssignedTo}>
-                <SelectTrigger size="sm" className="w-full">
+                <SelectTrigger id={`cl-assignedTo-${item.id}`} size="sm" className="w-full">
                   <SelectValue placeholder="-" />
                 </SelectTrigger>
                 <SelectContent>
@@ -226,10 +229,14 @@ function EditForm({ item, state, users, saving, t, onSave, onCancel }: EditFormP
               </Select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-muted-foreground">
+              <label
+                htmlFor={`cl-deadline-${item.id}`}
+                className="mb-1 block text-xs font-medium text-muted-foreground"
+              >
                 {t('checklist.deadline')}
               </label>
               <Input
+                id={`cl-deadline-${item.id}`}
                 type="date"
                 value={pendingDeadline}
                 onChange={handleDeadlineChange}
@@ -237,11 +244,14 @@ function EditForm({ item, state, users, saving, t, onSave, onCancel }: EditFormP
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-muted-foreground">
+              <label
+                htmlFor={`cl-priority-${item.id}`}
+                className="mb-1 block text-xs font-medium text-muted-foreground"
+              >
                 {t('checklist.priority')}
               </label>
               <Select value={pendingPriority} onValueChange={handlePriorityChange}>
-                <SelectTrigger size="sm" className="w-full">
+                <SelectTrigger id={`cl-priority-${item.id}`} size="sm" className="w-full">
                   <SelectValue placeholder="-" />
                 </SelectTrigger>
                 <SelectContent>

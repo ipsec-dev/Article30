@@ -3,6 +3,7 @@ import tseslint from 'typescript-eslint';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import nextPlugin from '@next/eslint-plugin-next';
 
 export default tseslint.config(
@@ -13,6 +14,7 @@ export default tseslint.config(
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
+      'jsx-a11y': jsxA11yPlugin,
       '@next/next': nextPlugin,
     },
     languageOptions: {
@@ -24,6 +26,11 @@ export default tseslint.config(
     },
     settings: {
       react: { version: 'detect' },
+      // Teach jsx-a11y that the design-system wrappers render these native
+      // elements, so label/control association is recognized correctly.
+      'jsx-a11y': {
+        components: { Label: 'label', Input: 'input', Textarea: 'textarea' },
+      },
     },
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
@@ -34,6 +41,10 @@ export default tseslint.config(
       'react/react-in-jsx-scope': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
+      'jsx-a11y/label-has-associated-control': [
+        'warn',
+        { controlComponents: ['Select', 'Switch'], assert: 'either', depth: 3 },
+      ],
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
     },

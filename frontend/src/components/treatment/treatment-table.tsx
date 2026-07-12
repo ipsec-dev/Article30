@@ -40,7 +40,12 @@ function freshnessFor(t: TreatmentDto): { kind: StatusKind; label: string } {
 
 function relativeDate(iso: string): string {
   const date = new Date(iso);
-  return date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+  return date.toLocaleDateString('fr-FR', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'Europe/Paris',
+  });
 }
 
 const HEADER_CLASS = 'px-4 py-2 text-left text-[10.5px] font-semibold uppercase tracking-wide';

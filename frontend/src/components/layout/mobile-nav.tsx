@@ -263,6 +263,7 @@ export function MobileNav({ user, regulatoryNewCount }: Readonly<MobileNavProps>
             </Badge>
           </div>
           <button
+            type="button"
             onClick={handleLogout}
             aria-label={t('nav.logout')}
             title={t('nav.logout')}

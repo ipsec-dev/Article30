@@ -354,21 +354,22 @@ export function Step4Security() {
           </Button>
 
           {/* Custom measures (those without a predefined type code) */}
-          {securityMeasures
-            .filter(sm => !SECURITY_MEASURES.some(m => m.code === sm.type))
-            .map(measure => {
-              const actualIndex = securityMeasures.indexOf(measure);
-              return (
-                <CustomMeasureCard
-                  key={`custom-measure-${actualIndex}`}
-                  actualIndex={actualIndex}
-                  measure={measure}
-                  locale={locale}
-                  onUpdate={updateSecurityMeasure}
-                  onRemove={removeSecurityMeasure}
-                />
-              );
-            })}
+          {securityMeasures.flatMap(measure => {
+            if (SECURITY_MEASURES.some(m => m.code === measure.type)) {
+              return [];
+            }
+            const actualIndex = securityMeasures.indexOf(measure);
+            return [
+              <CustomMeasureCard
+                key={`custom-measure-${actualIndex}`}
+                actualIndex={actualIndex}
+                measure={measure}
+                locale={locale}
+                onUpdate={updateSecurityMeasure}
+                onRemove={removeSecurityMeasure}
+              />,
+            ];
+          })}
         </div>
       </div>
 

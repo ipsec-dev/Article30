@@ -71,6 +71,7 @@ function ArticleListItem({ article, lang, selected, onSelect, t }: Readonly<Arti
 
   return (
     <button
+      type="button"
       onClick={handleClick}
       className={`w-full text-left px-4 py-3 border-l-4 transition-colors ${
         selected

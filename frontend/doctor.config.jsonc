@@ -1,0 +1,21 @@
+{
+  // These rules are disabled because the project's ESLint config already
+  // enforces the same checks, more accurately, so React Doctor's versions
+  // only add false positives here:
+  //
+  //   exhaustive-deps: covered by `react-hooks/exhaustive-deps`. React Doctor's
+  //     reimplementation does not follow the `const id = params.id` indirection
+  //     used on the [id] route pages, so it reports missing `params.id` deps
+  //     that ESLint (correctly) does not.
+  //   control-has-associated-label / label-has-associated-control: covered by
+  //     `jsx-a11y/label-has-associated-control`, configured with the design
+  //     system component mapping (Label -> label, Input -> input, Textarea ->
+  //     textarea) so it recognizes the custom `<Label>` wrapper. React Doctor
+  //     cannot be told about custom components and flags labeled controls as
+  //     unlabeled.
+  "rules": {
+    "react-doctor/exhaustive-deps": "off",
+    "react-doctor/control-has-associated-label": "off",
+    "react-doctor/label-has-associated-control": "off",
+  },
+}

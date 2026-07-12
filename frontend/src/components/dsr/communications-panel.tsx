@@ -6,6 +6,7 @@ import type { RequesterCommunicationKind, RequesterCommunicationChannel } from '
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useI18n } from '@/i18n/context';
+import { formatDateTime } from '@/lib/dates';
 
 interface CommunicationsPanelProps {
   dsrId: string;
@@ -27,7 +28,7 @@ const CHANNEL_LABELS: Record<RequesterCommunicationChannel, string> = {
 };
 
 function formatDate(iso: string): string {
-  return new Date(iso).toLocaleString();
+  return formatDateTime(iso);
 }
 
 export function CommunicationsPanel({ dsrId }: CommunicationsPanelProps) {

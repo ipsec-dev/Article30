@@ -21,11 +21,15 @@ export function transformFormToApi(data: TreatmentWizardFormData) {
     securityMeasuresDetailed: securityMeasures.filter(s => s.type),
     recipients: recipients.filter(r => r.type),
     dataCategories: dataCategories.filter(d => d.category),
-    transfers: transfers
-      .filter(t => t.destinationOrg || t.country)
-      .map(t => ({
-        ...t,
-        documentLink: t.documentLink || undefined,
-      })),
+    transfers: transfers.flatMap(t =>
+      t.destinationOrg || t.country
+        ? [
+            {
+              ...t,
+              documentLink: t.documentLink || undefined,
+            },
+          ]
+        : [],
+    ),
   };
 }

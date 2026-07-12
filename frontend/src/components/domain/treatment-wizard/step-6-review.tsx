@@ -390,11 +390,8 @@ function DataCategoriesField({
       <dd className="mt-1">
         {formData.dataCategories?.length > 0 && (
           <div className="space-y-2">
-            {formData.dataCategories.map((dc, i) => (
-              <div
-                key={`dc-${i}-${dc.category}`}
-                className="text-sm border-l-2 border-[var(--a30-border)] pl-3"
-              >
+            {formData.dataCategories.map(dc => (
+              <div key={dc.category} className="text-sm border-l-2 border-[var(--a30-border)] pl-3">
                 <span className="font-medium">{getLabel(dc.category, DATA_CATEGORIES)}</span>
                 {dc.description && <p className="text-[var(--ink-2)]">{dc.description}</p>}
                 {dc.retentionPeriod && (

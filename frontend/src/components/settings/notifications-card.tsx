@@ -67,13 +67,11 @@ export function NotificationsCard() {
   const handleToggle = (key: keyof Settings) => async (next: boolean) => {
     // Capture the pre-flip value so a failed PATCH rolls back to the actual
     // previous state, not to the inverse of `next` — under rapid double-clicks
-    // those two values can diverge.
-    let previousValue: boolean | undefined;
-    setSettings(prev => {
-      if (!prev) return prev;
-      previousValue = prev[key];
-      return { ...prev, [key]: next };
-    });
+    // those two values can diverge. Read it from current state before the
+    // optimistic update so the state updater stays pure (React may invoke
+    // updater callbacks more than once).
+    const previousValue = settings?.[key];
+    setSettings(prev => (prev ? { ...prev, [key]: next } : prev));
     try {
       await api.patch(SETTINGS_ENDPOINT, { [key]: next });
     } catch {

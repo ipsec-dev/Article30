@@ -65,7 +65,12 @@ export function AttachmentsTab({
           if (fileRef.current) fileRef.current.value = '';
         }}
       >
-        <input ref={fileRef} type="file" className="text-sm" />
+        <input
+          ref={fileRef}
+          type="file"
+          className="text-sm"
+          aria-label={t('followUp.attachments.upload')}
+        />
         <Button type="submit" size="sm">
           {t('followUp.attachments.upload')}
         </Button>
