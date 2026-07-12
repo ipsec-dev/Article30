@@ -5,7 +5,19 @@
 
 ### Bug Fixes
 
-* **frontend:** resolve React Doctor findings (correctness, a11y, perf) ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+* **frontend:** resolve react-doctor bug and a11y findings ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+* **frontend:** pin locale and timezone for date formatting ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+* **frontend:** stable useFieldArray keys for recipient/transfer rows ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+
+### Performance Improvements
+
+* **frontend:** single-pass iterations, set lookups, module-scope helpers ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+
+### Maintenance & Dependencies
+
+* **gitignore:** add semgrep.json to ignore list ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+* **frontend:** enforce a11y labels via jsx-a11y, retire react-doctor dupes ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+* **frontend:** remove dead files, document PDF iframe sandbox tradeoff ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
 
 ## [1.1.6](https://github.com/ipsec-dev/Article30/compare/v1.1.5...v1.1.6) (2026-07-12)
 
