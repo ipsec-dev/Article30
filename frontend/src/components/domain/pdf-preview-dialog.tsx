@@ -44,6 +44,16 @@ export function PdfPreviewDialog({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
+        {/*
+          Intentionally not sandboxed. `src` is a same-origin, app-generated PDF
+          (screening / treatment / vendor exports) shown via the browser's native
+          PDF viewer, which only renders inside a sandbox when given
+          `allow-scripts allow-same-origin` together — the exact escape-hatch the
+          react-doctor/iframe-missing-sandbox rule warns against. Since the content
+          is trusted and same-origin, a sandbox would either blank the preview
+          (`sandbox=""`) or reintroduce that unsafe pair, so it is left off. Do not
+          add a sandbox here without also replacing the native viewer (e.g. pdf.js).
+        */}
         <iframe
           // Re-mount when url changes so the cache doesn't show a stale doc.
           key={url}
