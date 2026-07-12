@@ -22,6 +22,7 @@ frontend/test-results/
 # Worktrees & local-only docs
 .worktrees/
 docs/
+semgrep.json
 
 # Tooling caches & local state
 .serena/
