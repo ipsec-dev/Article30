@@ -112,12 +112,10 @@ export function Sidebar({ user, regulatoryNewCount }: Readonly<SidebarProps>) {
 
   const sections = useMemo(() => {
     const all = buildPrimaryNav(regulatoryNewCount);
-    return all
-      .map(section => ({
-        ...section,
-        items: section.items.filter(item => !item.roles || item.roles.includes(user.role)),
-      }))
-      .filter(section => section.items.length > 0);
+    return all.flatMap(section => {
+      const items = section.items.filter(item => !item.roles || item.roles.includes(user.role));
+      return items.length > 0 ? [{ ...section, items }] : [];
+    });
   }, [regulatoryNewCount, user.role]);
 
   const referentiel = useMemo(

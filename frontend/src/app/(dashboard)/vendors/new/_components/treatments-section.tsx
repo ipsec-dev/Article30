@@ -19,6 +19,7 @@ export function TreatmentsSection({
   if (treatments.length === 0) {
     return null;
   }
+  const treatmentIdSet = new Set(treatmentIds);
   return (
     <div className="flex flex-col gap-2">
       <Label>{t('vendor.treatments')}</Label>
@@ -28,7 +29,7 @@ export function TreatmentsSection({
             key={tr.id}
             id={tr.id}
             name={tr.name}
-            checked={treatmentIds.includes(tr.id)}
+            checked={treatmentIdSet.has(tr.id)}
             onToggle={onToggle}
           />
         ))}
