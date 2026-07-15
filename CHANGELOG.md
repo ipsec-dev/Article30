@@ -7,7 +7,6 @@
 
 * **deps:** bump the production-deps group with 8 updates ([#104](https://github.com/ipsec-dev/Article30/issues/104)) ([9ac1fa3](https://github.com/ipsec-dev/Article30/commit/9ac1fa3688b3135e27195003801c39aa9f7fcc55))
 
-
 ### Maintenance & Dependencies
 
 * **deps-dev:** bump the dev-deps group across 1 directory with 2 updates ([#105](https://github.com/ipsec-dev/Article30/issues/105)) ([9cf79a4](https://github.com/ipsec-dev/Article30/commit/9cf79a4043cdf37ef13b1e69256bfa0c1c190267))
