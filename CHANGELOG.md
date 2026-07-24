@@ -7,7 +7,6 @@
 
 * **deps:** bump the production-deps group across 1 directory with 4 updates ([#109](https://github.com/ipsec-dev/Article30/issues/109)) ([5e05df4](https://github.com/ipsec-dev/Article30/commit/5e05df4a058c632d7e065787c013553507756a79))
 
-
 ### Maintenance & Dependencies
 
 * **ci:** bump actions/checkout in the actions group ([#108](https://github.com/ipsec-dev/Article30/issues/108)) ([8e15ea7](https://github.com/ipsec-dev/Article30/commit/8e15ea778fd636d62375e513a5cffef8d79e1604))
