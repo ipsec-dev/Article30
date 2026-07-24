@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.9](https://github.com/ipsec-dev/Article30/compare/v1.1.8...v1.1.9) (2026-07-24)
+
+
+### Bug Fixes
+
+* **deps:** bump the production-deps group across 1 directory with 4 updates ([#109](https://github.com/ipsec-dev/Article30/issues/109)) ([5e05df4](https://github.com/ipsec-dev/Article30/commit/5e05df4a058c632d7e065787c013553507756a79))
+
+
+### Maintenance & Dependencies
+
+* **ci:** bump actions/checkout in the actions group ([#108](https://github.com/ipsec-dev/Article30/issues/108)) ([8e15ea7](https://github.com/ipsec-dev/Article30/commit/8e15ea778fd636d62375e513a5cffef8d79e1604))
+* **deps-dev:** bump postcss from 8.5.16 to 8.5.17 ([#110](https://github.com/ipsec-dev/Article30/issues/110)) ([b72c312](https://github.com/ipsec-dev/Article30/commit/b72c31237a5011bb8a47f38097666bae1b4cfce9))
+* **deps-dev:** bump the dev-deps group across 1 directory with 5 updates ([#112](https://github.com/ipsec-dev/Article30/issues/112)) ([4945321](https://github.com/ipsec-dev/Article30/commit/49453218493d5533f3ae9288df29ddabc6c8a3b1))
+
 ## [1.1.8](https://github.com/ipsec-dev/Article30/compare/v1.1.7...v1.1.8) (2026-07-15)
 
 
