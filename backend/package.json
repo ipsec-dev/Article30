@@ -39,7 +39,7 @@
     "dotenv": "^17.4.2",
     "express-session": "^1.19.0",
     "helmet": "^8.3.0",
-    "ioredis": "^5.11.1",
+    "ioredis": "^6.0.0",
     "nestjs-cls": "^6.2.1",
     "nestjs-pino": "^4.6.1",
     "nodemailer": "^9.0.5",
