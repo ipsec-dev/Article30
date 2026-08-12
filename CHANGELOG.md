@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.10](https://github.com/ipsec-dev/Article30/compare/v1.1.9...v1.1.10) (2026-08-12)
+
+
+### Bug Fixes
+
+* **deps:** bump the production-deps group with 3 updates ([#126](https://github.com/ipsec-dev/Article30/issues/126)) ([05bd4f1](https://github.com/ipsec-dev/Article30/commit/05bd4f1401ae6582e3871d4df2ea3ebcaaabc85d))
+* **deps:** bump ioredis from 5.11.1 to 6.0.0 ([#129](https://github.com/ipsec-dev/Article30/issues/129)) ([c2f79b2](https://github.com/ipsec-dev/Article30/commit/c2f79b2f1488e7247dda731f8c5f646c8f5e4665))
+
+### Maintenance & Dependencies
+
+* **deps-dev:** bump the dev-deps group across 1 directory with 3 updates ([#127](https://github.com/ipsec-dev/Article30/issues/127)) ([71a4b18](https://github.com/ipsec-dev/Article30/commit/71a4b18d94e97a67ca0456fa763b65d41754b26d))
+* **deps-dev:** bump jsdom from 29.1.1 to 30.0.1 ([#128](https://github.com/ipsec-dev/Article30/issues/128)) ([0da4196](https://github.com/ipsec-dev/Article30/commit/0da41967b02bf801bf114069e77c70ef3cab01bc))
+
 ## [1.1.9](https://github.com/ipsec-dev/Article30/compare/v1.1.8...v1.1.9) (2026-08-09)
 
 
