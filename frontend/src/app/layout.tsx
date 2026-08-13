@@ -1,20 +1,26 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import Script from 'next/script';
 import { I18nProvider } from '@/i18n/context';
 import { ConfigProvider } from '@/lib/config/context';
 import './globals.css';
 
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+// Self-hosted instead of `next/font/google`: that loader downloads the woff2
+// from fonts.gstatic.com during `next build`, and when Google rotates the file
+// hashes the CSS it just served can point at binaries that already 404 — which
+// fails the Turbopack build outright (CI run 31636195759).
+// ponytail: latin subset only (variable weight axis); add the latin-ext file if
+// UI copy ever needs glyphs outside U+0000-00FF.
+const inter = localFont({
+  src: './fonts/inter-latin-var.woff2',
+  weight: '100 900',
   variable: '--font-sans',
   display: 'optional',
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
+const jetbrainsMono = localFont({
+  src: './fonts/jetbrains-mono-latin-var.woff2',
+  weight: '100 800',
   variable: '--font-mono',
   display: 'optional',
 });
