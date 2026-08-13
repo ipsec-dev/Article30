@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.11](https://github.com/ipsec-dev/Article30/compare/v1.1.10...v1.1.11) (2026-08-13)
+
+
+### Bug Fixes
+
+* **ci:** lint PR titles with commitlint ([#132](https://github.com/ipsec-dev/Article30/issues/132)) ([c9a153e](https://github.com/ipsec-dev/Article30/commit/c9a153eb7edc387d1d74698300250d8fd2d22466))
+
 ## [1.1.10](https://github.com/ipsec-dev/Article30/compare/v1.1.9...v1.1.10) (2026-08-12)
 
 
