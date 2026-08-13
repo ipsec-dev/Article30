@@ -98,6 +98,17 @@ jobs:
             --to "${{ github.event.pull_request.head.sha }}" \
             --verbose
 
+      # A squash merge takes its subject from the PR title (repo setting
+      # COMMIT_OR_PR_TITLE, any PR with more than one commit), so a
+      # non-conventional title lands on main unparsed and release-please
+      # skips the release entirely - no version bump, no changelog entry.
+      # Note: this only runs on push events, not on title edits, so editing
+      # the title to something invalid after CI is green won't be caught.
+      - name: Validate PR title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: printf '%s\n' "$PR_TITLE" | pnpm exec commitlint --verbose
+
   typecheck-build:
     name: Typecheck & Build
     needs: changes
