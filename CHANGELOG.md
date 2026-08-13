@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.1.11](https://github.com/ipsec-dev/Article30/compare/v1.1.10...v1.1.11) (2026-08-13)
+
+
+### Bug Fixes
+
+* **frontend:** resolve react-doctor bug and a11y findings ([#131](https://github.com/ipsec-dev/Article30/issues/131)) ([3f9b85b](https://github.com/ipsec-dev/Article30/commit/3f9b85b63d60955059d351aaa90e96bb5cb8a22e))
+* **frontend:** pin locale and timezone for date formatting ([#131](https://github.com/ipsec-dev/Article30/issues/131)) ([3f9b85b](https://github.com/ipsec-dev/Article30/commit/3f9b85b63d60955059d351aaa90e96bb5cb8a22e))
+* **frontend:** stable useFieldArray keys for recipient/transfer rows ([#131](https://github.com/ipsec-dev/Article30/issues/131)) ([3f9b85b](https://github.com/ipsec-dev/Article30/commit/3f9b85b63d60955059d351aaa90e96bb5cb8a22e))
+* **frontend:** self-host Inter and JetBrains Mono ([#131](https://github.com/ipsec-dev/Article30/issues/131)) ([3f9b85b](https://github.com/ipsec-dev/Article30/commit/3f9b85b63d60955059d351aaa90e96bb5cb8a22e))
+* **ci:** lint PR titles with commitlint ([#132](https://github.com/ipsec-dev/Article30/issues/132)) ([c9a153e](https://github.com/ipsec-dev/Article30/commit/c9a153eb7edc387d1d74698300250d8fd2d22466))
+
+### Performance Improvements
+
+* **frontend:** single-pass iterations, set lookups, module-scope helpers ([#131](https://github.com/ipsec-dev/Article30/issues/131)) ([3f9b85b](https://github.com/ipsec-dev/Article30/commit/3f9b85b63d60955059d351aaa90e96bb5cb8a22e))
+
+### Maintenance & Dependencies
+
+* **gitignore:** add semgrep.json to ignore list ([#131](https://github.com/ipsec-dev/Article30/issues/131)) ([3f9b85b](https://github.com/ipsec-dev/Article30/commit/3f9b85b63d60955059d351aaa90e96bb5cb8a22e))
+* **frontend:** enforce a11y labels via jsx-a11y, retire react-doctor dupes ([#131](https://github.com/ipsec-dev/Article30/issues/131)) ([3f9b85b](https://github.com/ipsec-dev/Article30/commit/3f9b85b63d60955059d351aaa90e96bb5cb8a22e))
+* **frontend:** remove dead files, document PDF iframe sandbox tradeoff ([#131](https://github.com/ipsec-dev/Article30/issues/131)) ([3f9b85b](https://github.com/ipsec-dev/Article30/commit/3f9b85b63d60955059d351aaa90e96bb5cb8a22e))
+
 ## [1.1.10](https://github.com/ipsec-dev/Article30/compare/v1.1.9...v1.1.10) (2026-08-12)
 
 
