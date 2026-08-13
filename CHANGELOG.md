@@ -1,5 +1,80 @@
 # Changelog
 
+## [1.1.10](https://github.com/ipsec-dev/Article30/compare/v1.1.9...v1.1.10) (2026-08-12)
+
+
+### Bug Fixes
+
+* **deps:** bump the production-deps group with 3 updates ([#126](https://github.com/ipsec-dev/Article30/issues/126)) ([05bd4f1](https://github.com/ipsec-dev/Article30/commit/05bd4f1401ae6582e3871d4df2ea3ebcaaabc85d))
+* **deps:** bump ioredis from 5.11.1 to 6.0.0 ([#129](https://github.com/ipsec-dev/Article30/issues/129)) ([c2f79b2](https://github.com/ipsec-dev/Article30/commit/c2f79b2f1488e7247dda731f8c5f646c8f5e4665))
+
+### Maintenance & Dependencies
+
+* **deps-dev:** bump the dev-deps group across 1 directory with 3 updates ([#127](https://github.com/ipsec-dev/Article30/issues/127)) ([71a4b18](https://github.com/ipsec-dev/Article30/commit/71a4b18d94e97a67ca0456fa763b65d41754b26d))
+* **deps-dev:** bump jsdom from 29.1.1 to 30.0.1 ([#128](https://github.com/ipsec-dev/Article30/issues/128)) ([0da4196](https://github.com/ipsec-dev/Article30/commit/0da41967b02bf801bf114069e77c70ef3cab01bc))
+
+## [1.1.9](https://github.com/ipsec-dev/Article30/compare/v1.1.8...v1.1.9) (2026-08-09)
+
+
+### Bug Fixes
+
+* **deps:** bump the production-deps group across 1 directory with 4 updates ([#109](https://github.com/ipsec-dev/Article30/issues/109)) ([5e05df4](https://github.com/ipsec-dev/Article30/commit/5e05df4a058c632d7e065787c013553507756a79))
+* **deps:** clear high-severity advisories blocking CI ([#122](https://github.com/ipsec-dev/Article30/issues/122)) ([6bd7912](https://github.com/ipsec-dev/Article30/commit/6bd7912d993f2928a8d999b000010f62fdbdf662))
+* **deps:** bump the production-deps group across 1 directory with 10 updates ([#125](https://github.com/ipsec-dev/Article30/issues/125)) ([0a175e1](https://github.com/ipsec-dev/Article30/commit/0a175e1287704274b9cf7ae258bca74071b37b47))
+
+### Maintenance & Dependencies
+
+* **ci:** bump actions/checkout in the actions group ([#108](https://github.com/ipsec-dev/Article30/issues/108)) ([8e15ea7](https://github.com/ipsec-dev/Article30/commit/8e15ea778fd636d62375e513a5cffef8d79e1604))
+* **deps-dev:** bump postcss from 8.5.16 to 8.5.17 ([#110](https://github.com/ipsec-dev/Article30/issues/110)) ([b72c312](https://github.com/ipsec-dev/Article30/commit/b72c31237a5011bb8a47f38097666bae1b4cfce9))
+* **deps-dev:** bump the dev-deps group across 1 directory with 5 updates ([#112](https://github.com/ipsec-dev/Article30/issues/112)) ([4945321](https://github.com/ipsec-dev/Article30/commit/49453218493d5533f3ae9288df29ddabc6c8a3b1))
+* **ci:** bump the actions group across 1 directory with 2 updates ([#123](https://github.com/ipsec-dev/Article30/issues/123)) ([b51695d](https://github.com/ipsec-dev/Article30/commit/b51695db25f914612875e1b08de28558582d71c2))
+* **deps-dev:** bump the dev-deps group across 1 directory with 11 updates ([#124](https://github.com/ipsec-dev/Article30/issues/124)) ([0321cb8](https://github.com/ipsec-dev/Article30/commit/0321cb81707b66e9e8d7306610e4fbc18f21c64a))
+* **deps-dev:** bump @testing-library/jest-dom from 6.9.1 to 7.0.0 ([#118](https://github.com/ipsec-dev/Article30/issues/118)) ([031df23](https://github.com/ipsec-dev/Article30/commit/031df232c118fa3e195690fd5ca6ac7b102f275d))
+
+## [1.1.8](https://github.com/ipsec-dev/Article30/compare/v1.1.7...v1.1.8) (2026-07-15)
+
+
+### Bug Fixes
+
+* **deps:** bump the production-deps group with 8 updates ([#104](https://github.com/ipsec-dev/Article30/issues/104)) ([9ac1fa3](https://github.com/ipsec-dev/Article30/commit/9ac1fa3688b3135e27195003801c39aa9f7fcc55))
+
+### Maintenance & Dependencies
+
+* **deps-dev:** bump the dev-deps group across 1 directory with 2 updates ([#105](https://github.com/ipsec-dev/Article30/issues/105)) ([9cf79a4](https://github.com/ipsec-dev/Article30/commit/9cf79a4043cdf37ef13b1e69256bfa0c1c190267))
+
+## [1.1.7](https://github.com/ipsec-dev/Article30/compare/v1.1.6...v1.1.7) (2026-07-12)
+
+
+### Bug Fixes
+
+* **frontend:** resolve react-doctor bug and a11y findings ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+* **frontend:** pin locale and timezone for date formatting ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+* **frontend:** stable useFieldArray keys for recipient/transfer rows ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+
+### Performance Improvements
+
+* **frontend:** single-pass iterations, set lookups, module-scope helpers ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+
+### Maintenance & Dependencies
+
+* **gitignore:** add semgrep.json to ignore list ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+* **frontend:** enforce a11y labels via jsx-a11y, retire react-doctor dupes ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+* **frontend:** remove dead files, document PDF iframe sandbox tradeoff ([#102](https://github.com/ipsec-dev/Article30/issues/102)) ([e548941](https://github.com/ipsec-dev/Article30/commit/e5489413eebab81fb4ea0a2e886e86fd58a18788))
+
+## [1.1.6](https://github.com/ipsec-dev/Article30/compare/v1.1.5...v1.1.6) (2026-07-12)
+
+
+### Bug Fixes
+
+* **deps:** bump the production-deps group with 3 updates ([#96](https://github.com/ipsec-dev/Article30/issues/96)) ([fd7b5b9](https://github.com/ipsec-dev/Article30/commit/fd7b5b9246ddd8585886110c79509e1a451334f6))
+
+### Maintenance & Dependencies
+
+* **ci:** bump the actions group with 6 updates ([#95](https://github.com/ipsec-dev/Article30/issues/95)) ([0c5d691](https://github.com/ipsec-dev/Article30/commit/0c5d691dc60ad5aaad05e06a377d6062b33b5be9))
+* **deps-dev:** bump the dev-deps group with 3 updates ([#97](https://github.com/ipsec-dev/Article30/issues/97)) ([906ec14](https://github.com/ipsec-dev/Article30/commit/906ec148a6f7b3f793d5ccca20d514ed7d4b99f1))
+* **deps-dev:** bump @types/node from 25.9.3 to 26.1.1 ([#98](https://github.com/ipsec-dev/Article30/issues/98)) ([3ac6688](https://github.com/ipsec-dev/Article30/commit/3ac6688a224e586dcb9894d2eaba773415ce8b4d))
+* **deps-dev:** bump the dev-deps group across 1 directory with 7 updates ([#101](https://github.com/ipsec-dev/Article30/issues/101)) ([3ffbc11](https://github.com/ipsec-dev/Article30/commit/3ffbc1149a26cfc1b66a687985f4d0f43da76580))
+
 ## [1.1.5](https://github.com/ipsec-dev/Article30/compare/v1.1.4...v1.1.5) (2026-07-03)
 
 
