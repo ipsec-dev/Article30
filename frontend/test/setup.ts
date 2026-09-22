@@ -15,6 +15,14 @@ if (typeof globalThis.ResizeObserver === 'undefined') {
 
 afterEach(() => {
   cleanup();
+  // jsdom >=30.1 moves focus to the document when the focused element is
+  // removed, so the next focus() fires `blur` on window and Radix Select
+  // closes itself. Focus+blur a throwaway node to reset focus to nothing.
+  const reset = document.createElement('button');
+  document.body.append(reset);
+  reset.focus();
+  reset.blur();
+  reset.remove();
 });
 
 vi.mock('sonner', () => ({
