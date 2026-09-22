@@ -10,7 +10,7 @@ import { PrismaModule } from '../../src/prisma/prisma.module';
 import { PrismaService } from '../../src/prisma/prisma.service';
 import { cleanupDatabase } from '../helpers';
 import Redis from 'ioredis';
-import nodemailer from 'nodemailer';
+import nodemailer, { type Transporter } from 'nodemailer';
 
 const TEST_DB_URL =
   process.env.DATABASE_URL_TEST ??
@@ -57,7 +57,7 @@ describe('Password reset endpoints', () => {
           useFactory: () => {
             const transport = nodemailer.createTransport({ jsonTransport: true });
             const svc = new MailService();
-            svc.setTransportForTesting(transport as unknown as nodemailer.Transporter, mailSink);
+            svc.setTransportForTesting(transport as unknown as Transporter, mailSink);
             return svc;
           },
         },
