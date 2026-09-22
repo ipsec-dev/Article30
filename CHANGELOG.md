@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.12](https://github.com/ipsec-dev/Article30/compare/v1.1.11...v1.1.12) (2026-09-22)
+
+
+### Bug Fixes
+
+* **deps:** bump nodemailer from 9.1.1 to 10.0.10 ([#153](https://github.com/ipsec-dev/Article30/issues/153)) ([9647a8c](https://github.com/ipsec-dev/Article30/commit/9647a8c5c3e12b626c274930dbe304fc16645181))
+* **deps:** clear fixable high/critical audit advisories ([#151](https://github.com/ipsec-dev/Article30/issues/151)) ([b0e5cf9](https://github.com/ipsec-dev/Article30/commit/b0e5cf9d19766505f352cd402503b5a69b600b54))
+
+
+### Maintenance & Dependencies
+
+* **ci:** bump the actions group across 1 directory with 4 updates ([#148](https://github.com/ipsec-dev/Article30/issues/148)) ([e53b39a](https://github.com/ipsec-dev/Article30/commit/e53b39a57de454cc981b9656078c766d26e7ae26))
+* **deps-dev:** bump the dev-deps group across 1 directory with 14 updates ([#149](https://github.com/ipsec-dev/Article30/issues/149)) ([53098a9](https://github.com/ipsec-dev/Article30/commit/53098a9451920c48e6967a8c4d7c458673e82921))
+* **deps-dev:** bump vitest from 4.1.10 to 5.0.0 ([#145](https://github.com/ipsec-dev/Article30/issues/145)) ([734e653](https://github.com/ipsec-dev/Article30/commit/734e6538da1faf05cbd373b1deaa4f7fb4f896f1))
+
 ## [1.1.11](https://github.com/ipsec-dev/Article30/compare/v1.1.10...v1.1.11) (2026-08-13)
 
 
