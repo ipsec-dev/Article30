@@ -42,7 +42,7 @@
     "ioredis": "^6.0.0",
     "nestjs-cls": "^6.2.1",
     "nestjs-pino": "^4.6.1",
-    "nodemailer": "^9.1.1",
+    "nodemailer": "^10.0.10",
     "pdfkit": "^0.19.1",
     "pg": "^8.22.0",
     "pino": "^10.3.1",
