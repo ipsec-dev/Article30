@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
 import { ConflictException, GoneException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import bcrypt from 'bcrypt';
-import nodemailer from 'nodemailer';
+import nodemailer, { type Transporter } from 'nodemailer';
 import Redis from 'ioredis';
 import { AuthService } from '../../src/modules/auth/auth.service';
 import { PasswordResetTokenService } from '../../src/modules/auth/password-reset-token.service';
@@ -57,7 +57,7 @@ describe('AuthService', () => {
           useFactory: () => {
             const transport = nodemailer.createTransport({ jsonTransport: true });
             const svc = new MailService();
-            svc.setTransportForTesting(transport as unknown as nodemailer.Transporter, []);
+            svc.setTransportForTesting(transport as unknown as Transporter, []);
             return svc;
           },
         },

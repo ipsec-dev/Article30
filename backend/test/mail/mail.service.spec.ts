@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import nodemailer from 'nodemailer';
+import nodemailer, { type Transporter } from 'nodemailer';
 import { MailService } from '../../src/modules/mail/mail.service';
 
 describe('MailService', () => {
@@ -14,7 +14,7 @@ describe('MailService', () => {
     sink = [];
     service = new MailService();
     const transport = nodemailer.createTransport({ jsonTransport: true });
-    service.setTransportForTesting(transport as unknown as nodemailer.Transporter, sink);
+    service.setTransportForTesting(transport as unknown as Transporter, sink);
   });
 
   afterEach(() => {

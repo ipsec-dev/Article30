@@ -2,7 +2,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import cookieParser from 'cookie-parser';
 import Redis from 'ioredis';
-import nodemailer from 'nodemailer';
+import nodemailer, { type Transporter } from 'nodemailer';
 import request from 'supertest';
 import { AppModule } from '../../src/app.module';
 import { csrfMiddleware } from '../../src/common/middleware/csrf.middleware';
@@ -62,7 +62,7 @@ export async function createTestApp(): Promise<TestApp> {
       factory: () => {
         const transport = nodemailer.createTransport({ jsonTransport: true });
         const svc = new MailService();
-        svc.setTransportForTesting(transport as unknown as nodemailer.Transporter, mailSink);
+        svc.setTransportForTesting(transport as unknown as Transporter, mailSink);
         return svc;
       },
     })
