@@ -17,14 +17,14 @@ async function freshLogin(page: import('@playwright/test').Page): Promise<void> 
 test.describe('auth flow', () => {
   test('admin can log in via the form and see the dashboard', async ({ page }) => {
     // Exercises the login UI directly without using the shared storageState
-    // session — genuinely covers the form submit path.
+    // session, so it covers the form submit path.
     await freshLogin(page);
     await expect(page.getByText(/^Article30$/).first()).toBeVisible({ timeout: 15_000 });
   });
 
   test('admin can log out and is redirected to /login', async ({ page }) => {
     // Use a private session for logout: the shared storageState session is
-    // reused across all the smoke specs and must NOT be destroyed.
+    // reused across all the smoke specs and must not be destroyed.
     await freshLogin(page);
     const logoutButton = page.getByRole('button', { name: /déconnexion|logout/i }).first();
     await logoutButton.click();

@@ -66,7 +66,7 @@ export function NotificationsCard() {
 
   const handleToggle = (key: keyof Settings) => async (next: boolean) => {
     // Capture the pre-flip value so a failed PATCH rolls back to the actual
-    // previous state, not to the inverse of `next` — under rapid double-clicks
+    // previous state, not to the inverse of `next`: under rapid double-clicks
     // those two values can diverge. Read it from current state before the
     // optimistic update so the state updater stays pure (React may invoke
     // updater callbacks more than once).

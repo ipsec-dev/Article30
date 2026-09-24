@@ -90,7 +90,7 @@ describe('Sidebar', () => {
     expect(dsrLink.style.borderLeft).toMatch(/2px solid/);
     expect(dsrLink.style.background).toBeTruthy();
 
-    // Spot-check: an unrelated link (dashboard) must NOT carry the active style.
+    // Spot-check: an unrelated link (dashboard) must not carry the active style.
     const dashboardLink = screen.getByRole('link', { name: /Tableau de bord|Dashboard/i });
     expect(dashboardLink.style.background).toBeFalsy();
   });
@@ -138,7 +138,6 @@ describe('Sidebar', () => {
 
   it('caps initials at 2 chars when first + last name together have more than two words', () => {
     renderWithI18n(<Sidebar user={makeUser({ firstName: 'Alice', lastName: 'Bob' })} />);
-    // Should render "AB".
     expect(screen.getByText('AB')).toBeInTheDocument();
     expect(screen.queryByText('ABC')).toBeNull();
   });

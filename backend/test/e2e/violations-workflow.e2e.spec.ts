@@ -45,7 +45,7 @@ describe('violations-workflow.controller (e2e)', () => {
     });
   }
 
-  // 1. PATCH /:id/transition — DPO can transition to DISMISSED
+  // 1. PATCH /:id/transition: DPO can transition to DISMISSED
   describe('PATCH /api/violations/:id/transition', () => {
     it('DPO can transition RECEIVED → DISMISSED', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.DPO);

@@ -60,7 +60,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     });
   }
 
-  // 1. PATCH /:id/transition — DPO transitions to ACKNOWLEDGED
+  // 1. PATCH /:id/transition: DPO transitions to ACKNOWLEDGED
   describe('PATCH /api/dsr/:id/transition', () => {
     it('DPO can transition RECEIVED → ACKNOWLEDGED', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.DPO);
@@ -88,7 +88,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     });
   });
 
-  // 2. POST /:id/pauses — DPO opens a pause
+  // 2. POST /:id/pauses: DPO opens a pause
   describe('POST /api/dsr/:id/pauses', () => {
     it('DPO can open a pause', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.DPO);
@@ -105,7 +105,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     });
   });
 
-  // 3. PATCH /:id/pauses/active/resume — DPO closes a pause
+  // 3. PATCH /:id/pauses/active/resume: DPO closes a pause
   describe('PATCH /api/dsr/:id/pauses/active/resume', () => {
     it('DPO can close (resume) an open pause', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.DPO);
@@ -131,7 +131,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     });
   });
 
-  // 4. POST /:id/communications — DPO records communication
+  // 4. POST /:id/communications: DPO records communication
   describe('POST /api/dsr/:id/communications', () => {
     it('DPO can record a requester communication', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.DPO);
@@ -208,7 +208,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     });
   });
 
-  // 7. PATCH /:id/treatments/:tid/processing — DPO upserts
+  // 7. PATCH /:id/treatments/:tid/processing: DPO upserts
   describe('PATCH /api/dsr/:id/treatments/:tid/processing', () => {
     it('DPO can upsert treatment processing', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.DPO);
@@ -248,7 +248,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     });
   });
 
-  // 8. POST /:id/treatments/:treatmentId/link — DPO links treatment
+  // 8. POST /:id/treatments/:treatmentId/link: DPO links treatment
   describe('POST /api/dsr/:id/treatments/:treatmentId/link', () => {
     it('DPO can link a treatment via the new /link endpoint', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.DPO);

@@ -19,8 +19,8 @@ export type NotificationKind = (typeof NOTIFICATION_KINDS)[number];
 
 // Instant kinds always send (no per-org toggle); scheduled kinds map to a
 // boolean column on Organization that can disable them. Reserved for future
-// callers (notably the scheduler in Task 8) that need to filter scheduled-only
-// kinds — kept exported so the catalog stays the single source of truth.
+// callers that need to filter scheduled-only kinds; kept exported so the
+// catalog stays the single source of truth.
 export const INSTANT_KINDS: ReadonlySet<NotificationKind> = new Set([
   'dsr.submitted',
   'violation.logged',
@@ -37,9 +37,8 @@ export const KIND_TO_SETTING = {
   'treatment.review-due': 'notifyTreatmentReview',
 } as const satisfies Partial<Record<NotificationKind, string>>;
 
-// Settings keys that gate scheduled kinds — derived from KIND_TO_SETTING values
-// so callers can't typo the column name (downstream Tasks 4-7-8 use this in
-// their `settings` arg type).
+// Settings keys that gate scheduled kinds, derived from KIND_TO_SETTING values
+// so callers can't typo the column name (NotifyArgs.settings is keyed by it).
 export type NotificationSettingKey = (typeof KIND_TO_SETTING)[keyof typeof KIND_TO_SETTING];
 
 // Maps each kind to its mail template id (matches files in

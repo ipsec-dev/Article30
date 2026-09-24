@@ -51,7 +51,6 @@ describe('RequesterCommunicationsService', () => {
     await prisma.followUpContentRevision.deleteMany();
   });
 
-  // Test 1: record inserts row + emits Timeline NOTIFICATION_SENT event
   it('record inserts a RequesterCommunication row and emits a NOTIFICATION_SENT Timeline event', async () => {
     const sentAt = new Date('2026-03-01T10:00:00.000Z');
     const communication = await svc.record({
@@ -75,7 +74,7 @@ describe('RequesterCommunicationsService', () => {
     expect(events[0].entityId).toBe(dsrId);
   });
 
-  // Test 2: record with each RequesterCommunicationKind enum value successfully inserts
+  // Covers every RequesterCommunicationKind enum value.
   it.each<RequesterCommunicationKind>([
     'ACKNOWLEDGEMENT',
     'EXTENSION_NOTICE',
@@ -99,7 +98,6 @@ describe('RequesterCommunicationsService', () => {
     await prisma.followUpTimeline.deleteMany();
   });
 
-  // Test 3: list returns ASC by sentAt then id
   it('list returns communications ordered ASC by sentAt then id', async () => {
     const earlier = new Date('2026-01-10T09:00:00.000Z');
     const later = new Date('2026-01-10T11:00:00.000Z');
@@ -160,7 +158,6 @@ describe('RequesterCommunicationsService', () => {
     }
   });
 
-  // Test 4: record with valid contentRevisionId succeeds
   it('record with a valid contentRevisionId links to the content revision', async () => {
     // Seed a FollowUpContentRevision for the DSR
     const revision = await prisma.followUpContentRevision.create({
@@ -185,7 +182,7 @@ describe('RequesterCommunicationsService', () => {
     expect(communication.contentRevisionId).toBe(revision.id);
   });
 
-  // Test 5: record with non-existent contentRevisionId fails with BadRequest (#9 same-DSR check)
+  // Rejected by the same-DSR check.
   it('record with a non-existent contentRevisionId throws BadRequestException', async () => {
     const fakeId = '00000000-0000-0000-0000-000000000000';
 
@@ -200,7 +197,6 @@ describe('RequesterCommunicationsService', () => {
     ).rejects.toThrow(BadRequestException);
   });
 
-  // Test 6 (#9): record rejects a contentRevisionId that points to a different DSR
   it('rejects a contentRevisionId that points to a different DSR', async () => {
     const dsrB = await seedDsr(prisma, { requesterEmail: 'someone-else@example.test' });
     const cr = await prisma.followUpContentRevision.create({

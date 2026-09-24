@@ -186,7 +186,7 @@ export default function ScreeningResultPage() {
         {formatDate(screening.createdAt)}
       </p>
 
-      {/* Risk Matrix — read-only preview derived from verdict + score */}
+      {/* Risk Matrix: read-only preview derived from verdict + score */}
       <div className="mt-6 max-w-md">
         <p
           className="mb-2 text-xs font-semibold uppercase tracking-wide"

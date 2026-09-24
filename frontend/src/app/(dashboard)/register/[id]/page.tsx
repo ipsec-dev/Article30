@@ -830,7 +830,7 @@ export default function TreatmentDetailPage() {
 
   return (
     <>
-      {/* Back button — Topbar in layout shell handles the page title */}
+      {/* Back button (Topbar in layout shell handles the page title) */}
       <div className="mb-4 flex items-center">
         <Button variant="outline" size="sm" onClick={handleBack}>
           {t('common.back')}

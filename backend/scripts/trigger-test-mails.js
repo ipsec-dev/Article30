@@ -7,15 +7,15 @@
  *
  * Triggers:
  *   - password-reset           (AuthService.forgotPassword on the demo admin)
- *   - dsr.submitted            (instant — DsrService.create with a fresh DSR)
+ *   - dsr.submitted            (instant, DsrService.create with a fresh DSR)
  *   - violation.logged
  *   - violation.high-severity-72h-kickoff   (HIGH severity → both fire)
  *   - vendor.questionnaire-returned         (VendorAssessmentsService.submit)
  *   - action-item.assigned                  (RemediationService.create)
- *   - dsr.deadline-approaching              (scheduler — T-7 stripe)
- *   - vendor.dpa-expiring                   (scheduler — T-30 stripe)
- *   - treatment.review-due                  (scheduler — T-7 stripe)
- *   - violation.72h-window                  (scheduler — T-24h stripe)
+ *   - dsr.deadline-approaching              (scheduler, T-7 stripe)
+ *   - vendor.dpa-expiring                   (scheduler, T-30 stripe)
+ *   - treatment.review-due                  (scheduler, T-7 stripe)
+ *   - violation.72h-window                  (scheduler, T-24h stripe)
  *
  * Idempotent: clears notification_log and re-creates all demo records each
  * run so re-running surfaces every mail again.
@@ -173,7 +173,7 @@ async function main() {
   // The four scheduled kinds need records inside their lead-time windows.
   // Create a vendor with DPA expiring exactly 30d out (T-30) and a treatment
   // with nextReviewAt exactly 7d out (T-7). The DSR created in step 2 has
-  // its deadline set by DsrService.create() — we override it to today+7 so
+  // its deadline set by DsrService.create(); we override it to today+7 so
   // the daily sweep finds it. Same for the violation: it's HIGH and
   // 48h-old, so the violation-72h sweep (T-24h stripe) will pick it up.
   const today = new Date();

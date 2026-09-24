@@ -13,7 +13,7 @@ import { BreachNotificationsService } from '../../src/modules/violations/breach-
 import { noopNotificationService } from '../helpers/notification-stub';
 
 // Fixed awareness timestamp for 72h boundary tests
-const AWARENESS_AT_RECENT = new Date(); // now — within 72h window
+const AWARENESS_AT_RECENT = new Date(); // now, within the 72h window
 
 // An awareness date 73h in the past
 const AWARENESS_AT_OLD = new Date(Date.now() - 73 * 60 * 60 * 1000);
@@ -94,8 +94,6 @@ describe('ViolationsService.transition()', () => {
     });
   }
 
-  // Test 1: DISMISSED happy path
-
   it('(1) DISMISSED happy path: status updated, dismissalReason stored, DISMISS_BREACH Decision recorded, STATUS_CHANGE Timeline emitted', async () => {
     const violation = await seedViolation();
 
@@ -127,8 +125,6 @@ describe('ViolationsService.transition()', () => {
     expect(payload.to).toBe('DISMISSED');
   });
 
-  // Test 2: DISMISSED with reason too short
-
   it('(2) DISMISSED with dismissalReason too short: throws BadRequestException', async () => {
     const violation = await seedViolation();
 
@@ -141,8 +137,6 @@ describe('ViolationsService.transition()', () => {
       }),
     ).rejects.toThrow(BadRequestException);
   });
-
-  // Test 3: TRIAGED from RECEIVED — mechanical, no Decision
 
   it('(3) TRIAGED from RECEIVED: succeeds, no FollowUpDecision recorded', async () => {
     const violation = await seedViolation();
@@ -168,8 +162,6 @@ describe('ViolationsService.transition()', () => {
     expect(events).toHaveLength(1);
   });
 
-  // Test 4: Invalid edge
-
   it('(4) Invalid edge RECEIVED → REMEDIATED: throws BadRequestException with prescribed message', async () => {
     const violation = await seedViolation();
 
@@ -191,8 +183,6 @@ describe('ViolationsService.transition()', () => {
       }),
     ).rejects.toThrow(/Invalid transition: RECEIVED → REMEDIATED/);
   });
-
-  // Test 5: NOTIFIED_CNIL within 72h
 
   it('(5) NOTIFIED_CNIL within 72h: filing + RegulatorInteraction + Decision NOTIFY_CNIL + STATUS_CHANGE + NOTIFICATION_SENT', async () => {
     const violation = await seedViolation({ awarenessAt: AWARENESS_AT_RECENT });
@@ -238,8 +228,6 @@ describe('ViolationsService.transition()', () => {
     expect(kinds).toContain('DECISION');
   });
 
-  // Test 6: NOTIFIED_CNIL > 72h without delayJustification
-
   it('(6) NOTIFIED_CNIL > 72h without delayJustification: throws BadRequestException', async () => {
     const violation = await seedViolation({ awarenessAt: AWARENESS_AT_OLD });
     await setStatus(violation.id, 'NOTIFICATION_PENDING');
@@ -263,8 +251,6 @@ describe('ViolationsService.transition()', () => {
     ).rejects.toThrow(/72 hours/i);
   });
 
-  // Test 7: NOTIFIED_CNIL > 72h with delayJustification
-
   it('(7) NOTIFIED_CNIL > 72h with delayJustification: succeeds', async () => {
     const violation = await seedViolation({ awarenessAt: AWARENESS_AT_OLD });
     await setStatus(violation.id, 'NOTIFICATION_PENDING');
@@ -287,8 +273,6 @@ describe('ViolationsService.transition()', () => {
     });
     expect(filings).toHaveLength(1);
   });
-
-  // Test 8: PERSONS_NOTIFICATION_WAIVED
 
   it('(8) PERSONS_NOTIFICATION_WAIVED: Decision WAIVE_PERSONS_NOTIFICATION recorded, waiver fields stored', async () => {
     const violation = await seedViolation();
@@ -315,8 +299,6 @@ describe('ViolationsService.transition()', () => {
     });
     expect(dec).not.toBeNull();
   });
-
-  // Test 9: PERSONS_NOTIFIED
 
   it('(9) PERSONS_NOTIFIED: PersonsNotification row created via composed service', async () => {
     const violation = await seedViolation();
@@ -346,8 +328,6 @@ describe('ViolationsService.transition()', () => {
     expect(kinds).toContain('NOTIFICATION_SENT');
   });
 
-  // Test 10: REOPENED from CLOSED
-
   it('(10) REOPENED from CLOSED: Decision kind REOPEN, rationale stored', async () => {
     const violation = await seedViolation();
     await setStatus(violation.id, 'CLOSED');
@@ -368,8 +348,6 @@ describe('ViolationsService.transition()', () => {
     expect(dec?.rationale).toBe('New evidence surfaced indicating the breach was more extensive.');
   });
 
-  // Test 11: REOPENED from non-CLOSED
-
   it('(11) REOPENED from RECEIVED (non-CLOSED): throws BadRequestException', async () => {
     const violation = await seedViolation(); // status RECEIVED
 
@@ -383,8 +361,6 @@ describe('ViolationsService.transition()', () => {
     ).rejects.toThrow(BadRequestException);
   });
 
-  // Test 12: Forged FK reject
-
   it('(12) Forged-FK reject: throws NotFoundException for nonexistent violationId', async () => {
     await expect(
       svc.transition({
@@ -395,8 +371,6 @@ describe('ViolationsService.transition()', () => {
       }),
     ).rejects.toThrow(NotFoundException);
   });
-
-  // Test 14: Atomicity — if Decision record fails, violation status NOT updated ─
 
   it('(14) Atomicity: if Decision record throws, violation status is NOT updated (transaction rolls back)', async () => {
     const violation = await seedViolation();
@@ -417,7 +391,7 @@ describe('ViolationsService.transition()', () => {
 
     spy.mockRestore();
 
-    // Verify violation status was NOT updated (transaction rolled back)
+    // Verify violation status was not updated (transaction rolled back)
     const unchanged = await prisma.violation.findUniqueOrThrow({
       where: { id: violation.id },
       select: { status: true },

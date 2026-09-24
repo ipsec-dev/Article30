@@ -158,7 +158,6 @@ export default function GlossaryPage() {
       if (!map.has(letter)) map.set(letter, []);
       map.get(letter)!.push(entry);
     }
-    // Sort map keys alphabetically
     return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b));
   }, [filtered, safeLocale]);
 

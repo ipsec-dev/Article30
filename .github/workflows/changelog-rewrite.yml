@@ -1,8 +1,9 @@
 name: Changelog Rewrite
 
 # Re-renders release-please's changelog from each PR's inner commits, so multi-commit
-# squash-merged PRs render every conventional entry. Runs after Release Please completes
-# and updates whichever surface release-please just wrote: open release PR or published Release.
+# squash-merged PRs render every conventional entry. Runs after Release Please completes and
+# rewrites the open release PR (CHANGELOG.md on its branch, and the PR body). The GitHub
+# Release later takes its notes from that CHANGELOG.md.
 
 on:
   workflow_run:

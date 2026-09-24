@@ -1,5 +1,5 @@
 interface AvatarInitialsProps {
-  // Accepts undefined/null defensively — UserDto declares `name: string` but
+  // Accepts undefined/null defensively: UserDto declares `name: string` but
   // the /auth/me payload sometimes omits it depending on backend shape.
   name: string | null | undefined;
   size?: number;

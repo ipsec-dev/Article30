@@ -56,7 +56,7 @@ export function useSidebarCollapsed() {
           window.localStorage.setItem(STORAGE_KEY, next ? 'true' : 'false');
         }
       } catch {
-        // localStorage unavailable — skip persistence
+        // localStorage unavailable: skip persistence
       }
       applySidebarWidth(next);
       return next;

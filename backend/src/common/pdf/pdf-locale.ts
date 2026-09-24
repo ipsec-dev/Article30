@@ -15,7 +15,7 @@ function normalize(value: string | undefined): PdfLocale | null {
  * Resolves the PDF output locale from an HTTP request. Priority:
  *   1. `?locale=` query string (set by the frontend so window.open() works)
  *   2. `Accept-Language` header (browser default)
- *   3. Fallback `fr` — matches the frontend default and audit-trail expectations.
+ *   3. Fallback `fr` (matches the frontend default and audit-trail expectations).
  */
 export function resolvePdfLocale(req: Request): PdfLocale {
   const queryRaw = req.query?.locale;

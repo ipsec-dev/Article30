@@ -36,7 +36,7 @@ export function ConfigProvider({ children }: Readonly<{ children: ReactNode }>) 
         }
       })
       .catch(() => {
-        // Fail-open for smtpEnabled (keeps true). bootstrapAvailable stays false —
+        // Fail-open for smtpEnabled (keeps true). bootstrapAvailable stays false:
         // refusing to reveal a bootstrap opportunity when we can't confirm the DB is
         // empty is the safer default.
       });

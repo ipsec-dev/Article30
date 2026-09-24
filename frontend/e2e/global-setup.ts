@@ -4,7 +4,7 @@ import { chromium, type FullConfig } from '@playwright/test';
 import bcrypt from 'bcrypt';
 
 // DB creation + migrations happen in e2e/db-prepare.mjs (run by the `e2e` npm
-// script before Playwright starts its webServer).  This hook resets data,
+// script before Playwright starts its webServer). This hook resets data,
 // seeds the admin, and persists an authenticated session so individual tests
 // reuse the cookie via `storageState` instead of hammering /auth/login (which
 // would trip the 5-attempts-per-minute rate limit).
@@ -16,9 +16,7 @@ export const ADMIN_STORAGE_STATE = 'e2e/.admin-storage-state.json';
 async function globalSetup(config: FullConfig) {
   const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: E2E_DB_URL }) });
   try {
-    // Models dropped during the single-tenant migration are no longer in the
-    // delete chain: DsrTreatment (Phase C migration), Membership (org-system
-    // removal). Cascade FKs handle the orphaned per-DSR sub-tables.
+    // Per-DSR sub-tables are not in the delete chain: cascade FKs remove them with their DSR.
     await prisma.$transaction([
       prisma.regulatoryUpdate.deleteMany(),
       prisma.rssFeed.deleteMany(),

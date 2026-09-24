@@ -5,7 +5,7 @@
  * every @Roles() decorator in the backend controllers.
  *
  * Strategy: import controller classes directly and read their NestJS/reflect-metadata
- * annotations.  This avoids spinning up the full AppModule (which needs Redis, DB,
+ * annotations. This avoids spinning up the full AppModule (which needs Redis, DB,
  * S3, …) while still reading the same metadata that the runtime AuthGuard uses.
  */
 
@@ -17,7 +17,6 @@ import { RequestMethod } from '@nestjs/common';
 import { Role, ROLE_PERMISSION_MATRIX, type HttpMethod } from '@article30/shared';
 import { ROLES_KEY } from '../../src/common/decorators/roles.decorator';
 
-// Import every controller class
 // Each import triggers the decorator application which writes Reflect metadata.
 import { TreatmentsController } from '../../src/modules/treatments/treatments.controller';
 import { ViolationsController } from '../../src/modules/violations/violations.controller';
@@ -49,21 +48,19 @@ const PUBLIC_ONLY_CONTROLLER_FILES = [
   'health.controller.ts',
 ] as const;
 
-// Constants
-
 const REQUEST_METHOD_TO_VERB: Record<number, HttpMethod | undefined> = {
   [RequestMethod.GET]: 'GET',
   [RequestMethod.POST]: 'POST',
   [RequestMethod.PATCH]: 'PATCH',
   [RequestMethod.PUT]: 'PUT',
   [RequestMethod.DELETE]: 'DELETE',
-  // HEAD / OPTIONS / ALL intentionally omitted — the matrix doesn't model them.
+  // HEAD / OPTIONS / ALL are omitted because the matrix doesn't model them.
 };
 
 const API_PREFIX = '/api';
 
 // `any` in the parameter position bypasses TS 6's tightened constructor-parameter
-// contravariance — each controller has a distinct injected-service signature.
+// contravariance: each controller has a distinct injected-service signature.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ALL_CONTROLLERS: (new (...args: any[]) => unknown)[] = [
   TreatmentsController,
@@ -84,8 +81,6 @@ const ALL_CONTROLLERS: (new (...args: any[]) => unknown)[] = [
   AttachmentsController,
   DecisionsController,
 ];
-
-// Helpers
 
 function joinPath(...segments: string[]): string {
   const joined = ('/' + segments.filter(Boolean).join('/')).replace(/\/+/g, '/');
@@ -139,8 +134,6 @@ function extractRoutes(
   return result;
 }
 
-// Test
-
 describe('role permissions matrix consistency', () => {
   it('ALL_CONTROLLERS plus PUBLIC_ONLY_CONTROLLER_FILES covers every controller file', () => {
     // Safeguard against the explicit-controller-list approach silently missing a
@@ -188,7 +181,7 @@ describe('role permissions matrix consistency', () => {
       ROLE_PERMISSION_MATRIX.flatMap(c => c.routes.map(r => `${r.method} ${r.path}`)),
     );
     for (const [route, roles] of actualRouteRoles) {
-      if (roles.length === 0) continue; // public/session-only — excluded
+      if (roles.length === 0) continue; // public/session-only: excluded
       expect(
         claimed.has(route),
         `Route ${route} is guarded by [${[...roles].join(',')}] but is missing from ROLE_PERMISSION_MATRIX`,

@@ -40,7 +40,7 @@ describe('RiskBadge', () => {
     );
     const badge = container.querySelector('[title]');
     expect(badge).not.toBeNull();
-    // fr tooltip: "7/9 critères CNIL" — en: "7/9 CNIL criteria"
+    // fr tooltip: "7/9 critères CNIL", en: "7/9 CNIL criteria"
     expect(badge?.getAttribute('title')).toMatch(/7\/9/);
   });
 });

@@ -17,7 +17,7 @@ export function sha256Hex(input: string | Buffer): string {
  *                     An empty string is treated as "no previous link" (same as null).
  * @param payload      the current row's content. Buffer payloads are always safe;
  *                     string payloads must have a deterministic byte representation
- *                     (sorted-key JSON or a fixed schema) — insertion-order
+ *                     (sorted-key JSON or a fixed schema); insertion-order
  *                     differences in JSON.stringify() will produce different hashes.
  */
 export function chainNext(

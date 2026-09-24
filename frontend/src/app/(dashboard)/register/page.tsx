@@ -57,7 +57,7 @@ export default function RegisterPage() {
       setTreatments(res.data);
       setTotal(res.total);
     } catch {
-      // intentional — errors surface as empty state
+      // intentional: errors surface as empty state
     } finally {
       setLoading(false);
     }
@@ -85,7 +85,7 @@ export default function RegisterPage() {
       const blob = await res.blob();
       downloadBlob(blob, 'treatments.csv');
     } catch {
-      // intentional — no toast yet
+      // intentional: no toast yet
     }
   }, []);
 
@@ -138,7 +138,7 @@ export default function RegisterPage() {
       }
       void fetchTreatments(page);
     } catch {
-      // intentional — no toast yet
+      // intentional: no toast yet
     }
   }, [pendingAction, fetchTreatments, page]);
 
@@ -204,7 +204,7 @@ export default function RegisterPage() {
         }}
       />
 
-      {/* Pagination — only shown when there are multiple pages */}
+      {/* Pagination (only shown when there are multiple pages) */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
           <p className="text-[13px]" style={{ color: 'var(--ink-3)' }}>

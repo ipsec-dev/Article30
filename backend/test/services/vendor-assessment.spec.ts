@@ -10,14 +10,14 @@ import { PrismaService } from '../../src/prisma/prisma.service';
 import { cleanupDatabase } from '../helpers';
 import { noopNotificationService } from '../helpers/notification-stub';
 
-// No-op NotificationService stub: this spec covers the existing pre-notify
+// No-op NotificationService stub: this spec covers the pre-notify
 // branches (validation, status guards, scoring). Notification side-effects
 // are covered separately in test/notifications/vendor-questionnaire-returned.spec.ts.
 const notificationsStub = noopNotificationService();
 
 const TEST_DB_URL =
   process.env.DATABASE_URL_TEST ??
-  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR — test-only default
+  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR: test-only default
 
 const BCRYPT_ROUNDS = 4;
 

@@ -88,9 +88,8 @@ export default function EditViolationPage() {
             description: violation.description ?? '',
             severity: violation.severity,
             // The form's discoveredAt is mapped to awarenessAt server-side;
-            // notifiedToCnil/notifiedToPersons are accepted but discarded
-            // (after Phase C they live in BreachNotificationFiling /
-            // PersonsNotification respectively).
+            // notifiedToCnil/notifiedToPersons are accepted but discarded (they
+            // live in BreachNotificationFiling / PersonsNotification respectively).
             discoveredAt: violation.awarenessAt,
             notifiedToCnil: false,
             notifiedToPersons: false,

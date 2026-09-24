@@ -55,7 +55,7 @@ describe('compliance.controller (e2e)', () => {
     });
   });
 
-  // ------------------- POST /snapshot — role gating -----------------------
+  // ------------------- POST /snapshot (role gating) -----------------------
 
   describe('POST /api/compliance/snapshot — role gating', () => {
     it('rejects AUDITOR with 403', async () => {

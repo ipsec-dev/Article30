@@ -157,9 +157,8 @@ export class VendorQuestionnairePdfService {
       { label: 'Téléphone / Phone', name: 'respondent_phone' },
     ];
 
-    // Stacked layout: label on its own line, input field below. Avoids the
-    // earlier two-column layout where bilingual labels wrapped awkwardly in a
-    // 170pt narrow column.
+    // Stacked layout: label on its own line, input field below, because
+    // bilingual labels wrap awkwardly in a narrow two-column layout.
     for (const row of rows) {
       const labelY = doc.y;
       doc
@@ -184,7 +183,7 @@ export class VendorQuestionnairePdfService {
 
   /**
    * Wraps `doc.formText` with a real visible stroke rectangle. PDFKit's
-   * AcroForm widget appearance is minimal — `borderColor`/`borderWidth` show
+   * AcroForm widget appearance is minimal: `borderColor`/`borderWidth` show
    * up in interactive editors but not when the PDF is viewed/printed
    * statically. Drawing the rect ourselves guarantees visible field outlines
    * regardless of viewer.
@@ -258,9 +257,9 @@ export class VendorQuestionnairePdfService {
 
       doc.moveDown(0.3);
 
-      // Checkbox row — one named field per option (vendor will check exactly one
+      // Checkbox row: one named field per option (vendor will check exactly one
       // per the printed instruction; AcroForm radio groups are clunkier and not
-      // worth the extra plumbing for v1).
+      // worth the extra plumbing).
       const rowY = doc.y;
       let cursor = x;
       for (const option of ANSWER_OPTIONS) {

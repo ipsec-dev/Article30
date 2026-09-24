@@ -9,7 +9,7 @@ import { api } from '@/lib/api/client';
 describe('useAttachments', () => {
   beforeEach(() => {
     vi.resetAllMocks();
-    // JSDOM's document.cookie='' does NOT clear cookies — explicitly expire any
+    // JSDOM's document.cookie='' does not clear cookies, so explicitly expire any
     // XSRF token left by a previous test.
     document.cookie = 'XSRF-TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
     vi.stubGlobal('fetch', vi.fn());

@@ -198,7 +198,7 @@ describe('api client', () => {
       // Third call: retry of original POST
       expect(fetchSpy.mock.calls[2][0]).toBe('/api/things');
       expect((fetchSpy.mock.calls[2][1] as RequestInit).method).toBe('POST');
-      // User did NOT see an error toast — the retry succeeded
+      // User did not see an error toast: the retry succeeded
       expect(vi.mocked(toast.error)).not.toHaveBeenCalled();
     });
 
@@ -230,7 +230,7 @@ describe('api client', () => {
         .mockResolvedValueOnce(mockFetchResponse({ body: { ok: true } })) // priming call
         .mockResolvedValueOnce(
           mockFetchResponse({ status: 403, ok: false, body: { message: 'Invalid CSRF token' } }),
-        ); // retry still fails — no second retry
+        ); // retry still fails; no second retry
       await expect(api.post('/things')).rejects.toBeInstanceOf(ApiError);
       expect(fetchSpy).toHaveBeenCalledTimes(3);
       expect(vi.mocked(toast.error)).toHaveBeenCalledWith('Invalid CSRF token');

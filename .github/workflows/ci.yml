@@ -102,7 +102,7 @@ jobs:
       # COMMIT_OR_PR_TITLE, any PR with more than one commit), so a
       # non-conventional title lands on main unparsed and release-please
       # skips the release entirely - no version bump, no changelog entry.
-      # Note: this only runs on push events, not on title edits, so editing
+      # This only runs on push events, not on title edits, so editing
       # the title to something invalid after CI is green won't be caught.
       - name: Validate PR title
         env:
@@ -300,8 +300,8 @@ jobs:
         id: playwright-version
         # Cache key is scoped to the resolved @playwright/test version so a
         # pnpm-lock.yaml bump (new browser snapshot) invalidates the cache
-        # cleanly. Frontend depends on @playwright/test, not bare `playwright`
-        # — under pnpm that's the path that actually exists.
+        # cleanly. Frontend depends on @playwright/test, not bare `playwright`;
+        # under pnpm that's the path that actually exists.
         run: |
           VERSION=$(node -p "require('./frontend/node_modules/@playwright/test/package.json').version")
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"

@@ -131,8 +131,8 @@ export class AlertsService {
       let dueDate: string | null = null;
       let severity = v.severity as Severity;
 
-      // dueDate is intentionally populated only while the 72h CNIL clock is still
-      // ticking. Once a BreachNotificationFiling row exists, the deadline is met —
+      // dueDate is populated only while the 72h CNIL clock is still ticking.
+      // Once a BreachNotificationFiling row exists, the deadline is met;
       // surfacing it on the alert would mislead the dashboard.
       const hasBeenFiledWithCnil = v.notificationFilings.length > 0;
       if (isPreNotification && !hasBeenFiledWithCnil) {
@@ -143,8 +143,8 @@ export class AlertsService {
         });
         dueDate = result.effectiveDeadline.toISOString();
 
-        // Severity tiering matches the original behaviour: critical at any overdue
-        // OR < 12h to deadline, high at < 24h, otherwise the violation's own severity.
+        // Severity tiering: critical at any overdue or < 12h to deadline, high
+        // at < 24h, otherwise the violation's own severity.
         const msToDeadline = result.effectiveDeadline.getTime() - now.getTime();
         if (result.isOverdue || msToDeadline < HOURS_THRESHOLD_CRITICAL * MS_PER_HOUR) {
           severity = Severity.CRITICAL;
@@ -256,10 +256,10 @@ export class AlertsService {
     });
 
     return dsrs.map(dsr => {
-      // Severity is engine-derived from the per-DSR profile + receivedAt — not
+      // Severity is engine-derived from the per-DSR profile + receivedAt, not
       // from the stored dsr.deadline column. The engine remains the single
       // source of truth for overdue determination so pause + extension
-      // semantics (M3) flow through one path.
+      // semantics flow through one path.
       const r = computeDeadline({
         profile: DSR_PROFILE_MAP[dsr.deadlineProfile],
         anchorAt: dsr.receivedAt,
@@ -317,7 +317,7 @@ export class AlertsService {
             url: `/vendors/${vendor.id}`,
           });
         } else {
-          // DPA expiry is further than 30 days out — no alert
+          // DPA expiry is further than 30 days out: no alert
         }
       }
     }

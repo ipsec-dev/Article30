@@ -10,7 +10,7 @@ const DEFAULT_PAGE_SIZE = 20;
 
 // Serializable audit-log writes conflict under concurrent traffic. Postgres
 // aborts the loser with error code P2034 (Prisma serialization failure). These
-// are transient — retry a handful of times with a small linear backoff before
+// are transient; retry a handful of times with a small linear backoff before
 // surfacing to the caller.
 const SERIALIZATION_FAILURE_CODE = 'P2034';
 const MAX_WRITE_ATTEMPTS = 4;

@@ -83,7 +83,7 @@ function DsrRow({ request, t }: Readonly<DsrRowProps>) {
         {t(`${DSR_TYPE_KEY_PREFIX}${request.type}`)}
       </td>
 
-      {/* Réf. — links to detail */}
+      {/* Réf. (links to detail) */}
       <td className="px-4 py-3">
         <Link
           href={`/dsr/${request.id}`}
@@ -419,7 +419,7 @@ export default function DsrPage() {
   const [copied, setCopied] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
-  const publicFormUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/dsr/submit`; // NOSONAR S7764 — browser-specific location API
+  const publicFormUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/dsr/submit`; // NOSONAR S7764: browser-specific location API
 
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(publicFormUrl);

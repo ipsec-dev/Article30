@@ -17,16 +17,16 @@ const INSTANT_LEAD_TIME = 'INSTANT';
 export interface NotifyArgs {
   kind: NotificationKind;
   recordId: string;
-  /** "T-7" / "T-1" / "T+1" / "T-24h" / "T-6h" / "T-30" — required for scheduled kinds, ignored for instant. */
+  /** "T-7" / "T-1" / "T+1" / "T-24h" / "T-6h" / "T-30": required for scheduled kinds, ignored for instant. */
   leadTime?: string;
   assigneeEmail?: string | null;
   orgDpoEmail?: string | null;
   orgLocale?: string | null;
-  /** Org company name — used for sign-off + footer orientation. Falls back to ''. */
+  /** Org company name, used for sign-off + footer orientation. Falls back to ''. */
   orgCompanyName?: string | null;
-  /** Which fallback path resolved the recipient — drives the footer orientation line. */
+  /** Which fallback path resolved the recipient; drives the footer orientation line. */
   recipientRole?: RecipientRole;
-  /** Settings record from the org row — only the toggle for `kind` is consulted. */
+  /** Settings record from the org row; only the toggle for `kind` is consulted. */
   settings?: Partial<Record<NotificationSettingKey, boolean>>;
   /** Template variables. Common keys: recordTitle, recipientFirstName, recordUrl, deadlineDate, leadTimeLabel. */
   context: Record<string, string>;
@@ -118,7 +118,7 @@ export class NotificationService {
     // findUnique above is a best-effort fast-path; under concurrent calls two
     // notify()s for the same (kind, recordId, leadTime) can both pass it, so
     // the unique constraint is still authoritative. Treat the duplicate-key
-    // loser as a successful no-op — the mail already went out, and the winner
+    // loser as a successful no-op: the mail already went out, and the winner
     // owns the audit row.
     try {
       await this.prisma.notificationLog.create({

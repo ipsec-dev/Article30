@@ -7,7 +7,7 @@ import type { NotificationService } from '../../src/modules/notifications/notifi
  * test/notifications/*.spec.ts).
  *
  * Centralised so the cast happens in one place; if NotificationService grows
- * methods that some tests SHOULD exercise, the type error surfaces here.
+ * methods that some tests should exercise, the type error surfaces here.
  */
 export const noopNotificationService = (): NotificationService =>
   ({ notify: async () => {} }) as unknown as NotificationService;

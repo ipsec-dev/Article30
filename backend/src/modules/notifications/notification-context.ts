@@ -5,7 +5,7 @@ import type { PrismaService } from '../../prisma/prisma.service';
 // assignee user if `assignedTo` is set.
 //
 // When multi-tenancy lands, change the org lookup to findUnique({where:{id}})
-// — every notify call site gets fixed in one place.
+// and every notify call site gets fixed in one place.
 export interface NotificationContext {
   org: {
     dpoEmail: string | null;

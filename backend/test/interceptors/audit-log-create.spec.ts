@@ -9,7 +9,7 @@ import { cleanupDatabase } from '../helpers';
 
 const TEST_DB_URL =
   process.env.DATABASE_URL_TEST ??
-  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR — test-only default
+  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR: test-only default
 const GENESIS = 'GENESIS';
 const TEST_ENTITY_ID = '00000000-0000-0000-0000-000000000001';
 

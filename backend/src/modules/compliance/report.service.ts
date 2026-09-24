@@ -240,7 +240,7 @@ interface OrgRow {
   representativeName?: string | null;
 }
 
-/** Minimal shape used by the renderer — matches both the Prisma row and the
+/** Minimal shape used by the renderer: matches both the Prisma row and the
  * shared DTO without forcing nominal-type compatibility between them. */
 interface ChecklistResponseRow {
   itemId: string;
@@ -504,11 +504,10 @@ export class ReportService {
   }
 
   /**
-   * Score pillar block — three lines at the same left margin:
+   * Score pillar block, rendered as three lines at the same left margin:
    *   1. label (bold, dark) on the left + score% (bold, color-coded) on the right
    *   2. full-width left-aligned score bar
    *   3. caption (muted, detail font): "Poids X% · Y/Z items conformes"
-   * Tighter and more report-like than the previous centered-280pt layout.
    */
   private renderScorePillar(
     doc: PDFKit.PDFDocument,

@@ -5,14 +5,14 @@ const SMTP_SECURE_PORT = 465;
 
 export interface MailTransportResult {
   transport: Transporter | null;
-  /** Test sink — populated only when NODE_ENV=test; null otherwise or when disabled. */
+  /** Test sink: populated only when NODE_ENV=test; null otherwise or when disabled. */
   sink: Array<{ to: string; subject: string; text: string }> | null;
   /** Whether outbound mail is wired. When false, `transport` and `sink` are null. */
   enabled: boolean;
 }
 
 // Only an explicit (case-insensitive) string 'false' disables SMTP.
-// Any other value — including '0', 'no', 'off', or an empty string — is
+// Any other value (including '0', 'no', 'off', or an empty string) is
 // treated as enabled. This keeps the default backwards-compatible for
 // operators who upgrade without setting the flag, and avoids silently
 // accepting "truthy-looking" off values that would mask configuration

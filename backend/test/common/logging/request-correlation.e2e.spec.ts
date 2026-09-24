@@ -38,7 +38,7 @@ describe('request correlation (e2e)', () => {
     const moduleRef = await Test.createTestingModule({ imports: [AppModule] })
       .overrideProvider('pino-params')
       .useValue({
-        // Array form: [options, destinationStream] — pinoHttp forwards the second arg
+        // Array form [options, destinationStream]: pinoHttp forwards the second arg
         // as the stream so our capturer receives every line the app would normally
         // write to stdout.
         pinoHttp: [pinoHttpOptions, destination],

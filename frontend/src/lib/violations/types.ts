@@ -106,6 +106,5 @@ export interface ActionItem {
 
 // Discriminator: target status
 // The hook accepts a free-form payload and the backend validates server-side.
-// Common fields per target listed below for documentation purposes.
 // (We keep this free-form to match the backend's unknown-payload contract.)
 export type TransitionPayloadFields = Record<string, unknown>;

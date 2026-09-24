@@ -23,7 +23,7 @@ export interface UpdateActionItemInput {
   ownerId?: string;
   deadline?: Date;
   status?: RemediationActionItemStatus;
-  /** Required when status transitions to DONE — used to set doneBy. */
+  /** Required when status transitions to DONE; used to set doneBy. */
   updatedBy: string;
 }
 
@@ -93,7 +93,7 @@ export class RemediationService {
         data.doneAt = new Date();
         data.doer = { connect: { id: input.updatedBy } };
       } else if (target.status === 'DONE') {
-        // Reverting from DONE — clear the markers.
+        // Reverting from DONE: clear the markers.
         data.doneAt = null;
         data.doer = { disconnect: true };
       }
@@ -106,7 +106,7 @@ export class RemediationService {
 
     if (input.ownerId !== undefined && target.ownerId !== updated.ownerId) {
       // Sentinel includes the new ownerId AND the change timestamp, so an
-      // A→B→A→B reassignment cycle always re-notifies — without the timestamp,
+      // A→B→A→B reassignment cycle always re-notifies. Without the timestamp,
       // the second OWNER:B row would collide with the unique constraint and
       // the notification would be silently dropped as a "race_lost" duplicate.
       await this.emitAssignedNotification(

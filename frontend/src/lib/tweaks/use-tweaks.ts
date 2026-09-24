@@ -87,7 +87,7 @@ export function useTweaks() {
           window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
         }
       } catch {
-        // localStorage unavailable — skip persistence
+        // localStorage unavailable: skip persistence
       }
       applyTweaks(next);
       return next;

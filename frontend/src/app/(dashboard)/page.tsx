@@ -170,7 +170,7 @@ export default function DashboardPage() {
           setSnapshots(snapRes ?? []);
         }
       } catch {
-        // swallow — UI degrades gracefully
+        // swallow: UI degrades gracefully
       } finally {
         setLoading(false);
       }

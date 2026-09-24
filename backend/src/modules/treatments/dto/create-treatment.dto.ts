@@ -148,7 +148,7 @@ export class CreateTreatmentDto {
   @SanitizeHtml()
   retentionPeriod?: string;
 
-  // Legacy fields (kept for backward compatibility during migration)
+  // Deprecated fields (still accepted for backward compatibility)
   @ApiPropertyOptional({ type: [String], deprecated: true })
   @IsOptional()
   @IsArray()

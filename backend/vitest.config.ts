@@ -9,7 +9,7 @@ export default defineConfig({
     globals: true,
     testTimeout: 15000,
     hookTimeout: 30000,
-    // Test files share a single PostgreSQL test DB — run them serially to avoid
+    // Test files share a single PostgreSQL test DB: run them serially to avoid
     // cross-file data contamination from concurrent cleanupDatabase() calls.
     fileParallelism: false,
     coverage: {
@@ -18,8 +18,8 @@ export default defineConfig({
       reportsDirectory: './coverage',
       // Surface un-imported source files so coverage gaps are visible,
       // not hidden behind "no test ever imported this module".
-      // (Vitest 4.1.5+ infers `all` from `include`/`exclude` — the explicit
-      // `all: true` was removed from CoverageOptions and now fails typecheck.)
+      // (Vitest 4.1.5+ infers `all` from `include`/`exclude`; CoverageOptions has no
+      // `all` option, so an explicit `all: true` fails typecheck.)
       include: ['src/**/*.ts'],
       exclude: [
         'src/main.ts',

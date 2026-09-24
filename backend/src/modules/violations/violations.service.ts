@@ -125,7 +125,7 @@ export class ViolationsService {
   }
 
   async create(dto: CreateViolationDto, userId: string, userRole?: string) {
-    // Destructure and discard legacy fields that no longer exist in the schema.
+    // Destructure and discard DTO fields that have no column in the schema.
     const {
       treatmentIds,
       discoveredAt,

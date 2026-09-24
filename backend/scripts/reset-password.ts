@@ -7,7 +7,7 @@
  *
  * Token mode (default) prints a one-time reset URL and exits. Direct mode
  * sets the password inline, destroys every session for that user, and
- * exits. Both modes work identically whether SMTP is enabled or not —
+ * exits. Both modes work identically whether SMTP is enabled or not:
  * recovery does not depend on mail.
  */
 

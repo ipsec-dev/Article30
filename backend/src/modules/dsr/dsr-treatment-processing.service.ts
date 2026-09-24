@@ -104,7 +104,7 @@ export class DsrTreatmentProcessingService {
         'code' in err &&
         (err as { code: string }).code === 'P2025'
       ) {
-        // Row doesn't exist — idempotent no-op
+        // Row doesn't exist: idempotent no-op
         return;
       }
       throw err;

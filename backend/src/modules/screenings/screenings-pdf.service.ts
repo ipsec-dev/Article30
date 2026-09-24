@@ -243,7 +243,7 @@ export class ScreeningsPdfService {
         `• ${q.articleRef} — ${pickLabel(q.label, locale)} (${ANSWER_LABELS[locale][responses[q.id]] ?? ''})`,
     );
 
-    // Pre-measure callout + section header so we addPage *before* drawing the
+    // Pre-measure callout + section header so we addPage before drawing the
     // header if they wouldn't fit together. drawCallout itself will addPage if
     // it overflows on its own, but that orphans the just-drawn section header
     // on the previous page.

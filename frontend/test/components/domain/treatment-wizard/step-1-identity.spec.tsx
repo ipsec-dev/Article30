@@ -12,7 +12,7 @@ import { I18nProvider } from '@/i18n/context';
 // MAX_SUB_PURPOSES is 5 (source const). The Add button is disabled at >=5 rows.
 // Legal basis uses a Radix Select (portal-rendered options; requires jsdom polyfills).
 
-// jsdom polyfills for Radix Select — same pattern as violation-form.spec.
+// jsdom polyfills for Radix Select (same pattern as violation-form.spec).
 beforeAll(() => {
   if (!Element.prototype.scrollIntoView) {
     Element.prototype.scrollIntoView = vi.fn();

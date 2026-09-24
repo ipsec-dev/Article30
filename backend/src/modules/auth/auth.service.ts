@@ -37,7 +37,7 @@ export class AuthService {
   ) {}
 
   async signup(dto: SignupDto) {
-    // Hash BEFORE the transaction — bcrypt is slow and we don't want to hold
+    // Hash before the transaction: bcrypt is slow and we don't want to hold
     // row locks for ~100ms per signup. Plausible-attack window is already
     // closed by the transaction's serializable isolation.
     const hashedPassword = await bcrypt.hash(dto.password, BCRYPT_SALT_ROUNDS);
@@ -51,7 +51,7 @@ export class AuthService {
           where: { email: dto.email },
         });
         if (existing) {
-          // Do not log the email — GDPR Art. 5(1)(c) data minimisation.
+          // Do not log the email: GDPR Art. 5(1)(c) data minimisation.
           this.logger.warn({
             event: 'auth.signup.rejected',
             reason: 'email_taken',
@@ -99,7 +99,7 @@ export class AuthService {
       where: { email: dto.email },
     });
     if (!user) {
-      // Do not log the email — GDPR Art. 5(1)(c).
+      // Do not log the email: GDPR Art. 5(1)(c).
       this.logger.warn({
         event: 'auth.login.failed',
         reason: 'user_not_found',
@@ -110,7 +110,7 @@ export class AuthService {
 
     const valid = await bcrypt.compare(dto.password, user.password);
     if (!valid) {
-      // Do not log the email — GDPR Art. 5(1)(c).
+      // Do not log the email: GDPR Art. 5(1)(c).
       this.logger.warn({
         event: 'auth.login.failed',
         reason: 'invalid_password',
@@ -160,8 +160,8 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(dto.newPassword, BCRYPT_SALT_ROUNDS);
     // Successfully consuming a reset token implies the user has demonstrated
-    // ownership of the email and is choosing a real password — flip approved
-    // to true so an invitee can log in once they finish onboarding (#C).
+    // ownership of the email and is choosing a real password; flip approved
+    // to true so an invitee can log in once they finish onboarding.
     await this.prisma.user.update({
       where: { id: userId },
       data: {

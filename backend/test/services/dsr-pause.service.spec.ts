@@ -53,7 +53,6 @@ describe('DsrPauseService', () => {
     await prisma.followUpTimeline.deleteMany();
   });
 
-  // Test 1: open creates an interval and emits PAUSE_STARTED timeline event
   it('open creates a DsrPauseInterval and emits a PAUSE_STARTED Timeline event', async () => {
     const interval = await svc.open({
       dsrId,
@@ -74,7 +73,6 @@ describe('DsrPauseService', () => {
     expect(events[0].entityId).toBe(dsrId);
   });
 
-  // Test 2: open when one is already open throws BadRequestException
   it('open throws BadRequestException when there is already an open pause', async () => {
     await svc.open({
       dsrId,
@@ -99,7 +97,6 @@ describe('DsrPauseService', () => {
     ).rejects.toThrow('DSR already has an open pause');
   });
 
-  // Test 3: close sets resumedAt and emits PAUSE_ENDED Timeline event
   it('close sets resumedAt and emits a PAUSE_ENDED Timeline event', async () => {
     await svc.open({
       dsrId,
@@ -124,7 +121,6 @@ describe('DsrPauseService', () => {
     expect(events[1].kind).toBe('PAUSE_ENDED');
   });
 
-  // Test 4: close when none is open throws NotFoundException
   it('close throws NotFoundException when there is no open pause', async () => {
     await expect(
       svc.close({
@@ -141,7 +137,7 @@ describe('DsrPauseService', () => {
     ).rejects.toThrow('No open pause to close');
   });
 
-  // Test 5: open → close → open works (multiple intervals all returned by list)
+  // open → close → open works (multiple intervals all returned by list)
   it('supports multiple pause cycles over DSR lifetime', async () => {
     await svc.open({
       dsrId,
@@ -163,7 +159,6 @@ describe('DsrPauseService', () => {
     expect(intervals[1].resumedAt).toBeNull();
   });
 
-  // Test 6: list returns ASC by pausedAt, then id (stable secondary sort)
   it('list returns intervals ordered ASC by pausedAt then id', async () => {
     // Create two intervals with same pausedAt to verify stable sort by id.
     // Both must have resumedAt set, otherwise the partial unique

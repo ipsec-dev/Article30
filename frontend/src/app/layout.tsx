@@ -7,10 +7,10 @@ import './globals.css';
 
 // Self-hosted instead of `next/font/google`: that loader downloads the woff2
 // from fonts.gstatic.com during `next build`, and when Google rotates the file
-// hashes the CSS it just served can point at binaries that already 404 — which
+// hashes the CSS it just served can point at binaries that already 404, which
 // fails the Turbopack build outright (CI run 31636195759).
-// ponytail: latin subset only (variable weight axis); add the latin-ext file if
-// UI copy ever needs glyphs outside U+0000-00FF.
+// Latin subset only (variable weight axis); add the latin-ext file if UI copy
+// ever needs glyphs outside U+0000-00FF.
 const inter = localFont({
   src: './fonts/inter-latin-var.woff2',
   weight: '100 900',

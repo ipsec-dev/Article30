@@ -165,7 +165,7 @@ describe('vendors.controller (e2e)', () => {
       const { agent } = await loginAs(testApp.app, user.email, password);
       const res = await agent.get(`/api/vendors/${vendor.id}/assessment`);
       expect(res.status).toBe(200);
-      // supertest parses an empty/null JSON body as {} — both acceptable.
+      // supertest parses an empty/null JSON body as {}; both are acceptable.
       expect(res.body === null || Object.keys(res.body).length === 0).toBe(true);
     });
 

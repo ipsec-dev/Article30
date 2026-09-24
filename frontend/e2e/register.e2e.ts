@@ -5,7 +5,7 @@ test.describe('register', () => {
     const page = loginAsAdmin;
     await page.goto('/register');
     await expect(page.getByRole('dialog', { name: /runtime/i })).not.toBeVisible();
-    // EmptyState title (no treatments yet) OR table headers
+    // EmptyState title (no treatments yet) or table headers
     await expect(
       page.getByText(/aucun traitement|réf\.|nom|nouveau traitement/i).first(),
     ).toBeVisible({ timeout: 10_000 });

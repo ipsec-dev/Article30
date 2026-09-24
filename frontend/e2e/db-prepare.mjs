@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Creates the article30_e2e Postgres database (idempotent) and applies Prisma
-// migrations.  Must run before Playwright starts its webServer, because the
+// migrations. Must run before Playwright starts its webServer, because the
 // backend crashes immediately when DATABASE_URL points to a missing DB.
 // Runs via the `e2e` npm script (see frontend/package.json).
 

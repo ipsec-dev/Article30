@@ -54,7 +54,7 @@ const KNOWN_ROW_ERROR_CODES = new Set<string>([
 ]);
 
 // Structural failures emit `BadRequestException` with these codes (some carry a
-// `:detail` suffix the backend computes — strip it for the i18n lookup).
+// `:detail` suffix the backend computes; strip it for the i18n lookup).
 const STRUCTURAL_ERROR_CODES = new Set<string>([
   'file_too_large',
   'xlsx_unreadable',

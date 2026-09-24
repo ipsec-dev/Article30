@@ -11,7 +11,7 @@ function ensureRole(
   allowed: readonly Role[],
 ): asserts user is RequestUser {
   // RequestUser.role is the Prisma-generated Role type; allowed comes from
-  // @article30/shared. Same string values, nominally different types - cast
+  // @article30/shared. Same string values, nominally different types: cast
   // through readonly string[] to bridge them without losing call-site safety.
   if (!user || !(allowed as readonly string[]).includes(user.role)) {
     throw new ForbiddenException();
@@ -55,7 +55,7 @@ export async function assertCanReadDocument(
       return;
     }
     case LinkedEntity.CHECKLIST_ITEM:
-      // Org-wide artefact - no per-user scoping beyond the role gate.
+      // Org-wide artefact: no per-user scoping beyond the role gate.
       return;
     default: {
       const _exhaustive: never = document.linkedEntity;

@@ -81,7 +81,7 @@ function genReqId(req: IncomingMessage): string {
 
 /**
  * Pino options used by both the Nest LoggerService and the pino-http middleware.
- * Single source of truth — all other modules consume this.
+ * Single source of truth: all other modules consume this.
  */
 export function buildPinoOptions(): Params {
   const level = resolveLogLevel();
@@ -159,7 +159,7 @@ export function buildPinoOptions(): Params {
       },
       serializers: {
         // Keep headers + ip so redact can strip/censor them.
-        // Skip request/response bodies — those are large, noisy, and redact's
+        // Skip request/response bodies: those are large, noisy, and redact's
         // wildcard depth won't reliably catch every nested secret.
         req: (req: {
           method?: string;

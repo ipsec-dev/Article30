@@ -28,7 +28,7 @@ interface OrgCtx {
 /**
  * Periodic sweeps that emit deadline-bound notifications. Every per-record
  * notify() call is wrapped in try/catch so a single bad row never aborts the
- * sweep — the failure is logged and the loop continues. Idempotency is enforced
+ * sweep; the failure is logged and the loop continues. Idempotency is enforced
  * downstream by NotificationService via the (kind, recordId, leadTime) unique
  * constraint on notification_log, so re-running a sweep on the same day is safe.
  */
@@ -42,7 +42,7 @@ export class NotificationsScheduler {
     private readonly notifications: NotificationService,
   ) {}
 
-  // Daily 08:00 — DSR / vendor DPA / treatment review. Pinned to Europe/Paris
+  // Daily 08:00 (DSR / vendor DPA / treatment review). Pinned to Europe/Paris
   // because CNIL deadlines are wall-clock Paris time; container TZ is UTC in
   // production which would shift the run to 09:00/10:00 local across DST.
   @Cron('0 8 * * *', { timeZone: 'Europe/Paris' })
@@ -67,7 +67,7 @@ export class NotificationsScheduler {
     }
   }
 
-  // Every 6h — violation 72h CNIL window. Higher cadence so the T-24h / T-6h
+  // Every 6h (violation 72h CNIL window). Higher cadence so the T-24h / T-6h
   // windows are not missed by a single missed daily tick. Paris-pinned for the
   // same reason as the daily sweep.
   @Cron('0 */6 * * *', { timeZone: 'Europe/Paris' })
@@ -77,7 +77,7 @@ export class NotificationsScheduler {
     if (!org) return;
     if (!org.notifyViolation72h) return;
 
-    // Outer try/catch — a DB hiccup on findMany would otherwise crash the cron
+    // Outer try/catch: a DB hiccup on findMany would otherwise crash the cron
     // tick. Per-record notify() failures are handled inside the loop.
     try {
       const now = Date.now();
@@ -97,7 +97,7 @@ export class NotificationsScheduler {
       const locale = resolveRecipientLocale(org.locale);
       for (const v of violations) {
         const remainingMs = v.awarenessAt.getTime() + 72 * MS_PER_HOUR - now;
-        // Two stripes: "1 day left" (12h–30h remaining) and "6h left" (0–12h).
+        // Two stripes: "1 day left" (12h-30h remaining) and "6h left" (0-12h).
         // The 30h upper bound covers the 6h cron jitter on either side of T-24h.
         let leadTime: 'T-24h' | 'T-6h' | null = null;
         if (remainingMs > 12 * MS_PER_HOUR && remainingMs <= 30 * MS_PER_HOUR) {
@@ -282,7 +282,7 @@ export class NotificationsScheduler {
           kind: 'vendor.dpa-expiring',
           recordId: v.id,
           leadTime,
-          // Vendor has no assignee in the schema — always route to org DPO.
+          // Vendor has no assignee in the schema, so always route to org DPO.
           assigneeEmail: null,
           orgDpoEmail: org.dpoEmail,
           orgLocale: org.locale,

@@ -133,9 +133,9 @@ export class TreatmentsImportService {
     }
 
     // Re-parse to recover raw cell values for DTO construction. We don't pass DTOs
-    // through the preview shape on purpose: re-parsing the original bytes keeps
+    // through the preview shape: re-parsing the original bytes keeps
     // the commit faithful to what was uploaded, and any drift between the two
-    // parses (none expected — parsing is deterministic) would be caught by the
+    // parses (none expected, since parsing is deterministic) would be caught by the
     // validation we just ran.
     const { dataRows, cell } = this.parseSheet(buffer);
     const emailToUserId = await this.resolveEmails(
@@ -145,8 +145,8 @@ export class TreatmentsImportService {
     const inserted = await this.prisma.$transaction(async tx => {
       // refNumber is @unique on Treatment. Without serialization, two concurrent
       // imports could both read the same _max(refNumber) and the second insert
-      // would fail with P2002. The advisory lock is xact-scoped — released on
-      // commit/abort.
+      // would fail with P2002. The advisory lock is xact-scoped (released on
+      // commit/abort).
       await acquireXactLock(tx, 'treatment-import');
 
       const out: Array<{ id: string; name: string }> = [];

@@ -42,7 +42,7 @@ export class AttachmentsService {
     // Two-phase upload: storage first, then DB transaction. If the inner
     // transaction throws (lock contention, constraint violation, connection
     // drop), best-effort delete the orphan storage object before rethrowing
-    // so we don't leak blobs. (Review #F.)
+    // so we don't leak blobs.
     let uploaded = false;
     try {
       await this.storage.upload(storageKey, input.buffer, input.mimeType);

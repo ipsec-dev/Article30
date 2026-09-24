@@ -148,9 +148,8 @@ export class UsersService {
     expiresInMinutes: number;
     emailed: boolean;
   }> {
-    // Single-tenant: no Membership to create, so the email-uniqueness check
-    // and the user.create can share the default isolation. Postgres' UNIQUE
-    // constraint on user.email rejects concurrent duplicates regardless.
+    // The email-uniqueness check and user.create share the default isolation level:
+    // the UNIQUE constraint on user.email rejects concurrent duplicates regardless.
     // The invitee is created with approved=false and placeholder names;
     // flipping to true and setting real firstName/lastName happens on a
     // successful password reset (auth.service.resetPassword).
@@ -181,7 +180,7 @@ export class UsersService {
       return user;
     });
 
-    // Audit FIRST, token SECOND — so a partial failure never leaves an orphan live token.
+    // Audit FIRST, token SECOND, so a partial failure never leaves an orphan live token.
     await this.audit.create({
       action: 'user.invited',
       entity: 'user',
@@ -201,7 +200,7 @@ export class UsersService {
     const frontendUrl = process.env.FRONTEND_URL ?? 'http://localhost:3000';
     // `invite=1` flag tells the reset-password page to show first/last name
     // fields. forgot-password and admin-issued resets omit it because those
-    // flows hit *existing* users whose names already exist.
+    // flows hit existing users whose names already exist.
     const resetUrl = `${frontendUrl}/reset-password?token=${token}&invite=1`;
 
     let emailed = false;

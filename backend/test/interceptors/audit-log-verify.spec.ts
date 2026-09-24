@@ -8,14 +8,14 @@ import { cleanupDatabase } from '../helpers';
 
 const TEST_DB_URL =
   process.env.DATABASE_URL_TEST ??
-  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR — test-only default
+  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR: test-only default
 const TEST_ENTITY_ID = '00000000-0000-0000-0000-000000000001';
 const EXPECTED_CHAIN_LENGTH = 3;
 const JSONB_REORDER_FIXTURE = {
   zebra: 'last',
   alpha: 'first',
   middle: { zz: 2, aa: 1 },
-  beta: [3, 2, 1], // NOSONAR — test fixture data
+  beta: [3, 2, 1], // NOSONAR: test fixture data
 };
 
 describe('AuditLogService — verify() chain integrity', () => {

@@ -67,8 +67,8 @@ describe('ComplianceService (score)', () => {
       expect(result.score).toBe(0);
       expect(result.breakdown.checklist.answered).toBe(0);
       expect(result.breakdown.checklist.total).toBe(CHECKLIST_TOTAL);
-      // Freshness defaults to 100 when there are no treatments — see
-      // computeFreshnessScore comment for why.
+      // Freshness defaults to 100 when there are no treatments (see the
+      // computeFreshnessScore comment for why).
       expect(result.breakdown.freshness.score).toBe(100);
       expect(result.breakdown.freshness.validated).toBe(0);
       expect(result.breakdown.freshness.total).toBe(0);
@@ -78,7 +78,7 @@ describe('ComplianceService (score)', () => {
     it('keeps freshness at 100 when checklist has answers but no treatments are registered yet', async () => {
       const user = await seedUser();
       // Org started filling in the governance checklist but hasn't logged
-      // any treatments — the freshness band must NOT drag the score down.
+      // any treatments: the freshness band must not drag the score down.
       await prisma.checklistResponse.create({
         data: {
           itemId: 'art33-breach',
@@ -157,7 +157,7 @@ describe('ComplianceService (score)', () => {
         },
       });
 
-      // NA without reason does NOT count
+      // NA without reason does not count
       await prisma.checklistResponse.create({
         data: {
           itemId: 'art25-design',
@@ -166,7 +166,7 @@ describe('ComplianceService (score)', () => {
         },
       });
 
-      // NO does NOT count
+      // NO does not count
       await prisma.checklistResponse.create({
         data: {
           itemId: 'art25-default',

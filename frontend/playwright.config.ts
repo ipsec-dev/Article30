@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './e2e',
   testMatch: /\.e2e\.ts$/,
-  // Per-test default timeout: bumped to 60s so first-route-compile latency
+  // Per-test default timeout: 60s so first-route-compile latency
   // (Next.js dev compiles each route on first navigation) doesn't flake the
   // smoke suite.
   timeout: 60_000,

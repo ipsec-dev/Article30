@@ -103,7 +103,7 @@ describe('NotificationsScheduler', () => {
         deadline: new Date(today.getTime() - 1 * DAY),
       },
     });
-    // Out of window — should not fire.
+    // Out of window: should not fire.
     await prisma.dataSubjectRequest.create({
       data: {
         type: 'ACCESS',
@@ -206,7 +206,7 @@ describe('NotificationsScheduler', () => {
         createdBy: owner.id,
       },
     });
-    // Out of window — should not fire.
+    // Out of window: should not fire.
     await prisma.vendor.create({
       data: {
         name: 'D',
@@ -240,7 +240,7 @@ describe('NotificationsScheduler', () => {
         createdBy: owner.id,
       },
     });
-    // Out of window — should not fire.
+    // Out of window: should not fire.
     await prisma.treatment.create({
       data: {
         name: 'P3',

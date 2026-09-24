@@ -167,7 +167,7 @@ export function DocumentList({ linkedEntity, linkedEntityId }: DocumentListProps
   const handleDownload = useCallback((docId: string, filename: string) => {
     // The backend serves files with Content-Disposition: inline so they preview
     // when navigated to directly (e.g. <img src>). The Download button should
-    // actually download, so we use the HTML `download` attribute - browsers
+    // actually download, so we use the HTML `download` attribute; browsers
     // honour it for same-origin URLs and override the inline disposition.
     const a = document.createElement('a');
     a.href = `/api/documents/${docId}/download`;

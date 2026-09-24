@@ -32,7 +32,7 @@ describe('<RolePermissionsDialog />', () => {
         <RolePermissionsDialog open={true} onOpenChange={() => {}} />
       </I18nProvider>,
     );
-    // Radix portals dialog content into document.body — query the whole doc.
+    // Radix portals dialog content into document.body, so query the whole doc.
     expect(document.querySelectorAll('svg').length).toBeGreaterThan(0);
     expect(screen.getAllByText('—').length).toBeGreaterThan(0);
   });

@@ -193,7 +193,7 @@ describe('Step2Data', () => {
     );
     expect(getFormValues().hasSensitiveData).toBe(true);
 
-    // Grid renders — check a couple of fr-labelled sensitive categories.
+    // Grid renders; check a couple of fr-labelled sensitive categories.
     const healthCheckbox = screen.getByRole('checkbox', { name: /Données de santé/i });
     const biometricCheckbox = screen.getByRole('checkbox', { name: /Données biométriques/i });
     expect(healthCheckbox).toBeInTheDocument();

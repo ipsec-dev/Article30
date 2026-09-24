@@ -153,7 +153,7 @@ export class AuditPackageService {
     const orgId = org?.id ?? 'unknown';
 
     // The audit row is written before the bundle is generated so its hash can be sealed
-    // into the PDFs. If generation fails afterwards the audit row remains — by design:
+    // into the PDFs. If generation fails afterwards, the audit row remains by design:
     // the log captures intent ("user requested an export"), not delivery.
     const auditEntry = await this.auditLog.create({
       action: 'EXPORT',

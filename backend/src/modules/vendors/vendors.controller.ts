@@ -90,7 +90,7 @@ export class VendorsController {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `inline; filename="vendor-questionnaire-${id}.pdf"`,
       // Override the global helmet `frame-ancestors 'none'` for this route
-      // only — required for the in-app PDF preview iframe.
+      // only (required for the in-app PDF preview iframe).
       'Content-Security-Policy': "frame-ancestors 'self'",
     });
     res.send(buffer);

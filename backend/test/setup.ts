@@ -18,7 +18,7 @@ function createDatabaseIfMissing(): void {
       stdio: 'pipe',
     });
   } catch {
-    // Already exists — fine
+    // Already exists, which is fine
   }
 }
 
@@ -52,7 +52,7 @@ export async function setup() {
 
   // If migrate deploy fails, the test DB likely has stale schema from a prior
   // migration history (common after a migration squash). Drop once and retry;
-  // if it still fails, the underlying error is real — re-throw.
+  // if it still fails, the underlying error is real, so re-throw.
   try {
     runMigrateDeploy();
   } catch {

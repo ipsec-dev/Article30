@@ -45,10 +45,10 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
   // One-shot recovery: if we got a CSRF 403, re-prime the cookie via a safe
   // GET to /api/auth/me (which makes the backend re-issue XSRF-TOKEN for the
   // current session) then retry the original request exactly once. Covers
-  // fresh-tab, stale-session, and server-restart cases — see the CSRF
-  // middleware's session-bound token design.
+  // fresh-tab, stale-session, and server-restart cases (see the CSRF
+  // middleware's session-bound token design).
   if (await isCsrfError(res)) {
-    // Bare fetch — NOT api.get — to avoid recursing through this same retry logic.
+    // Bare fetch (not api.get) to avoid recursing through this same retry logic.
     await fetch('/api/auth/me', { credentials: 'include' });
     res = await doFetch(path, options);
   }

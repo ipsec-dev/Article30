@@ -913,8 +913,6 @@ enum VendorAssessmentStatus {
   REJECTED
 }
 
-// Vendor Assessments 
-
 model VendorAssessment {
   id          String                 @id @default(uuid())
   vendorId    String

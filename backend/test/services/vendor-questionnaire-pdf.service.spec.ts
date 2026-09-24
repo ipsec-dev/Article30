@@ -12,7 +12,7 @@ import { cleanupDatabase } from '../helpers';
 
 const TEST_DB_URL =
   process.env.DATABASE_URL_TEST ??
-  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR — test-only default
+  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR: test-only default
 
 const KNOWN_HASH = 'c'.repeat(64);
 

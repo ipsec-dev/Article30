@@ -180,8 +180,8 @@ describe('Password reset endpoints', () => {
 
       await authService.resetPassword({ token, newPassword: 'Brandnewpass1' }, 'fr-FR');
 
-      // Without the locale fix, the confirmation always rendered as EN
-      // because the service hardcoded resolveLocale(undefined).
+      // The confirmation must use the request locale rather than the EN fallback
+      // that resolveLocale(undefined) returns.
       expect(mailSink).toHaveLength(2);
       expect(mailSink[1].subject).toBe('Votre mot de passe Article30 a été modifié');
     });
