@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.13](https://github.com/ipsec-dev/Article30/compare/v1.1.12...v1.1.13) (2026-09-24)
+
+
+### Maintenance & Dependencies
+
+* tidy code comments ([#154](https://github.com/ipsec-dev/Article30/issues/154)) ([b6b4f50](https://github.com/ipsec-dev/Article30/commit/b6b4f507408e6c1d6a9b996be96f4c53146bb9bf))
+* **ui:** use plain punctuation in UI text, PDFs and mails ([#154](https://github.com/ipsec-dev/Article30/issues/154)) ([b6b4f50](https://github.com/ipsec-dev/Article30/commit/b6b4f507408e6c1d6a9b996be96f4c53146bb9bf))
+
 ## [1.1.12](https://github.com/ipsec-dev/Article30/compare/v1.1.11...v1.1.12) (2026-09-22)
 
 
