@@ -3,13 +3,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaModule } from '../../src/prisma/prisma.module';
 import { PrismaService } from '../../src/prisma/prisma.service';
 
-const NEW_TABLES = [
+const WORKFLOW_TABLES = [
   'dsr_pause_intervals',
   'dsr_treatment_processing_logs',
   'requester_communications',
 ];
 
-const NEW_DSR_COLUMNS = [
+const WORKFLOW_DSR_COLUMNS = [
   'acknowledgedAt',
   'deadlineProfile',
   'extensionNotifiedAt',
@@ -23,7 +23,7 @@ const NEW_DSR_COLUMNS = [
   'feeAmount',
 ];
 
-describe('M3 Phase A schema', () => {
+describe('DSR workflow schema', () => {
   let module: TestingModule;
   let prisma: PrismaService;
 
@@ -36,7 +36,7 @@ describe('M3 Phase A schema', () => {
     await module.close();
   });
 
-  it.each(NEW_TABLES)('%s table exists', async tableName => {
+  it.each(WORKFLOW_TABLES)('%s table exists', async tableName => {
     const rows = await prisma.$queryRawUnsafe<{ table_name: string }[]>(
       `SELECT table_name FROM information_schema.tables
        WHERE table_schema = 'public' AND table_name = $1`,
@@ -45,7 +45,7 @@ describe('M3 Phase A schema', () => {
     expect(rows).toHaveLength(1);
   });
 
-  it('DsrStatus enum has exactly the 10 Phase A values', async () => {
+  it('DsrStatus enum has exactly the 10 workflow values', async () => {
     const values = await prisma.$queryRawUnsafe<{ enumlabel: string }[]>(
       `SELECT enumlabel FROM pg_enum
        JOIN pg_type ON pg_enum.enumtypid = pg_type.oid
@@ -68,7 +68,7 @@ describe('M3 Phase A schema', () => {
     );
   });
 
-  it.each(NEW_DSR_COLUMNS)('data_subject_requests.%s column exists', async columnName => {
+  it.each(WORKFLOW_DSR_COLUMNS)('data_subject_requests.%s column exists', async columnName => {
     const cols = await prisma.$queryRawUnsafe<{ column_name: string }[]>(
       `SELECT column_name FROM information_schema.columns
        WHERE table_name = 'data_subject_requests' AND column_name = $1`,
