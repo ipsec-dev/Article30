@@ -40,6 +40,7 @@ describe('NotificationsScheduler', () => {
   });
 
   afterAll(async () => {
+    await cleanupDatabase(prisma);
     await module.close();
   });
 

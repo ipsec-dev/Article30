@@ -44,6 +44,7 @@ describe('DSR submitted notification', () => {
   });
 
   afterAll(async () => {
+    await cleanupDatabase(prisma);
     await module.close();
   });
 

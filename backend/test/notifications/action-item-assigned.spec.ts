@@ -43,6 +43,7 @@ describe('Action item assigned notification', () => {
   });
 
   afterAll(async () => {
+    await cleanupDatabase(prisma);
     await module.close();
   });
 

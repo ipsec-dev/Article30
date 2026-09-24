@@ -51,6 +51,7 @@ describe('Violation logged notification', () => {
   });
 
   afterAll(async () => {
+    await cleanupDatabase(prisma);
     await module.close();
   });
 
