@@ -48,7 +48,7 @@ export function PdfPreviewDialog({
           Intentionally not sandboxed. `src` is a same-origin, app-generated PDF
           (screening / treatment / vendor exports) shown via the browser's native
           PDF viewer, which only renders inside a sandbox when given
-          `allow-scripts allow-same-origin` together — the exact escape-hatch the
+          `allow-scripts allow-same-origin` together, the exact escape-hatch the
           react-doctor/iframe-missing-sandbox rule warns against. Since the content
           is trusted and same-origin, a sandbox would either blank the preview
           (`sandbox=""`) or reintroduce that unsafe pair, so it is left off. Do not

@@ -84,7 +84,7 @@ function ArticleListItem({ article, lang, selected, onSelect, t }: Readonly<Arti
         <span className="font-medium" style={{ color: 'var(--primary)' }}>
           {t('articles.articleNumber')} {article.articleNumber}
         </span>
-        <span style={{ color: 'var(--ink-light)' }}>—</span>
+        <span style={{ color: 'var(--ink-light)' }}>-</span>
       </div>
       <p className="text-sm truncate" style={{ color: 'var(--ink-secondary)' }}>
         {getArticleTitle(article, lang)}

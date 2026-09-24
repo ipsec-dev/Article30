@@ -1,4 +1,4 @@
-[VIO] Nouvelle violation {{severityLabel}} — {{shortRef}}
+[VIO] Nouvelle violation {{severityLabel}} - {{shortRef}}
 
 Bonjour {{recipientFirstName}},
 
@@ -13,8 +13,8 @@ Action recommandée
   Qualifier la violation et lancer l'évaluation des risques.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Gérer vos notifications : {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

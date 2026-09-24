@@ -43,7 +43,7 @@ export class AttachmentsController {
   ) {}
 
   // Order matters: more-specific routes (`:id/download`, `:id` Delete) must
-  // be declared BEFORE the polymorphic `:entityType/:entityId` Get.
+  // be declared before the polymorphic `:entityType/:entityId` Get.
 
   @Post()
   @Roles(...FOLLOW_UP_WRITE_ROLES)

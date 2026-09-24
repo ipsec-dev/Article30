@@ -10,7 +10,7 @@
  * Run AFTER `prisma migrate deploy` and BEFORE the first scheduler tick:
  *   pnpm --filter @article30/backend notifications:backfill
  *
- * Idempotent — safe to re-run; the unique constraint
+ * Idempotent: safe to re-run; the unique constraint
  * (kind, recordId, leadTime) on notification_log prevents duplicate rows
  * (Prisma surfaces the violation as P2002, which we swallow).
  *
@@ -19,7 +19,7 @@
  * windows, mirror the change here so the backfill keeps suppressing the same
  * set of records.
  *
- * Per-org toggles (notifyDsrDeadline etc.) are intentionally NOT consulted:
+ * Per-org toggles (notifyDsrDeadline etc.) are not consulted:
  * we pre-seed all kinds so that flipping a toggle ON later doesn't trigger a
  * thunderclap for records that were inside the window at backfill time.
  */
@@ -29,7 +29,7 @@ const { PrismaService } = require('../dist/src/prisma/prisma.service');
 
 const HOUR = 60 * 60 * 1000;
 const DAY = 24 * HOUR;
-// Sentinel email — recipientEmail is part of the notification_log row but not
+// Sentinel email: recipientEmail is part of the notification_log row but not
 // of the unique constraint, so any value works. A literal sentinel makes the
 // backfilled rows trivially auditable in the DB.
 const SENTINEL = '__BACKFILL__';
@@ -53,13 +53,13 @@ async function main() {
       });
       inserted++;
     } catch (err) {
-      // P2002 = unique constraint already satisfied — idempotent re-run.
+      // P2002 = unique constraint already satisfied (idempotent re-run).
       if (err.code !== 'P2002') throw err;
     }
   };
 
   // DSR deadlines (mirrors sweepDsrDeadlines): T-7 / T-1 / T+1 day stripes
-  // around `deadline`. Status filter excludes CLOSED — same as the scheduler.
+  // around `deadline`. Status filter excludes CLOSED, same as the scheduler.
   const dsrs = await prisma.dataSubjectRequest.findMany({
     where: {
       deadline: {
@@ -77,7 +77,7 @@ async function main() {
   }
 
   // Vendor DPA expiry (mirrors sweepVendorDpaExpiry): T-30 / T-7 / T-1 day
-  // stripes around `dpaExpiry`. No status filter — schema has no vendor status.
+  // stripes around `dpaExpiry`. No status filter: schema has no vendor status.
   const vendors = await prisma.vendor.findMany({
     where: {
       dpaExpiry: {
@@ -95,7 +95,7 @@ async function main() {
   }
 
   // Treatment review (mirrors sweepTreatmentReview): T-7 / T+1 stripes around
-  // `nextReviewAt`. No status filter — review applies to every treatment with
+  // `nextReviewAt`. No status filter: review applies to every treatment with
   // a scheduled next review.
   const treatments = await prisma.treatment.findMany({
     where: {

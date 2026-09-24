@@ -8,8 +8,7 @@ const RECEIVED_AT = new Date('2026-04-01T00:00:00Z');
 const NOW = new Date('2026-04-15T00:00:00Z');
 
 describe('resolveDeadline', () => {
-  // Test 1: STANDARD_30D, no pauses, no extension → matches plain computeDeadline output
-  it('STANDARD_30D, no pauses, no extension — matches computeDeadline directly', () => {
+  it('STANDARD_30D, no pauses, no extension: matches computeDeadline directly', () => {
     const result = resolveDeadline(
       { receivedAt: RECEIVED_AT, deadlineProfile: 'STANDARD_30D', extensionGranted: false },
       [],
@@ -27,8 +26,7 @@ describe('resolveDeadline', () => {
     expect(result.isPaused).toBe(expected.isPaused);
   });
 
-  // Test 2: STANDARD_30D + open pause shifts effectiveDeadline forward
-  it('STANDARD_30D + open pause — effectiveDeadline shifts forward and isPaused=true', () => {
+  it('STANDARD_30D + open pause: effectiveDeadline shifts forward and isPaused=true', () => {
     const pausedAt = new Date('2026-04-05T00:00:00Z');
     const result = resolveDeadline(
       { receivedAt: RECEIVED_AT, deadlineProfile: 'STANDARD_30D', extensionGranted: false },
@@ -48,8 +46,7 @@ describe('resolveDeadline', () => {
     expect(shiftMs).toBe(10 * MS_PER_DAY);
   });
 
-  // Test 3: STANDARD_30D + closed pause adds the closed-span to effectiveDeadline
-  it('STANDARD_30D + closed pause — effectiveDeadline offset equals pause span', () => {
+  it('STANDARD_30D + closed pause: effectiveDeadline offset equals pause span', () => {
     const pausedAt = new Date('2026-04-05T00:00:00Z');
     const resumedAt = new Date('2026-04-10T00:00:00Z');
     const result = resolveDeadline(
@@ -62,8 +59,7 @@ describe('resolveDeadline', () => {
     expect(shiftMs).toBe(5 * MS_PER_DAY);
   });
 
-  // Test 4: EXTENDED_90D + extension extraDays=60 → effectiveDeadline = base + 60d
-  it('EXTENDED_90D + extensionGranted + extraDays=60 — deadline shifts 60 days past base', () => {
+  it('EXTENDED_90D + extensionGranted + extraDays=60: deadline shifts 60 days past base', () => {
     const result = resolveDeadline(
       {
         receivedAt: RECEIVED_AT,
@@ -82,8 +78,7 @@ describe('resolveDeadline', () => {
     );
   });
 
-  // Test 5: HEALTH_8D → 8-day deadline
-  it('HEALTH_8D — base deadline is 8 days after receivedAt', () => {
+  it('HEALTH_8D: base deadline is 8 days after receivedAt', () => {
     const result = resolveDeadline(
       { receivedAt: RECEIVED_AT, deadlineProfile: 'HEALTH_8D', extensionGranted: false },
       [],
@@ -96,8 +91,7 @@ describe('resolveDeadline', () => {
     expect(result.isOverdue).toBe(true);
   });
 
-  // Test 6: HEALTH_OLD_60D → 60-day deadline
-  it('HEALTH_OLD_60D — base deadline is 60 days after receivedAt', () => {
+  it('HEALTH_OLD_60D: base deadline is 60 days after receivedAt', () => {
     const result = resolveDeadline(
       { receivedAt: RECEIVED_AT, deadlineProfile: 'HEALTH_OLD_60D', extensionGranted: false },
       [],
@@ -109,8 +103,7 @@ describe('resolveDeadline', () => {
     expect(result.isOverdue).toBe(false);
   });
 
-  // Test 7: Multiple pauses accumulate
-  it('multiple pauses — shifts accumulate additively', () => {
+  it('multiple pauses: shifts accumulate additively', () => {
     const pauses = [
       { pausedAt: new Date('2026-04-02T00:00:00Z'), resumedAt: new Date('2026-04-04T00:00:00Z') }, // 2d
       { pausedAt: new Date('2026-04-06T00:00:00Z'), resumedAt: new Date('2026-04-09T00:00:00Z') }, // 3d
@@ -125,8 +118,7 @@ describe('resolveDeadline', () => {
     expect(result.isPaused).toBe(false);
   });
 
-  // Test 8: extensionGranted=true but extensionExtraDays=null → no extension shift
-  it('extensionGranted=true but extensionExtraDays=null — no extension applied', () => {
+  it('extensionGranted=true but extensionExtraDays=null: no extension applied', () => {
     const withNull = resolveDeadline(
       {
         receivedAt: RECEIVED_AT,

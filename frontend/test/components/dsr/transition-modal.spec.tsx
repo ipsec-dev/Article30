@@ -119,7 +119,6 @@ describe('<DsrTransitionModal>', () => {
     );
     // Select the rejection reason (fires onChange to set payload value)
     await userEvent.selectOptions(screen.getByLabelText(/rejection reason/i), 'EXCESSIVE');
-    // Fill rejectionDetails
     await userEvent.type(
       screen.getByLabelText(/rejection details/i),
       'This request is clearly excessive in scope',

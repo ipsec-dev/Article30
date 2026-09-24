@@ -417,7 +417,7 @@ export default function DsrDetailPage() {
 
   return (
     <div className="space-y-4">
-      {/* Action row — back / edit / delete (Topbar owns the title) */}
+      {/* Action row: back / edit / delete (Topbar owns the title) */}
       <div className="flex items-center gap-2">
         <DsrPageActions
           canAccess={Boolean(canAccess)}
@@ -429,7 +429,7 @@ export default function DsrDetailPage() {
         />
       </div>
 
-      {/* SLA header card — prominent deadline visualisation */}
+      {/* SLA header card: prominent deadline visualisation */}
       <Card>
         <CardContent className="pt-4">
           <SLABar deadline={dsr.deadline} startedAt={dsr.receivedAt} />

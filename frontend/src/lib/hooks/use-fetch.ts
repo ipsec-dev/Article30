@@ -21,7 +21,7 @@ interface UseFetch<T> {
  * trigger for after-mutation refresh, and a `setData` setter for callers
  * that already received an updated entity from a PATCH/POST response.
  *
- * Errors are swallowed silently — most detail pages already render an empty
+ * Errors are swallowed silently: most detail pages already render an empty
  * state when `data` stays null. Pass an explicit handler if you need toast.
  */
 export function useFetch<T>(path: string | null): UseFetch<T> {
@@ -37,7 +37,7 @@ export function useFetch<T>(path: string | null): UseFetch<T> {
       const res = await api.get<T>(path);
       setData(res);
     } catch {
-      // silently fail — caller decides how to surface the empty state
+      // silently fail; caller decides how to surface the empty state
     } finally {
       setLoading(false);
     }

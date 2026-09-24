@@ -189,7 +189,7 @@ describe('TreatmentWizard', () => {
     expect(recipientsBtn).toBeDefined();
     expect(recipientsBtn).toBeDisabled();
 
-    // Clicking it does nothing — step 0 remains visible.
+    // Clicking it does nothing; step 0 remains visible.
     if (recipientsBtn) await user.click(recipientsBtn);
     expectStepVisible(/Identification/i);
   });

@@ -36,7 +36,7 @@ const REF_NUMBER_PAD_LENGTH = 4;
 const DEFAULT_RISK_CRITERIA_COUNT = 0;
 const DEFAULT_COMPLETENESS_SCORE = 0;
 const NO_RESULTS_KEY = 'common.noResults';
-const EM_DASH = '—';
+const PLACEHOLDER = '-';
 const DEFAULT_API_URL = 'http://localhost:3001';
 const RISK_CRITERIA_TOTAL = 9;
 
@@ -92,7 +92,7 @@ function renderPersonCategories(treatment: TreatmentDto, locale: string): React.
   if (treatment.personCategories.length === 0) {
     return (
       <li className="text-sm" style={{ color: 'var(--ink-3)' }}>
-        {EM_DASH}
+        {PLACEHOLDER}
       </li>
     );
   }
@@ -107,7 +107,7 @@ function renderDataCategories(treatment: TreatmentDto): React.ReactNode {
   if (!Array.isArray(treatment.dataCategories) || treatment.dataCategories.length === 0) {
     return (
       <p className="mt-1 text-sm" style={{ color: 'var(--ink-3)' }}>
-        {EM_DASH}
+        {PLACEHOLDER}
       </p>
     );
   }
@@ -162,7 +162,7 @@ function renderRecipients(treatment: TreatmentDto, locale: string): React.ReactN
   }
   return (
     <p className="mt-1 text-sm" style={{ color: 'var(--ink-3)' }}>
-      {EM_DASH}
+      {PLACEHOLDER}
     </p>
   );
 }
@@ -171,7 +171,7 @@ function renderTransfers(treatment: TreatmentDto, t: (key: string) => string): R
   if (!Array.isArray(treatment.transfers) || treatment.transfers.length === 0) {
     return (
       <p className="mt-1 text-sm" style={{ color: 'var(--ink-3)' }}>
-        {EM_DASH}
+        {PLACEHOLDER}
       </p>
     );
   }
@@ -229,7 +229,7 @@ function renderSecurity(treatment: TreatmentDto, locale: string): React.ReactNod
   }
   return (
     <p className="mt-1 text-sm" style={{ color: 'var(--ink-3)' }}>
-      {EM_DASH}
+      {PLACEHOLDER}
     </p>
   );
 }
@@ -455,7 +455,7 @@ function buildRefDisplay(refNumber: number | null | undefined): string {
   if (refNumber) {
     return `T-${String(refNumber).padStart(REF_NUMBER_PAD_LENGTH, '0')}`;
   }
-  return EM_DASH;
+  return PLACEHOLDER;
 }
 
 type StatusBadgeProps = Readonly<{
@@ -501,7 +501,7 @@ function IdentificationCard({ treatment, legalBasisNode, t }: IdentificationCard
             {t('treatment.purpose')}
           </p>
           <p className="mt-1 text-sm" style={{ color: 'var(--ink)' }}>
-            {treatment.purpose || EM_DASH}
+            {treatment.purpose || PLACEHOLDER}
           </p>
           {subPurposes.length > 0 && (
             <ul className="mt-2 list-disc pl-4 text-sm" style={{ color: 'var(--ink-2)' }}>
@@ -616,7 +616,7 @@ function SecurityCard({ treatment, securityNode, t }: SecurityCardProps) {
             {t('treatment.retentionPeriod')}
           </p>
           <p className="mt-1 text-sm" style={{ color: 'var(--ink)' }}>
-            {treatment.retentionPeriod || EM_DASH}
+            {treatment.retentionPeriod || PLACEHOLDER}
           </p>
         </div>
         <div>
@@ -809,7 +809,7 @@ export default function TreatmentDetailPage() {
 
   const statusBadge = <StatusBadge status={treatment.status} t={t} />;
 
-  let legalBasisNode: React.ReactNode = EM_DASH;
+  let legalBasisNode: React.ReactNode = PLACEHOLDER;
   if (treatment.legalBasis) {
     legalBasisNode = t(`legalBasis.${treatment.legalBasis}`);
   }
@@ -830,7 +830,7 @@ export default function TreatmentDetailPage() {
 
   return (
     <>
-      {/* Back button — Topbar in layout shell handles the page title */}
+      {/* Back button (Topbar in layout shell handles the page title) */}
       <div className="mb-4 flex items-center">
         <Button variant="outline" size="sm" onClick={handleBack}>
           {t('common.back')}

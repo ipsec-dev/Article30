@@ -155,7 +155,7 @@ describe('auth.controller (e2e)', () => {
       // The response contains two XSRF-TOKEN set-cookie headers: the first is
       // set by csrfMiddleware (old pre-regenerate value), the second is set by
       // the login controller's regenerate callback (fresh post-regenerate value).
-      // We want the last one — the fresh token that the browser will store.
+      // We want the last one: the fresh token that the browser will store.
       const xsrf = [...cookies].reverse().find((c: string) => c.startsWith('XSRF-TOKEN='));
       expect(xsrf).toBeDefined();
       const match = /XSRF-TOKEN=([^;]+)/.exec(xsrf!);

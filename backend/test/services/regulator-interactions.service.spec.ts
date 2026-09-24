@@ -121,7 +121,7 @@ describe('RegulatorInteractionsService', () => {
       direction: 'INBOUND',
       kind: 'CLOSURE_NOTICE',
       occurredAt: new Date('2026-04-20T10:00:00Z'),
-      summary: 'Received closure notice from CNIL — case resolved without sanction',
+      summary: 'Received closure notice from CNIL, case resolved without sanction',
       recordedBy: userId,
     });
     await svc.record({

@@ -16,7 +16,7 @@ function readCsrfFromSetCookie(setCookie: string | string[] | undefined): string
 /**
  * Primes a fresh supertest agent with a CSRF token by issuing a safe-method
  * GET (csrfMiddleware sets the XSRF-TOKEN cookie on any safe request
- * regardless of response status — /api/auth/me returns 401 when
+ * regardless of response status: /api/auth/me returns 401 when
  * unauthenticated but still sets the cookie because csrfMiddleware runs
  * before AuthGuard).
  *
@@ -46,8 +46,8 @@ export async function primeCsrf(app: INestApplication): Promise<{
  * Uses primeCsrf() internally so the login POST carries the required
  * x-xsrf-token header. AuthController.login calls req.session.regenerate(),
  * which rotates both the session id and the server-side csrfToken, so we
- * re-prime after login with a safe GET /api/auth/me to capture the *post-
- * regeneration* token. The returned csrfToken is the one that matches the
+ * re-prime after login with a safe GET /api/auth/me to capture the post-
+ * regeneration token. The returned csrfToken is the one that matches the
  * authenticated session and can be sent directly on any subsequent non-
  * safe method via .set('x-xsrf-token', csrfToken).
  */
@@ -72,7 +72,7 @@ export async function loginAs(
       `loginAs: POST /api/auth/login returned ${res.status} but did not set a connect.sid cookie`,
     );
   }
-  // Session regeneration rotated the CSRF token — fetch the fresh one so
+  // Session regeneration rotated the CSRF token; fetch the fresh one so
   // callers can immediately POST/PATCH/DELETE without another priming round.
   const refresh = await agent.get('/api/auth/me');
   const csrfToken = readCsrfFromSetCookie(refresh.headers['set-cookie']) ?? preLoginToken;

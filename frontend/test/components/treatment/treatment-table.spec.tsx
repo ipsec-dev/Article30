@@ -46,7 +46,7 @@ describe('<TreatmentTable />', () => {
     );
     expect(screen.getByText('#12')).toBeInTheDocument();
     // Multiple em-dashes may appear (refNumber + freshness fallback); at least one should exist
-    expect(screen.getAllByText('—').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText('-').length).toBeGreaterThanOrEqual(1);
   });
 
   it('uses Validé and Brouillon labels for status', () => {

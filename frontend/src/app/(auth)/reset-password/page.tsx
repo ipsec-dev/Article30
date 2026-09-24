@@ -20,7 +20,7 @@ function ResetPasswordForm() {
   const token = searchParams.get('token') ?? '';
   // `?invite=1` is set by the user-invite email; forgot-password and
   // admin-issued resets omit it. We only ask for first/last name on the
-  // invite path — existing users keep their stored names.
+  // invite path; existing users keep their stored names.
   const isInvite = searchParams.get('invite') === '1';
 
   const [firstName, setFirstName] = useState('');

@@ -1,7 +1,7 @@
 import { ViolationStatus } from '@prisma/client';
 
 /**
- * Spec §6.2 — state machine for violations workflow.
+ * State machine for the violations workflow.
  */
 export const ALLOWED_TRANSITIONS: Record<ViolationStatus, ViolationStatus[]> = {
   RECEIVED: ['TRIAGED', 'DISMISSED'],

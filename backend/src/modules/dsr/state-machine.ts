@@ -1,7 +1,7 @@
 import { DsrStatus } from '@prisma/client';
 
 /**
- * Spec §6.3 — state machine for DSR workflow.
+ * State machine for the DSR workflow.
  */
 export const DSR_ALLOWED_TRANSITIONS: Record<DsrStatus, DsrStatus[]> = {
   RECEIVED: ['ACKNOWLEDGED', 'REJECTED', 'WITHDRAWN'],

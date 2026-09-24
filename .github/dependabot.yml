@@ -34,7 +34,7 @@ updates:
     cooldown:
       default-days: 3
     ignore:
-      # xlsx pinned at 0.18.5 by design — no upstream npm fix for the two
+      # xlsx pinned at 0.18.5: no upstream npm fix for the two
       # HIGH advisories. See CHANGELOG.md Security section under
       # [Unreleased]. Re-evaluate when SheetJS publishes on npm again.
       - dependency-name: xlsx

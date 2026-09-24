@@ -15,7 +15,7 @@ export default defineConfig({
     setupFiles: ['./test/setup.ts'],
     include: ['test/**/*.spec.{ts,tsx}'],
     // v8 coverage instrumentation slows down @testing-library/user-event
-    // flows past the 5s default — give react-testing-library tests headroom
+    // flows past the 5s default; give react-testing-library tests headroom
     // so they don't flake under parallel execution + coverage.
     testTimeout: 15000,
     coverage: {

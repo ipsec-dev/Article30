@@ -46,7 +46,7 @@ describe('alerts.controller (e2e)', () => {
 
     it('returns 200 with an empty items array and a zeroed summary when DB is empty', async () => {
       // AlertsService.getAlerts() returns { items: AlertItem[], summary: { total, critical, high, medium } }
-      // (not a bare array — see backend/src/modules/alerts/alerts.service.ts).
+      // (not a bare array; see backend/src/modules/alerts/alerts.service.ts).
       const { user, password } = await seedUser(testApp.prisma, Role.DPO);
       const { agent } = await loginAs(testApp.app, user.email, password);
       const res = await agent.get('/api/alerts');

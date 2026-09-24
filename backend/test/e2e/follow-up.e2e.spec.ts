@@ -102,7 +102,7 @@ describe('follow-up.controllers (e2e)', () => {
         visibility: 'AUDITOR_VISIBLE',
       });
 
-      // Auditor (single-tenant — every user shares the one org).
+      // Auditor (single-tenant: every user shares the one org).
       const { user: auditor, password: auditorPwd } = await seedUser(testApp.prisma, Role.AUDITOR);
       const { agent: auditorAgent } = await loginAs(testApp.app, auditor.email, auditorPwd);
       const res = await auditorAgent.get(`/api/follow-up/comments/VIOLATION/${v.id}`);

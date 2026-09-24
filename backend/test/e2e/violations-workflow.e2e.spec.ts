@@ -45,7 +45,7 @@ describe('violations-workflow.controller (e2e)', () => {
     });
   }
 
-  // 1. PATCH /:id/transition — DPO can transition to DISMISSED
+  // 1. PATCH /:id/transition: DPO can transition to DISMISSED
   describe('PATCH /api/violations/:id/transition', () => {
     it('DPO can transition RECEIVED → DISMISSED', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.DPO);
@@ -56,7 +56,7 @@ describe('violations-workflow.controller (e2e)', () => {
         .set('x-xsrf-token', csrfToken)
         .send({
           target: 'DISMISSED',
-          payload: { dismissalReason: 'False alarm — no breach at all.' },
+          payload: { dismissalReason: 'False alarm, no breach at all.' },
         });
       expect(res.status).toBe(200);
       expect(res.body.status).toBe('DISMISSED');

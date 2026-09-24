@@ -28,8 +28,8 @@ export function formatDateLocale(date: Date, locale: Locale): string {
 /**
  * Render a Date with time, in Paris wall-clock, with an explicit TZ marker.
  *
- * Assembled from `formatToParts()` so the layout is fixed by *our* code, not by
- * ICU/Node locale data — which can drift across major versions and silently
+ * Assembled from `formatToParts()` so the layout is fixed by our code, not by
+ * ICU/Node locale data, which can drift across major versions and silently
  * change separators (e.g. add/remove commas).
  */
 export function formatDateTimeLocale(date: Date, locale: Locale): string {
@@ -89,7 +89,7 @@ export function formatSeverity(severity: Severity, locale: Locale): string {
   return SEVERITY_LABELS[locale][severity];
 }
 
-/** `KIND-12345678` — first 8 hex chars of the UUID, prefixed with the kind tag. */
+/** `KIND-12345678`: first 8 hex chars of the UUID, prefixed with the kind tag. */
 export function shortRef(kindTag: string, id: string): string {
   return `${kindTag}-${id.slice(0, 8)}`;
 }

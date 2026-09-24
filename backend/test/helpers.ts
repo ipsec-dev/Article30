@@ -6,7 +6,7 @@ import { PrismaModule } from '../src/prisma/prisma.module';
 
 const TEST_DB_URL =
   process.env.DATABASE_URL_TEST ??
-  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR — test-only default
+  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR: test-only default
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- test mock requires flexible shapes */
 export function createMockContext(overrides: {
@@ -18,8 +18,8 @@ export function createMockContext(overrides: {
   roles?: string[];
 }): {
   context: ExecutionContext;
-  request: Record<string, any>; // NOSONAR — test mock needs flexible property access
-  response: Record<string, any>; // NOSONAR — test mock needs flexible property access
+  request: Record<string, any>; // NOSONAR: test mock needs flexible property access
+  response: Record<string, any>; // NOSONAR: test mock needs flexible property access
   reflector: Reflector;
 } {
   const request = {

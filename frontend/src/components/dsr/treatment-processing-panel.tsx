@@ -36,12 +36,12 @@ const VENDOR_PROPAGATION_LABELS: Record<VendorPropagationStatus, string> = {
 };
 
 function truncate(text: string | null, maxLen = 80): string {
-  if (!text) return '—';
+  if (!text) return '-';
   return text.length > maxLen ? text.slice(0, maxLen) + '…' : text;
 }
 
 function formatDate(iso: string | null): string {
-  if (!iso) return '—';
+  if (!iso) return '-';
   return formatDateTime(iso);
 }
 
@@ -205,7 +205,7 @@ function LinkTreatmentForm({ onLink }: LinkTreatmentFormProps) {
           </option>
           {(treatments ?? []).map(t => (
             <option key={t.id} value={t.id}>
-              {`#${t.refNumber ?? '—'} · ${t.name}`}
+              {`#${t.refNumber ?? '-'} · ${t.name}`}
             </option>
           ))}
         </select>

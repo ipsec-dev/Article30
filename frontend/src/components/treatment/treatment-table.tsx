@@ -35,7 +35,7 @@ const FRESHNESS_LABEL: Record<string, { kind: StatusKind; label: string }> = {
 function freshnessFor(t: TreatmentDto): { kind: StatusKind; label: string } {
   const s = t.indicators?.freshnessStatus;
   if (s && FRESHNESS_LABEL[s]) return FRESHNESS_LABEL[s];
-  return { kind: 'neutral', label: '—' };
+  return { kind: 'neutral', label: '-' };
 }
 
 function relativeDate(iso: string): string {
@@ -158,7 +158,7 @@ export function TreatmentTable({ treatments, onRowClick, actions }: TreatmentTab
                     <span className="num font-mono text-[12px]" style={{ color: 'var(--ink-3)' }}>
                       {row.refNumber !== null && row.refNumber !== undefined
                         ? `#${row.refNumber}`
-                        : '—'}
+                        : '-'}
                     </span>
                   </td>
                   <td className="px-4 py-3">

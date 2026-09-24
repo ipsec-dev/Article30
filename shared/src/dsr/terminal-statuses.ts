@@ -1,7 +1,7 @@
 import { DsrStatus } from '../types/dsr';
 
 /**
- * DSR statuses where the deadline no longer applies — the case is concluded
+ * DSR statuses where the deadline no longer applies: the case is concluded
  * one way or the other and should not appear in overdue lists or alerts.
  *
  * Used by AlertsService.getDsrDeadlines, DsrService.findAll(overdue:true), and

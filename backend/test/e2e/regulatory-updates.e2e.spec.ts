@@ -155,7 +155,7 @@ describe('regulatory-updates.controller (e2e)', () => {
     });
   });
 
-  describe('PATCH /api/regulatory-updates/:id/saved — role gating', () => {
+  describe('PATCH /api/regulatory-updates/:id/saved: role gating', () => {
     it('rejects AUDITOR with 403', async () => {
       const feed = await seedRssFeed(testApp.prisma);
       const update = await seedRegulatoryUpdate(testApp.prisma, feed.id);

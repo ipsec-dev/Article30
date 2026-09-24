@@ -50,14 +50,14 @@ const PDF_SPACING = {
 } as const;
 
 const PDF_COL_RATIO = {
-  DATA_CAT: [0.3, 0.4, 0.3] as const, // NOSONAR — column width ratios
-  RECIPIENT: [0.4, 0.6] as const, // NOSONAR — column width ratios
-  TRANSFER: [0.35, 0.25, 0.4] as const, // NOSONAR — column width ratios
-  SECURITY: [0.4, 0.6] as const, // NOSONAR — column width ratios
+  DATA_CAT: [0.3, 0.4, 0.3] as const, // NOSONAR: column width ratios
+  RECIPIENT: [0.4, 0.6] as const, // NOSONAR: column width ratios
+  TRANSFER: [0.35, 0.25, 0.4] as const, // NOSONAR: column width ratios
+  SECURITY: [0.4, 0.6] as const, // NOSONAR: column width ratios
 } as const;
 
 const RISK_CRITERIA_COUNT = 9;
-const PLACEHOLDER = '—';
+const PLACEHOLDER = '-';
 
 interface TreatmentStrings {
   metaTitle: string;
@@ -268,7 +268,7 @@ export class PdfExportService {
       registerArticle30Fonts(doc);
       const s = STRINGS[locale];
       setPdfMetadata(doc, {
-        title: `${s.metaTitle} — ${treatment.name}`,
+        title: `${s.metaTitle} - ${treatment.name}`,
         subject: s.metaSubject,
         keywords: ['RGPD', 'GDPR', 'Article 30', 'Register', 'Treatment'],
       });
@@ -560,7 +560,7 @@ export class PdfExportService {
   /**
    * Risk-criterion row. Filled circle for present (= AIPD-relevant risk),
    * empty circle for absent. Color follows risk semantics: red when present,
-   * green when absent — same convention as the web's risk strip. When
+   * green when absent (same convention as the web's risk strip). When
    * present, the row sits on a faint red tint to mirror the web's tinted
    * card pattern.
    */

@@ -54,7 +54,7 @@ const KNOWN_ROW_ERROR_CODES = new Set<string>([
 ]);
 
 // Structural failures emit `BadRequestException` with these codes (some carry a
-// `:detail` suffix the backend computes — strip it for the i18n lookup).
+// `:detail` suffix the backend computes; strip it for the i18n lookup).
 const STRUCTURAL_ERROR_CODES = new Set<string>([
   'file_too_large',
   'xlsx_unreadable',
@@ -223,7 +223,7 @@ export function TreatmentImportDialog({ open, onClose, onComplete }: TreatmentIm
                     <strong>
                       {t('register.import.row').replace('{{row}}', String(r.rowNumber))}
                     </strong>{' '}
-                    — {r.name || '?'} — {t(STATUS_KEY[r.status])}
+                    - {r.name || '?'} - {t(STATUS_KEY[r.status])}
                     {r.errors.length > 0 && (
                       <ul className="ml-4 list-disc">
                         {r.errors.map(e => (

@@ -71,7 +71,7 @@ describe('IsStrongPasswordConstraint', () => {
     });
 
     it('prefers length message over class message when both fail', () => {
-      // 11 chars + only lowercase — both length and class constraints fail.
+      // 11 chars + only lowercase: both length and class constraints fail.
       // Length should surface first so the user knows the most blocking issue.
       expect(constraint.defaultMessage(args('aaaaaaaaaaa'))).toBe(
         'password must be between 12 and 128 characters',

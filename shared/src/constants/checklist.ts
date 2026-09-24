@@ -4,7 +4,7 @@ import { ChecklistCategory, type ChecklistItemDef } from '../types';
  * Organization-level governance posture checklist.
  *
  * Per-treatment compliance items (lawfulness, retention, rights, security
- * measures, etc.) are intentionally excluded — those are captured by the
+ * measures, etc.) are intentionally excluded: those are captured by the
  * per-treatment screening flow, the treatment fiche, and the DSR module.
  * What stays here is what an auditor would ask once for the organization
  * as a whole, regardless of which treatments exist.

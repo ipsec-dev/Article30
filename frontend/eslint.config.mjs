@@ -35,7 +35,7 @@ export default tseslint.config(
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
-      // Empty catch is a deliberate idiom on read-only fetches whose failure
+      // Empty catch is fine on read-only fetches whose failure
       // mode is "render the empty state"; the api client already toasts.
       'no-empty': ['error', { allowEmptyCatch: true }],
       'react/react-in-jsx-scope': 'off',

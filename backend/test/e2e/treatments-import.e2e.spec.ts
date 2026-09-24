@@ -31,7 +31,7 @@ describe('treatments-import.service (e2e)', () => {
     await cleanupDatabase(testApp.prisma);
   });
 
-  describe('parseAndValidate() — structural checks', () => {
+  describe('parseAndValidate(): structural checks', () => {
     it('throws BadRequest when the required `name` header is missing', async () => {
       await expect(importService.parseAndValidate(buildXlsxMissingColumn())).rejects.toBeInstanceOf(
         BadRequestException,
@@ -51,7 +51,7 @@ describe('treatments-import.service (e2e)', () => {
     });
   });
 
-  describe('parseAndValidate() — per-row checks', () => {
+  describe('parseAndValidate(): per-row checks', () => {
     it('flags a row as invalid when name is missing', async () => {
       const preview = await importService.parseAndValidate(buildXlsx([{ purpose: 'noname' }]));
       expect(preview.rows[0].status).toBe('invalid');

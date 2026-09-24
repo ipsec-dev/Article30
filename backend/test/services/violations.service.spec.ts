@@ -38,7 +38,7 @@ describe('ViolationsService', () => {
     const decisions = new DecisionsService(prisma, validator, timeline);
     const breachNotifications = new BreachNotificationsService(prisma, validator, timeline);
     // create() emits notifications, but this spec asserts only the persisted
-    // violation row — a no-op stub keeps the test focused.
+    // violation row, so a no-op stub keeps the test focused.
     const notifications = noopNotificationService();
     service = new ViolationsService(
       prisma,

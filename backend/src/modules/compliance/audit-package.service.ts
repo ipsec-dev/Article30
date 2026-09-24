@@ -153,7 +153,7 @@ export class AuditPackageService {
     const orgId = org?.id ?? 'unknown';
 
     // The audit row is written before the bundle is generated so its hash can be sealed
-    // into the PDFs. If generation fails afterwards the audit row remains — by design:
+    // into the PDFs. If generation fails afterwards, the audit row remains by design:
     // the log captures intent ("user requested an export"), not delivery.
     const auditEntry = await this.auditLog.create({
       action: 'EXPORT',
@@ -260,7 +260,7 @@ export class AuditPackageService {
       });
       registerArticle30Fonts(doc);
       setPdfMetadata(doc, {
-        title: `${s.checklistSubtitle} — ${s.checklistTitle}`,
+        title: `${s.checklistSubtitle} - ${s.checklistTitle}`,
         subject: s.checklistMetaSubject,
         keywords: ['RGPD', 'GDPR', 'Audit', 'Checklist'],
       });
@@ -323,7 +323,7 @@ export class AuditPackageService {
               .font(PDF_FONT_REGULAR)
               .fontSize(PDF_FONT_SIZES.detail)
               .fillColor(PDF_COLORS.light)
-              .text('—', pillX, startY + 1, { width: ANSWER_PILL_WIDTH, align: 'center' });
+              .text('-', pillX, startY + 1, { width: ANSWER_PILL_WIDTH, align: 'center' });
           }
           doc.x = labelX;
           doc.y = Math.max(doc.y, startY + PDF_LAYOUT.pillHeight) + 2;

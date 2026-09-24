@@ -18,7 +18,7 @@ const NOTIFICATION_SETTINGS_SELECT = Object.fromEntries(
 ) as Record<NotificationKey, true>;
 
 // Defaults all-true since the schema columns also default true. Used by the
-// GET fallback only — first-run case when no Organization row exists yet.
+// GET fallback only (first-run case when no Organization row exists yet).
 const NOTIFICATION_SETTINGS_DEFAULTS: Record<NotificationKey, boolean> = Object.fromEntries(
   NOTIFICATION_KEYS.map(k => [k, true]),
 ) as Record<NotificationKey, boolean>;
@@ -99,7 +99,7 @@ export class OrganizationService {
       throw new NotFoundException('No organization configured');
     }
 
-    // Only the explicitly-set keys flow into the UPDATE — keeps the diff
+    // Only the explicitly-set keys flow into the UPDATE, which keeps the diff
     // narrow and avoids accidental column resets.
     const data = Object.fromEntries(definedEntries) as Partial<NotificationSettings>;
     const updated = await this.prisma.organization.update({

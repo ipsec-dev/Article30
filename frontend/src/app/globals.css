@@ -13,8 +13,8 @@
   --ink: #1f2328;
   --ink-2: #424a53;
   --ink-3: #656d76;
-  --ink-4: #8c959f; /* decorative / disabled only — fails WCAG AA for body-weight text */
-  /* borders — `--a30-border` / `--a30-accent` use the a30- prefix to avoid collision
+  --ink-4: #8c959f; /* decorative / disabled only (fails WCAG AA for body-weight text) */
+  /* borders: `--a30-border` / `--a30-accent` use the a30- prefix to avoid collision
      with shadcn's `--border` / `--accent` aliases that the @theme inline block defines.
      Tailwind class consumers (e.g. `border-border`) work transparently via that remap. */
   --a30-border: #d1d9e0;
@@ -149,7 +149,7 @@
   --color-border: var(--a30-border);
   --color-input: var(--a30-border);
   --color-ring: var(--primary);
-  /* Sidebar is intentionally always dark indigo — does NOT track [data-theme] or .dark.
+  /* Sidebar is intentionally always dark indigo: it does not track [data-theme] or .dark.
      The Article30 design treats the sidebar as its own visual scope. */
   --color-sidebar: #0b1220;
   --color-sidebar-foreground: #e2e8f0;

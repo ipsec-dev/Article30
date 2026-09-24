@@ -11,7 +11,7 @@ export class EntityValidator {
    * entity row. Returns void on success.
    *
    * Single-tenant: there's exactly one organization, so existence is the whole
-   * check. The polymorphic FK semantics still need defending — the entityType
+   * check. The polymorphic FK semantics still need defending: the entityType
    * has to match the table the entityId actually lives in.
    */
   async validate(entityType: EntityType, entityId: string): Promise<void> {
@@ -34,7 +34,7 @@ export class EntityValidator {
         select: { id: true },
       });
     }
-    // Exhaustiveness guard: when EntityType grows (M2/M3 may add TREATMENT
+    // Exhaustiveness guard: when EntityType grows (for example with TREATMENT
     // or VENDOR), this throws instead of silently returning null and producing
     // a misleading "not found" error.
     const _exhaustive: never = entityType;

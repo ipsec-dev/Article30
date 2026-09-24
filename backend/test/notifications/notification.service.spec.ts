@@ -113,7 +113,7 @@ describe('NotificationService', () => {
     expect(mail.send).toHaveBeenCalledTimes(1);
   });
 
-  it('is idempotent — second call for same (kind, recordId, leadTime) is a no-op', async () => {
+  it('is idempotent: second call for same (kind, recordId, leadTime) is a no-op', async () => {
     const args = {
       kind: 'dsr.deadline-approaching' as const,
       recordId: 'r7',

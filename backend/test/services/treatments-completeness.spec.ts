@@ -116,7 +116,7 @@ describe('TreatmentsService – Completeness', () => {
       const user = await seedUser();
       await seedOrganization();
 
-      // Only name is provided — no other fields
+      // Only name is provided (no other fields)
       const treatment = await createTreatment(user.id, { name: 'Minimal Treatment' });
 
       // name=10 is the only scored field; sensitiveCategories also counts as N/A=5 since hasSensitiveData is not set (false by default)

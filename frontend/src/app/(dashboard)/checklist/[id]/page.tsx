@@ -182,11 +182,11 @@ export default function ScreeningResultPage() {
 
       <p className="mt-2 text-xs" style={{ color: 'var(--ink-3)' }}>
         {t('screening.createdBy')}:{' '}
-        {screening.creator ? `${screening.creator.firstName} ${screening.creator.lastName}` : ''} —{' '}
+        {screening.creator ? `${screening.creator.firstName} ${screening.creator.lastName}` : ''} -{' '}
         {formatDate(screening.createdAt)}
       </p>
 
-      {/* Risk Matrix — read-only preview derived from verdict + score */}
+      {/* Risk Matrix: read-only preview derived from verdict + score */}
       <div className="mt-6 max-w-md">
         <p
           className="mb-2 text-xs font-semibold uppercase tracking-wide"
@@ -197,7 +197,7 @@ export default function ScreeningResultPage() {
         <RiskMatrix
           selectedLikelihood={riskLikelihood}
           selectedSeverity={riskSeverity}
-          ariaLabel="Matrice de risques — résultat du screening"
+          ariaLabel="Matrice de risques : résultat du screening"
         />
       </div>
 
@@ -208,7 +208,7 @@ export default function ScreeningResultPage() {
           <ul className="mt-2 space-y-1">
             {redFlags.map(q => (
               <li key={q.id} className="text-sm text-red-700">
-                • {q.articleRef} — {localizedLabel(q.label, locale)}
+                • {q.articleRef} - {localizedLabel(q.label, locale)}
               </li>
             ))}
           </ul>

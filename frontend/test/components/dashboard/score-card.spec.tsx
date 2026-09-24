@@ -48,7 +48,7 @@ describe('<ScoreCard />', () => {
         snapshots={SNAPSHOTS}
       />,
     );
-    expect(screen.getByText('—')).toBeInTheDocument();
+    expect(screen.getByText('-')).toBeInTheDocument();
   });
 
   it('shows the trend delta when snapshots span a range', () => {

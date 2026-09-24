@@ -36,7 +36,7 @@ function readStoredLocale(): Locale {
 // External store for the active locale, backed by localStorage. Using
 // useSyncExternalStore (rather than useEffect(setState, [])) lets the server
 // render the default while the client subscribes to the stored value in a
-// single commit — no post-mount re-render flicker. `cachedLocale` also keeps
+// single commit, with no post-mount re-render flicker. `cachedLocale` also keeps
 // the last choice in memory so the preference survives a session where
 // localStorage writes throw (e.g. private browsing).
 let cachedLocale: Locale | null = null;
@@ -60,7 +60,7 @@ function writeLocale(next: Locale): void {
       window.localStorage.setItem(STORAGE_KEY, next);
     }
   } catch {
-    // localStorage unavailable — preference is tab-only this session.
+    // localStorage unavailable: preference is tab-only this session.
   }
   for (const listener of localeListeners) listener();
 }

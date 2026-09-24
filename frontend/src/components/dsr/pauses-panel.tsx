@@ -144,7 +144,7 @@ export function PausesPanel({ dsrId }: PausesPanelProps) {
           style={{ border: '1px solid var(--a30-border)' }}
         >
           <h4 className="text-xs font-medium" style={{ color: 'var(--ink-2)' }}>
-            Pause — awaiting requester
+            Pause: awaiting requester
           </h4>
           <div>
             <Label htmlFor="pause-reason">Reason</Label>

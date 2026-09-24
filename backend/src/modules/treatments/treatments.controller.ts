@@ -170,7 +170,7 @@ export class TreatmentsController {
       // browser honours regardless of disposition.
       'Content-Disposition': `inline; filename="traitement-${id}.pdf"`,
       // Override the global helmet `frame-ancestors 'none'` for this route
-      // only — same-origin embedding is required for the preview dialog.
+      // only: same-origin embedding is required for the preview dialog.
       'Content-Security-Policy': "frame-ancestors 'self'",
     });
     res.send(buffer);

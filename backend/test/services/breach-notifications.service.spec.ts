@@ -11,9 +11,9 @@ import { EntityValidator } from '../../src/modules/follow-up/entity-validator';
 
 // Fixed awareness timestamp for 72h boundary tests
 const AWARENESS_AT = new Date('2026-04-01T00:00:00Z');
-// 71h after awareness — within the 72h window
+// 71h after awareness, within the 72h window
 const FILED_WITHIN_72H = new Date('2026-04-03T23:00:00Z'); // 71h later
-// ~73h after awareness — over the 72h window
+// ~73h after awareness, over the 72h window
 const FILED_OVER_72H = new Date('2026-04-04T01:00:00Z'); // 73h later
 
 describe('BreachNotificationsService', () => {
@@ -139,7 +139,7 @@ describe('BreachNotificationsService', () => {
   });
 
   it('(4) COMPLEMENTARY at any time: succeeds with no 72h check, creates filing + RegulatorInteraction FILING_COMPLEMENTARY', async () => {
-    // Filed well over 72h — but COMPLEMENTARY is exempt
+    // Filed well over 72h, but COMPLEMENTARY is exempt
     const filing = await svc.fileCnil({
       violationId,
       phase: 'COMPLEMENTARY',
@@ -191,14 +191,14 @@ describe('BreachNotificationsService', () => {
       violationId,
       method: 'EMAIL',
       notifiedAt: new Date('2026-04-10T12:00:00Z'),
-      recipientScope: 'First batch — EU customers',
+      recipientScope: 'First batch: EU customers',
       sentBy: userId,
     });
     await svc.notifyPersons({
       violationId,
       method: 'POST',
       notifiedAt: new Date('2026-04-11T09:00:00Z'),
-      recipientScope: 'Second batch — postal-only customers',
+      recipientScope: 'Second batch: postal-only customers',
       sentBy: userId,
     });
     await svc.notifyPersons({

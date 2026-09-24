@@ -65,6 +65,6 @@ describe('<RecentTreatments />', () => {
 
   it('shows em-dash when refNumber is null', () => {
     render(<RecentTreatments treatments={[makeTreatment({ refNumber: null })]} />);
-    expect(screen.getAllByText('—').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText('-').length).toBeGreaterThanOrEqual(1);
   });
 });

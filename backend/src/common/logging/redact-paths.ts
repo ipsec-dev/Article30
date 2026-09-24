@@ -1,8 +1,8 @@
 // Pino's redact wildcards (`*`) match exactly one level. Deeply-nested fields
-// need explicit depth entries — we cover up to 2 levels of nesting, which
+// need explicit depth entries; we cover up to 2 levels of nesting, which
 // handles realistic "someone logged a DTO that wraps a Prisma entity" cases.
-// Deeper nesting is considered a call-site convention violation — T12–T17's
-// structured { event, ...fields } pattern keeps logs flat.
+// Deeper nesting is considered a call-site convention violation: the
+// structured { event, ...fields } logging pattern keeps logs flat.
 
 export const STRIP_PATHS = [
   'password',
@@ -44,14 +44,14 @@ const STRIP_LEAF_KEYS = new Set<string>([
 
 const STRIP_HEADER_KEYS = new Set<string>(['authorization', 'cookie']);
 
+const HEADER_PATH_MIN_LENGTH = 3;
+
 /**
  * Decide whether a pino-matched path came from STRIP_PATHS (should be removed)
  * vs CENSOR_PATHS (should be replaced with '[Redacted]').
  *
  * Called by the pino `redact.censor` function at serialization time.
  */
-const HEADER_PATH_MIN_LENGTH = 3;
-
 export function isStripPath(path: readonly string[]): boolean {
   if (path.length === 0) {
     return false;

@@ -48,7 +48,7 @@ export class MailService implements OnModuleInit {
     this.initialised = true;
   }
 
-  /** Test helper — swap in a real transport + capture sink. Marks as initialised + enabled. */
+  /** Test helper: swap in a real transport + capture sink. Marks as initialised + enabled. */
   setTransportForTesting(transport: Transporter, sink: MailSink | null = null): void {
     this.transport = transport;
     this.sink = sink;
@@ -56,7 +56,7 @@ export class MailService implements OnModuleInit {
     this.initialised = true;
   }
 
-  /** Test helper — put the service in the disabled-at-boot state without touching env. */
+  /** Test helper: put the service in the disabled-at-boot state without touching env. */
   setDisabledForTesting(): void {
     this.transport = null;
     this.sink = null;

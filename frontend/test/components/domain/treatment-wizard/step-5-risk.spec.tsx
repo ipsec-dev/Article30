@@ -133,7 +133,7 @@ describe('Step5Risk', () => {
 
     // The aipd.warning key is the distinct body text of the warning box.
     expect(screen.getByText(/Attention\s*:/i)).toBeInTheDocument();
-    // "AIPD requise" appears both as warning heading and conclusion heading — assert it's present.
+    // "AIPD requise" appears both as warning heading and conclusion heading; assert it's present.
     const requiredHeadings = screen.getAllByText(/AIPD requise/i);
     expect(requiredHeadings.length).toBeGreaterThanOrEqual(1);
   });
@@ -161,7 +161,7 @@ describe('Step5Risk', () => {
     const user = setupUser();
     const { getFormValues } = renderStep<TreatmentWizardFormData>(Step5Risk, ALL_FALSE);
 
-    // Click the first criterion (EVALUATION_SCORING — fr label).
+    // Click the first criterion (EVALUATION_SCORING, found by its fr label).
     const labelEl = screen.getByText(/Évaluation ou notation de personnes/i);
     const card = labelEl.closest('.border') as HTMLElement | null;
     expect(card).toBeTruthy();

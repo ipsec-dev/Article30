@@ -67,14 +67,14 @@ jobs:
           fi
           total=$(jq '[.advisories[]? | select(.severity == "high" or .severity == "critical")] | length' "$tmp")
           fixable_count=$(jq '[.advisories[]? | select((.severity == "high" or .severity == "critical") and (.patched_versions // "") != "" and (.patched_versions // "") != "<0.0.0")] | length' "$tmp")
-          echo "high/critical advisories: $total — fixable: $fixable_count"
+          echo "high/critical advisories: $total, fixable: $fixable_count"
           if [ "$fixable_count" -gt 0 ]; then
-            echo "::error::$fixable_count high/critical vulnerabilities have an available fix — bumping is required"
+            echo "::error::$fixable_count high/critical vulnerabilities have an available fix, bumping is required"
             jq '.advisories[]? | select((.severity == "high" or .severity == "critical") and (.patched_versions // "") != "" and (.patched_versions // "") != "<0.0.0") | {id, module_name, severity, vulnerable_versions, patched_versions, title, url}' "$tmp"
             exit 1
           fi
           if [ "$total" -gt 0 ]; then
-            echo "::warning::$total high/critical advisories present with no fix available yet — not blocking CI"
+            echo "::warning::$total high/critical advisories present with no fix available yet, not blocking CI"
             jq '.advisories[]? | select(.severity == "high" or .severity == "critical") | {id, module_name, severity, title, url}' "$tmp"
           fi
 
@@ -102,7 +102,7 @@ jobs:
       # COMMIT_OR_PR_TITLE, any PR with more than one commit), so a
       # non-conventional title lands on main unparsed and release-please
       # skips the release entirely - no version bump, no changelog entry.
-      # Note: this only runs on push events, not on title edits, so editing
+      # This only runs on push events, not on title edits, so editing
       # the title to something invalid after CI is green won't be caught.
       - name: Validate PR title
         env:
@@ -300,8 +300,8 @@ jobs:
         id: playwright-version
         # Cache key is scoped to the resolved @playwright/test version so a
         # pnpm-lock.yaml bump (new browser snapshot) invalidates the cache
-        # cleanly. Frontend depends on @playwright/test, not bare `playwright`
-        # — under pnpm that's the path that actually exists.
+        # cleanly. Frontend depends on @playwright/test, not bare `playwright`;
+        # under pnpm that's the path that actually exists.
         run: |
           VERSION=$(node -p "require('./frontend/node_modules/@playwright/test/package.json').version")
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"

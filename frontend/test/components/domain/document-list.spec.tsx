@@ -8,7 +8,7 @@ import { Role } from '@article30/shared';
 import type { DocumentDto, UserDto } from '@article30/shared';
 
 // DocumentList behaviour under test (mirrors src/components/domain/document-list.tsx):
-// - On mount calls getMe() AND api.get('/documents?entity=…&entityId=…').
+// - On mount calls getMe() and api.get('/documents?entity=…&entityId=…').
 // - Shows a spinner while loading, then either the empty-state or a <li> per document.
 // - Upload button is only visible when the loaded user's role is in WRITE_ROLES
 // (ADMIN / DPO / EDITOR). AUDITOR and PROCESS_OWNER never see it.
@@ -101,7 +101,7 @@ beforeEach(() => {
   vi.spyOn(window, 'confirm').mockReturnValue(true);
   vi.spyOn(window, 'open').mockImplementation(() => null);
 
-  // Safe defaults — each test overrides as needed.
+  // Safe defaults; each test overrides as needed.
   authMock.getMe.mockResolvedValue(makeUser(Role.DPO));
   apiMock.get.mockResolvedValue([]);
 });

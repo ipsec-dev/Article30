@@ -271,10 +271,10 @@ export class DsrService {
   }
 
   async transition(input: TransitionInput): Promise<DataSubjectRequest> {
-    // 1. Forged-FK defense — validator-first before any DB read
+    // 1. Forged-FK defense: validator-first before any DB read
     await this.entityValidator.validate('DSR', input.dsrId);
 
-    // 2. Validate payload shape (cheap, target-only — independent of current status)
+    // 2. Validate payload shape (cheap, target-only, independent of current status)
     let validatedPayload: unknown;
     try {
       validatedPayload = DSR_TRANSITION_VALIDATORS[input.target](input.payload);
@@ -285,7 +285,7 @@ export class DsrService {
       throw err;
     }
 
-    // 3–9. All side effects in one atomic transaction. Read current status under
+    // 3-9. All side effects in one atomic transaction. Read current status under
     // a per-DSR advisory lock so two concurrent transitions on the same DSR
     // serialize and the second one re-validates against the post-commit state.
     return this.prisma.$transaction(async tx => {
@@ -316,7 +316,7 @@ export class DsrService {
         (input.target === 'ACKNOWLEDGED' || input.target === 'IDENTITY_VERIFIED') &&
         dsr.status === 'AWAITING_REQUESTER'
       ) {
-        // Resuming from pause — close the open interval
+        // Resuming from pause: close the open interval
         await this.dsrPauseService.close(
           {
             dsrId: input.dsrId,

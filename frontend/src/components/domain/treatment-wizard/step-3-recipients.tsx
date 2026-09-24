@@ -343,7 +343,7 @@ export function Step3Recipients() {
   // so React keeps per-row state attached to the right row. An array-index key
   // would reattach one row's state to the wrong data after a middle row is
   // removed. Edits go through field-path setValue (not the array-replacing
-  // setValue) so the ids — and text-input focus — are preserved.
+  // setValue) so the ids (and text-input focus) are preserved.
   const {
     fields: recipientFields,
     append: appendRecipient,

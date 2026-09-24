@@ -19,9 +19,9 @@ function rowStatus(condition: boolean): Status {
 }
 
 function buildRows(t: TreatmentDto): Row[] {
-  // dataCategories is DataCategoryEntry[] | null — guard against null
+  // dataCategories is DataCategoryEntry[] | null; guard against null
   const dataCategories = t.dataCategories ?? [];
-  // transfers is TransferEntry[] | null — guard against null
+  // transfers is TransferEntry[] | null; guard against null
   const hasTransfers = Array.isArray(t.transfers) && t.transfers.length > 0;
 
   return [

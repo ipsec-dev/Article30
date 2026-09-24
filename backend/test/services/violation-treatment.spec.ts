@@ -37,7 +37,7 @@ describe('ViolationsService – treatment linking', () => {
     const decisions = new DecisionsService(prisma, validator, timeline);
     const breachNotifications = new BreachNotificationsService(prisma, validator, timeline);
     // create() emits notifications, but this spec asserts only treatment
-    // linking — a no-op stub keeps the test focused.
+    // linking, so a no-op stub keeps the test focused.
     const notifications = noopNotificationService();
     service = new ViolationsService(
       prisma,

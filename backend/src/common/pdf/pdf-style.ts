@@ -2,7 +2,7 @@
  * Shared visual language for every PDF the backend produces.
  *
  * Treat this module as the single source of truth: any per-PDF tweak that
- * doesn't fit one of the helpers below is a smell — fold it back in here so
+ * doesn't fit one of the helpers below is a smell; fold it back in here so
  * the suite stays uniform.
  */
 
@@ -16,7 +16,7 @@ export const PDF_MARGIN = 40;
 
 /**
  * Default page margins for every PDFDocument the backend creates. Bottom is
- * intentionally larger than the others to reserve room for the per-page
+ * larger than the others to reserve room for the per-page
  * footer + audit-hash seal stamped by `drawFooterAllPages`. Without this
  * reservation, the natural content flow can collide with the fixed-position
  * footer.
@@ -31,7 +31,7 @@ export const PDF_PAGE_MARGINS = {
 /**
  * Register the Article30 typeface (Inter) on a PDFKit document.
  *
- * Must be called once on every newly-constructed `PDFDocument` BEFORE any
+ * Must be called once on every newly-constructed `PDFDocument` before any
  * `.font(...)` call. Uses the bundled TTF files at `common/pdf/fonts/` (copied
  * to dist by nest-cli's `assets` config).
  */
@@ -40,14 +40,14 @@ export function registerArticle30Fonts(doc: PDFKit.PDFDocument): void {
   doc.registerFont(PDF_FONT_BOLD, path.join(FONTS_DIR, 'Inter-Bold.ttf'));
 }
 
-// Article30 design tokens — kept in lockstep with frontend/src/app/globals.css :root.
+// Article30 design tokens, kept in lockstep with frontend/src/app/globals.css :root.
 // Web UI uses CSS custom properties (var(--primary), var(--ink), etc.); PDFs
 // can't, so we mirror the same hex values here.
 export const PDF_COLORS = {
-  primary: '#4f46e5', // var(--primary) — indigo
+  primary: '#4f46e5', // var(--primary), indigo
   dark: '#1f2328', // var(--ink)
   medium: '#424a53', // var(--ink-2)
-  light: '#8c959f', // var(--ink-4) — for footer/captions; ink-3 (#656d76) is too dark for "light"
+  light: '#8c959f', // var(--ink-4), for footer/captions; ink-3 (#656d76) is too dark for "light"
   divider: '#d1d9e0', // var(--a30-border)
   white: '#ffffff',
   black: '#000000',
@@ -55,9 +55,9 @@ export const PDF_COLORS = {
   warning: '#9a6700', // var(--warn)
   danger: '#cf222e', // var(--danger)
   // Tinted bg/fg pairs for pills, callouts, and answer/severity chips. Use these
-  // instead of reaching for raw hex — drift between services becomes invisible.
+  // instead of reaching for raw hex, where drift between services becomes invisible.
   // Source of truth: the Tailwind palette consumed by the web's `<Badge>` component
-  // (green/amber/red/blue 100/800), NOT the legacy `--danger-bg` CSS var which
+  // (green/amber/red/blue 100/800), not the `--danger-bg` CSS var, which
   // is unused by Badge.
   successBg: '#dcfce7', // tw green-100
   successFg: '#166534', // tw green-800
@@ -65,8 +65,8 @@ export const PDF_COLORS = {
   warnFg: '#92400e', // tw amber-800
   dangerBg: '#fee2e2', // tw red-100
   dangerFg: '#991b1b', // tw red-800
-  // CRITICAL severity stays *tinted* (web uses red-200/red-900) rather than a
-  // solid filled chip — keeps the visual step from HIGH consistent across media.
+  // CRITICAL severity stays tinted (web uses red-200/red-900) rather than a
+  // solid filled chip, which keeps the visual step from HIGH consistent across media.
   criticalBg: '#fecaca', // tw red-200
   criticalFg: '#7f1d1d', // tw red-900
   infoBg: '#dbeafe', // tw blue-100
@@ -110,7 +110,7 @@ export const PDF_LAYOUT = {
   cardPadX: 12,
   cardPadY: 12,
   cardBorderWidth: 0.6,
-  // AcroForm field tokens (vendor questionnaire). Don't tweak per-PDF — fold
+  // AcroForm field tokens (vendor questionnaire). Don't tweak per-PDF; fold
   // any new form layout back into these.
   formCheckboxSize: 12,
   formCheckboxLabelGap: 4,
@@ -121,7 +121,7 @@ export const PDF_LAYOUT = {
   formQuestionBlockHeight: 110,
   formQuestionGap: 8,
   formFieldBorderWidth: 0.5,
-  // Pinned distance from the page's bottom *edge* (not bottom margin) for the
+  // Pinned distance from the page's bottom edge (not bottom margin) for the
   // top of the per-page footer drawn by `drawFooterAllPages`. The page's
   // bottom margin (PDF_PAGE_MARGINS.bottom) is set wider than this so content
   // auto-page-breaks above the footer area instead of overlapping it.
@@ -138,9 +138,8 @@ export const PDF_TABLE = {
   headerOffset: 10,
   /** Vertical gap between the section label and the column header row. */
   headerGap: 0.2,
-  /** Vertical gap between data rows (0.5 line heights). Bumped from 0.3 so
-   * adjacent rows don't visually glue together — important when one cell wraps
-   * to two lines. */
+  /** Vertical gap between data rows (0.5 line heights) so adjacent rows don't
+   * visually glue together, which matters when one cell wraps to two lines. */
   rowGap: 0.5,
 } as const;
 
@@ -148,8 +147,8 @@ export const PDF_TABLE = {
 export type PdfLocale = 'fr' | 'en';
 
 // Both locales use the same dd/mm/yyyy numeric format the web uses everywhere
-// (frontend/src/lib/dates.ts). Switching EN to a "dd MMM yyyy" short-month
-// shape silently created a print-vs-screen mismatch — keep them aligned.
+// (frontend/src/lib/dates.ts). A "dd MMM yyyy" short-month shape for EN would
+// create a print-vs-screen mismatch, so keep them aligned.
 const DATE_FMT_FR = new Intl.DateTimeFormat('fr-FR', {
   day: '2-digit',
   month: '2-digit',
@@ -175,8 +174,8 @@ interface DrawHeaderOptions {
   title: string;
   subtitle?: string;
   meta?: string;
-  /** Layout direction. Defaults to 'left' (Article30 editorial); 'center' kept
-   * for backwards-compatibility with cover-page style PDFs (badges, score). */
+  /** Layout direction. Defaults to 'left' (Article30 editorial); 'center' is
+   * for cover-page style PDFs (badges, score). */
   align?: 'left' | 'center';
 }
 
@@ -231,10 +230,9 @@ export function drawHeader(doc: PDFKit.PDFDocument, opts: DrawHeaderOptions): vo
 }
 
 /**
- * Section heading — Article30 design: sentence-case bold with a small
+ * Section heading in the Article30 design: sentence-case bold with a small
  * indigo accent dot at the left. Matches the web's `SectionTitle` primitive
- * (no eyebrow, no UPPERCASE — that pattern was explicitly killed in the
- * Notion/GitHub direction set during the design chat).
+ * (no eyebrow, no UPPERCASE).
  */
 export function drawSectionHeader(
   doc: PDFKit.PDFDocument,
@@ -274,8 +272,8 @@ const FOOTER_GENERATED_BY: Record<PdfLocale, (date: string) => string> = {
 /**
  * Renders the footer rule + "Generated on …" line + optional disclaimer at
  * the cursor's current Y. Uses absolute positioning (no `moveDown`) so it
- * cannot accidentally trigger a page break — important for
- * `drawFooterAllPages` which iterates a snapshotted page count and would
+ * cannot accidentally trigger a page break, which matters for
+ * `drawFooterAllPages`: it iterates a snapshotted page count and would
  * orphan footers on overflow pages.
  */
 export function drawFooter(doc: PDFKit.PDFDocument, opts: DrawFooterOptions = {}): void {
@@ -330,7 +328,7 @@ export function drawBadge(doc: PDFKit.PDFDocument, opts: DrawBadgeOptions): void
 
   doc.save().roundedRect(x, y, width, height, PDF_LAYOUT.badgeRadius).fill(opts.color).restore();
 
-  // Vertical centering — PDFKit's `baseline: 'middle'` aligns the em-box
+  // Vertical centering: PDFKit's `baseline: 'middle'` aligns the em-box
   // center to the supplied y. Pure (height - fontSize)/2 math leaves caps
   // visibly off-center because Inter's ascent + descent ≠ fontSize and the
   // 'alphabetic' default baseline puts the line-box top at y, not the caps.
@@ -350,11 +348,11 @@ interface DrawScoreBarOptions {
   score: number;
   color: string;
   showPercent?: boolean;
-  /** Optional left edge — when omitted, the bar centers on the page. */
+  /** Optional left edge; when omitted, the bar centers on the page. */
   x?: number;
-  /** Optional top edge — when omitted, the bar uses `doc.y`. */
+  /** Optional top edge; when omitted, the bar uses `doc.y`. */
   y?: number;
-  /** Optional bar width — when omitted, defaults to PDF_LAYOUT.scoreBarWidth. */
+  /** Optional bar width; when omitted, defaults to PDF_LAYOUT.scoreBarWidth. */
   width?: number;
 }
 
@@ -372,7 +370,7 @@ interface DrawDonutOptions {
 }
 
 /**
- * Donut chart matching the web's `Donut` primitive — track ring + arc + centred percentage label.
+ * Donut chart matching the web's `Donut` primitive: track ring + arc + centred percentage label.
  * Renders independently of cursor: caller specifies x/y or it anchors to current `doc.x`/`doc.y`.
  * Cursor is restored afterwards.
  */
@@ -441,21 +439,15 @@ export function formatHashSeal(fullHash: string): string {
 }
 
 /**
- * Audit hash-seal chip — small mono text with leading label and a small
- * "chain" glyph (square outline + two diagonal strokes), mirrors the web's
- * `HashSeal` primitive (the `.hash-chain` repeating-linear-gradient pattern).
- * Used in PDF footers to convey the tamper-evident seal.
- */
-/**
- * Audit hash-seal chip — small mono text with leading label and a small
- * "chain" glyph (square outline + two diagonal strokes), mirrors the web's
+ * Audit hash-seal chip: small mono text with leading label and a small
+ * "chain" glyph (square outline + two diagonal strokes), mirroring the web's
  * `HashSeal` primitive (the `.hash-chain` repeating-linear-gradient pattern).
  * Used in PDF footers to convey the tamper-evident seal.
  *
- * Implementation note: do NOT wrap in `doc.save()/restore()`. PDFKit's
+ * Implementation note: do not wrap in `doc.save()/restore()`. PDFKit's
  * `text(..., { lineBreak: false })` produces an unbalanced PDF content stream
  * inside an explicit save block, emitting "Restoring state when no valid
- * states to pop" warnings on every page. Since this is always the LAST thing
+ * states to pop" warnings on every page. Since this is always the last thing
  * drawn on each page (via `drawFooterAllPages`), state pollution is harmless.
  */
 export function drawHashSeal(doc: PDFKit.PDFDocument, opts: DrawHashSealOptions): void {
@@ -472,8 +464,8 @@ export function drawHashSeal(doc: PDFKit.PDFDocument, opts: DrawHashSealOptions)
   // Vertically centre the glyph against the text cap height.
   const glyphY = baselineY + (PDF_FONT_SIZES.footer - glyphSize) / 2;
 
-  // Square outline + two diagonal strokes — reads as a "chain" pattern at
-  // this scale without needing PDFKit's clip path (which produced state
+  // Square outline + two diagonal strokes: reads as a "chain" pattern at
+  // this scale without needing PDFKit's clip path (which produces state
   // imbalance on later pages).
   doc.lineWidth(0.4).strokeColor(PDF_COLORS.light);
   doc.rect(startX, glyphY, glyphSize, glyphSize).stroke();
@@ -488,7 +480,7 @@ export function drawHashSeal(doc: PDFKit.PDFDocument, opts: DrawHashSealOptions)
 
   // Reset fill to text color (stroke calls don't touch fillColor but be defensive).
   doc.fillColor(PDF_COLORS.light);
-  // Width gets a 4pt buffer beyond the measured text — without it, hashes
+  // Width gets a 4pt buffer beyond the measured text; without it, hashes
   // whose chars happen to be slightly wider than average wrap onto a second
   // line ("Audit 2e4e…" / "7cbc"). PDFKit honours `lineBreak: false` for
   // line-internal wrapping but still re-flows when the rendered width
@@ -556,7 +548,7 @@ export function drawPill(doc: PDFKit.PDFDocument, opts: DrawPillOptions): void {
     .roundedRect(opts.x, opts.y, opts.width, PDF_LAYOUT.pillHeight, PDF_LAYOUT.pillRadius)
     .fill(opts.palette.fill)
     .restore();
-  // Vertical centering — see `drawBadge` for the rationale behind using
+  // Vertical centering: see `drawBadge` for the rationale behind using
   // `baseline: 'middle'` instead of computing offsets from fontSize.
   doc.font(PDF_FONT_BOLD).fontSize(PDF_FONT_SIZES.pill).fillColor(opts.palette.fg);
   doc.text(opts.label, opts.x, opts.y + PDF_LAYOUT.pillHeight / 2, {
@@ -589,16 +581,15 @@ interface DrawTableOptions {
   columns: PdfTableColumn[];
   /** Rows pre-mapped to cell strings; each row's length must match columns.length. */
   rows: string[][];
-  /** Total available width — usually `doc.page.width - left - right margins`. */
+  /** Total available width, usually `doc.page.width - left - right margins`. */
   width: number;
 }
 
 /**
  * Draws a labelled multi-column table with absolute-x cell positioning.
- * Replaces the per-PDF `drawXTable` private methods.
  *
  * The header alignment trick (`headerY = doc.y - PDF_TABLE.headerOffset`) is
- * fragile — see PDF_TABLE.headerOffset comment.
+ * fragile; see the PDF_TABLE.headerOffset comment.
  */
 export function drawTable(doc: PDFKit.PDFDocument, opts: DrawTableOptions): void {
   if (opts.rows.length === 0) {
@@ -626,7 +617,7 @@ export function drawTable(doc: PDFKit.PDFDocument, opts: DrawTableOptions): void
   }
   const startX = doc.x + PDF_TABLE.rowIndent;
 
-  // Header row — first cell sets baseline; subsequent cells use the
+  // Header row: first cell sets baseline; subsequent cells use the
   // computed `headerY` to stay on the same line.
   doc.font(PDF_FONT_BOLD).fontSize(PDF_FONT_SIZES.pill);
   doc.text(opts.columns[0].header, startX, doc.y, { width: colWidths[0], continued: false });
@@ -636,7 +627,7 @@ export function drawTable(doc: PDFKit.PDFDocument, opts: DrawTableOptions): void
   }
 
   // Data rows. Per-row, write each cell from the same `rowY`, then advance
-  // to the *tallest* cell's bottom so wrapped cells don't bleed into the
+  // to the tallest cell's bottom so wrapped cells don't bleed into the
   // next row.
   doc.font(PDF_FONT_REGULAR).fontSize(PDF_FONT_SIZES.pill);
   for (const row of opts.rows) {
@@ -655,7 +646,7 @@ export function drawTable(doc: PDFKit.PDFDocument, opts: DrawTableOptions): void
 /**
  * Shared bilingual labels for the answer enum used by the screening,
  * audit-package checklist, and vendor questionnaire PDFs. Single source of
- * truth — don't re-declare per file.
+ * truth; don't re-declare per file.
  */
 export const ANSWER_LABELS: Record<PdfLocale, Record<string, string>> = {
   fr: {
@@ -817,9 +808,8 @@ const CALLOUT_PALETTE: Record<DrawCalloutOptions['tone'], PillPalette> = {
 };
 
 /**
- * Tinted callout panel — rounded background + padded body lines. Used for
- * red flags, attention boxes, success confirmations. Replaces ad-hoc panels
- * inlined in individual services.
+ * Tinted callout panel: rounded background + padded body lines. Used for
+ * red flags, attention boxes, success confirmations.
  *
  * Page-safety: PDFKit shapes don't span page boundaries. If the callout
  * wouldn't fit in the remaining page space, force a page break first so the
@@ -865,8 +855,8 @@ export function drawCallout(doc: PDFKit.PDFDocument, opts: DrawCalloutOptions): 
 }
 
 /**
- * Wraps the output of `render()` in a rounded outline + interior padding —
- * the print analogue of the web's `<Card>` primitive. Use sparingly: only
+ * Wraps the output of `render()` in a rounded outline + interior padding
+ * (the print analogue of the web's `<Card>` primitive). Use sparingly: only
  * for sections the web explicitly cards (e.g. screening answers, vendor
  * detail blocks).
  *
@@ -901,7 +891,7 @@ export function drawCardWrapper(
     doc.x = x;
     doc.y = startY + totalHeight + 6;
   } else {
-    // Content won't fit on this page — render without the outline so the
+    // Content won't fit on this page: render without the outline so the
     // page break flows naturally.
     render();
   }
@@ -909,7 +899,7 @@ export function drawCardWrapper(
 
 interface DrawFooterAllPagesOptions {
   disclaimer?: string;
-  /** Short hash from formatHashSeal() — stamped under the footer on every page. */
+  /** Short hash from formatHashSeal(), stamped under the footer on every page. */
   hashSeal?: string;
   locale?: PdfLocale;
 }
@@ -917,12 +907,8 @@ interface DrawFooterAllPagesOptions {
 /**
  * Stamps the footer (and optional audit-hash seal) on every buffered page at
  * a fixed distance from the page bottom. Use this for multi-page PDFs created
- * with `bufferPages: true`. Single-page PDFs can keep using `drawFooter`
+ * with `bufferPages: true`. Single-page PDFs can call `drawFooter`
  * directly at end-of-document.
- *
- * Each per-page render is wrapped in its own save/restore to isolate it from
- * any inherited state on naturally-overflowed pages — without this, PDFKit
- * emits "Restoring state when no valid states to pop" warnings on later pages.
  */
 export function drawFooterAllPages(
   doc: PDFKit.PDFDocument,
@@ -933,13 +919,13 @@ export function drawFooterAllPages(
     doc.switchToPage(range.start + i);
 
     // PDFKit's `text()` triggers a page break whenever the cursor sits below
-    // the page's bottom margin. The footer lives BELOW that margin (in the
+    // the page's bottom margin. The footer lives below that margin (in the
     // reserved bottom strip), so we temporarily push the bottom margin to
-    // zero before drawing — otherwise every footer line spawns a new page.
+    // zero before drawing; otherwise every footer line spawns a new page.
     const originalBottom = doc.page.margins.bottom;
     doc.page.margins.bottom = 0;
 
-    // Pin from the page bottom edge (NOT the bottom margin) so the footer
+    // Pin from the page bottom edge (not the bottom margin) so the footer
     // sits in the reserved bottom strip below the content area.
     const footerY = doc.page.height - PDF_LAYOUT.footerPinFromBottom;
     doc.x = doc.page.margins.left;

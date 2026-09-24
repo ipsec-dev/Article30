@@ -80,10 +80,8 @@ describe('<TreatmentProcessingPanel>', () => {
     const actionSelect = screen.getByLabelText(/action taken/i);
     expect(actionSelect).toBeInTheDocument();
 
-    // Change actionTaken to DELETED
     await userEvent.selectOptions(actionSelect, 'DELETED');
 
-    // Submit
     await userEvent.click(screen.getByRole('button', { name: /save/i }));
 
     await waitFor(() =>

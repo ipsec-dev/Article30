@@ -5,7 +5,7 @@
 // We inline the augmentation instead of re-exporting jest-dom's
 // `@testing-library/jest-dom/vitest` because that file resolves `vitest` from
 // inside jest-dom's own package directory, which under pnpm may resolve to a
-// different vitest copy than the one frontend test files consume — leaving
+// different vitest copy than the one frontend test files consume, leaving
 // their `Assertion<HTMLElement>` untouched. Resolving `vitest` from here
 // (frontend/types/) pins the augmentation to frontend's actual vitest dep.
 import 'vitest';

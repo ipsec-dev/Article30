@@ -19,6 +19,6 @@
     if (parsed.dark === true) root.classList.add('dark');
     else if (parsed.dark === false) root.classList.remove('dark');
   } catch (e) {
-    /* fail silently — DEFAULT_TWEAKS take effect via static html attrs */
+    /* fail silently: DEFAULT_TWEAKS take effect via static html attrs */
   }
 })();

@@ -26,7 +26,7 @@ const renderStep = () =>
   );
 
 // The Type field is a Radix combobox, so the only `textbox` roles in a recipient
-// row are the free-text "precision" inputs — one per row.
+// row are the free-text "precision" inputs, one per row.
 const precisionInputs = () => screen.getAllByRole('textbox');
 
 describe('<Step3Recipients> recipient rows', () => {

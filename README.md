@@ -17,7 +17,7 @@ The data model is **Article 30 turned into code** - a typed schema, DPO validati
 - **Per-treatment checklist** - Guided screening on a single treatment yielding a compliance verdict
 - **Governance posture** - Organization-wide self-assessment across breach, governance, transfers and records
 - **Regulatory Watch** - Ingest RSS feeds (CNIL, EDPB by default) and track regulatory updates
-- **Document Library** - Upload policies, DPAs, and evidence to S3-compatible storage (presigned URLs)
+- **Document Library** - Upload policies, DPAs, and evidence to S3-compatible storage, downloaded through the backend
 - **Alerts** - Surface upcoming deadlines (DSR response, treatment reviews, notifications)
 - **Regulation Reference** - Browse GDPR recitals and articles in 5 languages (FR, EN, ES, DE, IT)
 - **Glossary** - 86 RGPD acronyms, concepts, roles, processes, and adjacent compliance frameworks

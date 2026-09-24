@@ -183,7 +183,7 @@ describe('treatments.controller (e2e)', () => {
       expect(res.status).toBe(403);
     });
 
-    it('validates a treatment for a DPO (different creator — separation of duties) and sets status/validatedBy/validatedAt', async () => {
+    it('validates a treatment for a DPO (different creator: separation of duties) and sets status/validatedBy/validatedAt', async () => {
       // Creator must differ from validator: TreatmentsService.validate() throws
       // ForbiddenException when createdBy === userId.
       const { user: creator } = await seedUser(testApp.prisma, Role.EDITOR, {

@@ -1,4 +1,4 @@
-[VIO] Rappel CNIL — {{leadTimeLabel}} — {{shortRef}}
+[VIO] Rappel CNIL - {{leadTimeLabel}} - {{shortRef}}
 
 Bonjour {{recipientFirstName}},
 
@@ -13,8 +13,8 @@ Action recommandée
   Finaliser la notification CNIL maintenant.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Gérer vos notifications : {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

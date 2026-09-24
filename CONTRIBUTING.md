@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing. This project is an open-source GDPR / RGPD registry;
+Thanks for your interest in contributing. This project is an open-source GDPR / RGPD registry.
 
 Pull requests, feature requests, bug reports, and security disclosures are all welcome.
 
@@ -36,11 +36,9 @@ pnpm --filter @article30/backend test:coverage  # backend coverage report (requi
 
 ## Code style
 
-- Avoid `any` unless justified with an eslint-disable and a comment explaining why.
-- Prefer editing existing files over adding new ones.
-- Default to writing no comments (only when the _why_ is non-obvious)
-- Don't explain _what_ the code does, well-named identifiers already do that.
-- Keep functions small and focused. Split when a file grows unfocused.
+- Avoid `any`. When it cannot be avoided, add an `eslint-disable` with a comment explaining why.
+- Comment the _why_ when it is not obvious. Well-named identifiers already say _what_ the code does.
+- Keep functions small and focused, and split a file when it grows unfocused.
 
 ## Testing
 
@@ -51,8 +49,8 @@ pnpm --filter @article30/backend test:coverage  # backend coverage report (requi
 ## Pull request checklist
 
 - [ ] Prisma schema changes come with a migration (`pnpm db:migrate`).
-- [ ] `CHANGELOG.md` updated under `## [Unreleased]`.
-- [ ] Docs updated if behaviour changed (`README.md`, or an in `docs/` for larger changes).
+- [ ] Commit messages follow Conventional Commits: release-please builds `CHANGELOG.md` from them.
+- [ ] Docs updated if behaviour changed (`README.md`, or the [wiki](https://github.com/ipsec-dev/Article30/wiki) for larger changes).
 - [ ] No personal data, secrets, or absolute paths introduced.
 
 ## License

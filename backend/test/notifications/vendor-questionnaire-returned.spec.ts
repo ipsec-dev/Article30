@@ -39,6 +39,7 @@ describe('Vendor questionnaire returned notification', () => {
   });
 
   afterAll(async () => {
+    await cleanupDatabase(prisma);
     await module.close();
   });
 

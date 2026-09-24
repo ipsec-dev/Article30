@@ -21,7 +21,7 @@ describe('OrganizationService', () => {
       imports: [PrismaModule],
       providers: [
         OrganizationService,
-        // Stub: this spec covers get()/update() only — neither path writes
+        // Stub: this spec covers get()/update() only; neither path writes
         // an audit row, so a no-op is sufficient.
         { provide: AuditLogService, useValue: { create: async () => undefined } },
       ],
@@ -77,7 +77,7 @@ describe('OrganizationService', () => {
     });
 
     it('creates org first if none exists, then updates', async () => {
-      // No org seeded — update should auto-create via get()
+      // No org seeded, so update should auto-create via get()
       const updated = await service.update({ companyName: 'Auto Created Corp' });
 
       expect(updated.companyName).toBe('Auto Created Corp');
@@ -85,7 +85,7 @@ describe('OrganizationService', () => {
     });
   });
 
-  describe('Organization upgrade — slug + locale + timestamps', () => {
+  describe('Organization upgrade: slug + locale + timestamps', () => {
     it('exposes slug, locale, createdAt, updatedAt on every organization', async () => {
       const existing = await prisma.organization.findFirst();
       let org = existing;

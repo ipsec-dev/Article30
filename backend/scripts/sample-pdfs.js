@@ -38,7 +38,7 @@ async function main() {
   const vendor = await prisma.vendor.findFirst();
   const someUser = await prisma.user.findFirst();
   if (!someUser) {
-    console.error('No user in DB — aborting.');
+    console.error('No user in DB, aborting.');
     await app.close();
     process.exit(1);
   }

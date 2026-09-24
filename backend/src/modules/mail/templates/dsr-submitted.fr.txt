@@ -1,4 +1,4 @@
-[DSR] Nouvelle demande — {{shortRef}}
+[DSR] Nouvelle demande - {{shortRef}}
 
 Bonjour {{recipientFirstName}},
 
@@ -14,8 +14,8 @@ Action recommandée
   Ouvrir la demande pour vérifier l'identité du demandeur et lancer la qualification.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Gérer vos notifications : {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

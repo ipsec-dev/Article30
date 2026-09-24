@@ -23,7 +23,7 @@ describe('RemediationService', () => {
     const validator = new EntityValidator(prisma);
     const timeline = new TimelineService(prisma, validator);
     // create()/update() emit action-item.assigned, but this spec asserts only
-    // persistence + Timeline rows — a no-op stub keeps the test focused.
+    // persistence + Timeline rows, so a no-op stub keeps the test focused.
     // Notification side-effects are covered separately in
     // test/notifications/action-item-assigned.spec.ts.
     const notifications = noopNotificationService();
@@ -76,8 +76,6 @@ describe('RemediationService', () => {
     await prisma.followUpTimeline.deleteMany({ where: { entityId: violationId } });
   });
 
-  // (1) create
-
   it('(1) create returns row with status PENDING and emits Timeline ASSIGNMENT', async () => {
     const deadline = new Date('2026-06-01T00:00:00Z');
     const item = await svc.create({
@@ -108,8 +106,6 @@ describe('RemediationService', () => {
     expect(payload.deadline).toBe(deadline.toISOString());
   });
 
-  // (2) update title
-
   it('(2) update title modifies title and preserves other fields', async () => {
     const item = await svc.create({
       violationId,
@@ -131,8 +127,6 @@ describe('RemediationService', () => {
     expect(updated.doneBy).toBeNull();
   });
 
-  // (3) update status to IN_PROGRESS
-
   it('(3) update status to IN_PROGRESS keeps doneAt null', async () => {
     const item = await svc.create({
       violationId,
@@ -151,8 +145,6 @@ describe('RemediationService', () => {
     expect(updated.doneAt).toBeNull();
     expect(updated.doneBy).toBeNull();
   });
-
-  // (4) update status to DONE
 
   it('(4) update status to DONE sets doneAt and doneBy to updatedBy', async () => {
     const before = new Date();
@@ -174,8 +166,6 @@ describe('RemediationService', () => {
     expect(updated.doneAt!.getTime()).toBeGreaterThanOrEqual(before.getTime());
     expect(updated.doneBy).toBe(secondUserId);
   });
-
-  // (5) revert from DONE
 
   it('(5) update status DONE then back to IN_PROGRESS clears doneAt and doneBy', async () => {
     const item = await svc.create({
@@ -203,8 +193,6 @@ describe('RemediationService', () => {
     expect(reverted.doneAt).toBeNull();
     expect(reverted.doneBy).toBeNull();
   });
-
-  // (6) list ordered by deadline ASC
 
   it('(7) list returns items ordered ASC by deadline then id', async () => {
     await svc.create({

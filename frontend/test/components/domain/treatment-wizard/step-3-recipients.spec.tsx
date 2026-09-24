@@ -11,7 +11,7 @@ import { GuaranteeType } from '@article30/shared';
 // Step3Recipients reads/writes via useFormContext<TreatmentWizardFormData>.
 // Fields touched: recipients (RecipientEntry[]), transfers (TransferEntry[]).
 // Recipient row: Radix Select (type) + Input (precision).
-// Transfer row: Input destinationOrg, Input country (text — NOT a select),
+// Transfer row: Input destinationOrg, Input country (text, not a select),
 //         Radix Select guaranteeType, Input documentLink.
 // Adequacy indicator appears when transfer.country exactly matches a string in ADEQUATE_COUNTRIES
 // (e.g. "Switzerland", "Canada"). A non-matching country (e.g. "United States") hides it.
@@ -121,7 +121,7 @@ describe('Step3Recipients', () => {
     const firstCard = screen.getByText(/Destinataire 1/i).closest('div');
     expect(firstCard).not.toBeNull();
 
-    // Each recipient card has one outline button — the delete button (svg trash icon).
+    // Each recipient card has one outline button: the delete button (svg trash icon).
     const deleteButton = within(firstCard as HTMLElement).getByRole('button');
     await user.click(deleteButton);
 

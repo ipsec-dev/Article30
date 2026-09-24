@@ -13,7 +13,7 @@ const SEVERITY_PENALTY: Record<string, number> = {
 
 /**
  * Violation lifecycle states whose penalties no longer apply to the live score.
- * REMEDIATED and CLOSED both represent "no active risk" — keeping them in the
+ * REMEDIATED and CLOSED both represent "no active risk"; keeping them in the
  * formula would let a single old incident drag the score down forever.
  */
 const RESOLVED_VIOLATION_STATUSES: ViolationStatus[] = ['REMEDIATED', 'CLOSED'];
@@ -97,7 +97,7 @@ export class ComplianceService {
       } else if (r.response === 'PARTIAL') {
         compliantCount += PARTIAL_CREDIT;
       } else {
-        // NO, or NA without reason — no credit
+        // NO, or NA without reason: no credit
       }
     }
     let checklistScore: number;
@@ -117,7 +117,7 @@ export class ComplianceService {
       // No treatments registered → don't penalise the band. Mirrors the
       // violations sub-score which defaults to 100 when nothing is open.
       // Without this default, an org with a perfect checklist and zero
-      // incidents was capped at 60% just for not having logged a register
+      // incidents would be capped at 60% just for not having logged a register
       // entry yet.
       freshnessScore = PERCENTAGE_MULTIPLIER;
     } else {
@@ -204,7 +204,7 @@ export class ComplianceService {
     await runWithJobContext({ jobName: 'compliance-snapshot' }, async () => {
       this.logger.debug({ event: 'compliance.snapshot.scheduled' });
       await this.createSnapshot();
-      // compliance.snapshot.created is emitted inside createSnapshot() — don't double-log
+      // compliance.snapshot.created is emitted inside createSnapshot(), so don't double-log
     });
   }
 }

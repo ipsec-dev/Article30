@@ -257,7 +257,7 @@ describe('DsrService.transition()', () => {
     ).rejects.toThrow(BadRequestException);
   });
 
-  it('(13) forged FK reject — random UUID', async () => {
+  it('(13) forged FK reject: random UUID', async () => {
     await expect(
       svc.transition({
         dsrId: randomUUID(),

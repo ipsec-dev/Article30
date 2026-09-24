@@ -28,7 +28,7 @@ export interface RoleCapability {
   labelKey: string;
   /** Roles allowed to perform this capability. */
   allowedRoles: readonly Role[];
-  /** Backend routes that enforce this capability. Used by drift test only — never rendered. */
+  /** Backend routes that enforce this capability. Used by drift test only, never rendered. */
   routes: readonly RoleCapabilityRoute[];
 }
 
@@ -181,7 +181,7 @@ export const ROLE_PERMISSION_MATRIX: readonly RoleCapability[] = [
       { method: 'PATCH', path: '/api/organization/settings' },
     ],
   },
-  // Capabilities added in Task 2 to close gaps flagged by the drift test ──
+  // Screening, document, vendor, regulatory-update and follow-up capabilities
   {
     id: 'screening.write',
     labelKey: 'roleMatrix.capability.screening.write',
@@ -290,7 +290,7 @@ export const ROLE_PERMISSION_MATRIX: readonly RoleCapability[] = [
     allowedRoles: FOLLOW_UP_READ_ROLES,
     routes: [{ method: 'GET', path: '/api/follow-up/decisions/:entityType/:entityId' }],
   },
-  // Violation workflow capabilities added in M2 Task 8
+  // Violation workflow capabilities
   {
     id: 'violation.workflow.transition',
     labelKey: 'roleMatrix.capability.violation.workflow.transition',
@@ -348,7 +348,7 @@ export const ROLE_PERMISSION_MATRIX: readonly RoleCapability[] = [
     allowedRoles: FOLLOW_UP_READ_ROLES,
     routes: [{ method: 'GET', path: '/api/violations/:id/action-items' }],
   },
-  // DSR workflow capabilities added in M3 Task 8
+  // DSR workflow capabilities
   {
     id: 'dsr.workflow.transition',
     labelKey: 'roleMatrix.capability.dsr.workflow.transition',

@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { I18nProvider } from '@/i18n/context';
 import { TreatmentImportDialog } from '@/components/treatment/treatment-import-dialog';
 
-// Stub fetch — every test sets its own response.
+// Stub fetch; every test sets its own response.
 function mockFetch(json: unknown, status = 200) {
   return vi.fn().mockResolvedValue({
     status,
@@ -139,7 +139,7 @@ describe('TreatmentImportDialog', () => {
     );
     // Confirm button is re-disabled because the new preview has a conflict.
     expect(screen.getByRole('button', { name: /confirm|confirmer/i })).toBeDisabled();
-    // Commit was NOT considered successful.
+    // Commit was not considered successful.
     expect(onComplete).not.toHaveBeenCalled();
   });
 
@@ -181,13 +181,13 @@ describe('TreatmentImportDialog', () => {
     await userEvent.upload(screen.getByLabelText(/choose file|choisir/i), file);
     await userEvent.click(screen.getByRole('button', { name: /preview|aperçu/i }));
 
-    // The dialog must NOT render the raw `register.import.error.unmapped_future_code` string.
+    // The dialog must not render the raw `register.import.error.unmapped_future_code` string.
     await waitFor(() =>
       expect(
         screen.queryByText(/register\.import\.error\.unmapped_future_code/),
       ).not.toBeInTheDocument(),
     );
-    // It MUST render the unknown-error i18n value (matches both EN and FR).
+    // It must render the unknown-error i18n value (matches both EN and FR).
     expect(screen.getByText(/unrecognised|inconnue|recognized/i)).toBeInTheDocument();
   });
 });

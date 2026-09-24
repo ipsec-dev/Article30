@@ -31,7 +31,7 @@ export interface TestApp {
   prisma: PrismaService;
   redis: Redis;
   mailSink: MailSink;
-  /** Bare agent — no session. Use loginAs() to authenticate. */
+  /** Bare agent with no session. Use loginAs() to authenticate. */
   agent: () => ReturnType<typeof request>;
   close: () => Promise<void>;
 }

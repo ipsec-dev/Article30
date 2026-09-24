@@ -55,9 +55,9 @@ describe('compliance.controller (e2e)', () => {
     });
   });
 
-  // ------------------- POST /snapshot — role gating -----------------------
+  // ------------------- POST /snapshot (role gating) -----------------------
 
-  describe('POST /api/compliance/snapshot — role gating', () => {
+  describe('POST /api/compliance/snapshot: role gating', () => {
     it('rejects AUDITOR with 403', async () => {
       const { user, password } = await seedUser(testApp.prisma, Role.AUDITOR);
       const { agent, csrfToken } = await loginAs(testApp.app, user.email, password);

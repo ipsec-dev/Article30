@@ -37,7 +37,8 @@ describe('organization.controller (e2e)', () => {
       expect(res.status).toBe(401);
     });
 
-    // Note: the no-org-exists case is no longer reachable — seedUser auto-creates an Organization for AuthGuard's Membership invariant.
+    // The no-org-exists case is unreachable: seedUser auto-creates an Organization
+    // for AuthGuard's Membership invariant.
 
     it('returns 200 with the existing organization row when one exists', async () => {
       await testApp.prisma.organization.create({

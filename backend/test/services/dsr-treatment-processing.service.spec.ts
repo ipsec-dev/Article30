@@ -35,11 +35,9 @@ describe('DsrTreatmentProcessingService', () => {
     });
     userId = user.id;
 
-    // DSR
     const dsr = await seedDsr(prisma);
     dsrId = dsr.id;
 
-    // Treatment
     const treatment = await seedTreatment(prisma, userId);
     treatmentId = treatment.id;
   });
@@ -53,7 +51,6 @@ describe('DsrTreatmentProcessingService', () => {
     await prisma.dsrTreatmentProcessingLog.deleteMany();
   });
 
-  // Test 1: link creates a row with default actionTaken: NONE, vendorPropagationStatus: NOT_REQUIRED
   it('link creates a row with default actionTaken NONE and vendorPropagationStatus NOT_REQUIRED', async () => {
     const row = await svc.link(dsrId, treatmentId);
 
@@ -67,8 +64,7 @@ describe('DsrTreatmentProcessingService', () => {
     expect(row.performedBy).toBeNull();
   });
 
-  // Test 2: link is idempotent (calling twice returns the existing row, no throw)
-  it('link is idempotent — calling twice returns the existing row without error', async () => {
+  it('link is idempotent: calling twice returns the existing row without error', async () => {
     const first = await svc.link(dsrId, treatmentId);
     const second = await svc.link(dsrId, treatmentId);
 
@@ -82,7 +78,6 @@ describe('DsrTreatmentProcessingService', () => {
     expect(count).toBe(1);
   });
 
-  // Test 3: upsert updates findings + actionTaken on an existing row without clearing other fields
   it('upsert updates findings and actionTaken on an existing row without clearing other fields', async () => {
     // Create with link first so searchedAt stays null
     await svc.link(dsrId, treatmentId);
@@ -103,7 +98,6 @@ describe('DsrTreatmentProcessingService', () => {
     expect(updated.searchedAt).toBeNull();
   });
 
-  // Test 4: upsert creates a new row when none exists
   it('upsert creates a new row when none exists', async () => {
     const row = await svc.upsert({
       dsrId,
@@ -122,7 +116,6 @@ describe('DsrTreatmentProcessingService', () => {
     expect(row.searchedAt).toEqual(new Date('2026-01-10T10:00:00Z'));
   });
 
-  // Test 5: list returns rows for the DSR (and only that DSR)
   it('list returns rows for the DSR, ordered by treatmentId ASC', async () => {
     // Seed a second treatment and a second DSR
     const treatment2 = await seedTreatment(prisma, userId);
@@ -130,7 +123,7 @@ describe('DsrTreatmentProcessingService', () => {
 
     await svc.link(dsrId, treatmentId);
     await svc.link(dsrId, treatment2.id);
-    // Link other DSR — should NOT appear in list for dsrId
+    // Link other DSR; it should not appear in list for dsrId
     await svc.link(otherDsr.id, treatmentId);
 
     const rows = await svc.list(dsrId);
@@ -148,7 +141,6 @@ describe('DsrTreatmentProcessingService', () => {
     await prisma.treatment.delete({ where: { id: treatment2.id } });
   });
 
-  // Test 6: unlink removes the row
   it('unlink removes the row', async () => {
     await svc.link(dsrId, treatmentId);
 
@@ -161,8 +153,7 @@ describe('DsrTreatmentProcessingService', () => {
     expect(count).toBe(0);
   });
 
-  // Bonus: unlink is idempotent (no throw when row doesn't exist)
-  it('unlink is idempotent — does not throw when row does not exist', async () => {
+  it('unlink is idempotent: does not throw when row does not exist', async () => {
     await expect(svc.unlink(dsrId, treatmentId)).resolves.toBeUndefined();
   });
 });

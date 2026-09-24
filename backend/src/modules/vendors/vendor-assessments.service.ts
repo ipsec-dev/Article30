@@ -114,7 +114,7 @@ export class VendorAssessmentsService {
   ): Promise<void> {
     // Instant-notification side-effects must never fail the user-facing
     // operation: the assessment row is already persisted when we get here.
-    // Vendors have no assignee — recipient is always the org DPO.
+    // Vendors have no assignee, so the recipient is always the org DPO.
     // submittedDate uses the row's Prisma-managed updatedAt (set atomically by
     // the SUBMIT update) so the displayed date matches the persisted timestamp.
     try {
@@ -192,7 +192,7 @@ export class VendorAssessmentsService {
       } else if (answer?.answer === 'PARTIAL') {
         earned += q.weight / PARTIAL_WEIGHT_DIVISOR;
       } else {
-        // NO answer — no credit
+        // NO answer: no credit
       }
     }
 

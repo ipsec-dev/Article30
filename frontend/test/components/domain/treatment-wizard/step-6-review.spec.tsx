@@ -137,8 +137,8 @@ describe('Step6Review', () => {
     );
 
     // fr label for RiskLevel.HIGH is "Élevé" (from badge.riskLevel.HIGH key).
-    // Also visible on the "Identified criteria" list inside the risk Section — so we
-    // assert at least one match for the level label AND the 2/9 count badge.
+    // Also visible on the "Identified criteria" list inside the risk Section, so we
+    // assert at least one match for the level label and the 2/9 count badge.
     const elevated = screen.getAllByText(/Élevé/i);
     expect(elevated.length).toBeGreaterThanOrEqual(1);
     // Count badge renders "2/9".

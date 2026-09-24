@@ -100,7 +100,7 @@ function RejectedFields({ payload, setPayload }: FieldProps) {
           <option value="MANIFESTLY_UNFOUNDED">Manifestly unfounded</option>
           <option value="EXCESSIVE">Excessive</option>
           <option value="IDENTITY_UNVERIFIABLE">Identity unverifiable</option>
-          <option value="REPEAT_NO_NEW_INFO">Repeat request — no new info</option>
+          <option value="REPEAT_NO_NEW_INFO">Repeat request with no new info</option>
           <option value="LEGAL_BASIS_OVERRIDE">Legal basis override</option>
         </select>
       </div>

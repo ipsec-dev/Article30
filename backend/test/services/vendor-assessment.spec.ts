@@ -10,14 +10,14 @@ import { PrismaService } from '../../src/prisma/prisma.service';
 import { cleanupDatabase } from '../helpers';
 import { noopNotificationService } from '../helpers/notification-stub';
 
-// No-op NotificationService stub: this spec covers the existing pre-notify
+// No-op NotificationService stub: this spec covers the pre-notify
 // branches (validation, status guards, scoring). Notification side-effects
 // are covered separately in test/notifications/vendor-questionnaire-returned.spec.ts.
 const notificationsStub = noopNotificationService();
 
 const TEST_DB_URL =
   process.env.DATABASE_URL_TEST ??
-  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR — test-only default
+  'postgresql://article30:article30_secret@localhost:5432/article30_test'; // NOSONAR: test-only default
 
 const BCRYPT_ROUNDS = 4;
 
@@ -27,7 +27,7 @@ const SCORE_ZERO = 0;
 const SCORE_SINGLE_YES = 18;
 const SCORE_MIXED = 56;
 
-describe('VendorAssessmentsService — scoring', () => {
+describe('VendorAssessmentsService: scoring', () => {
   // We test the pure computeScore method directly
   const service = Object.create(VendorAssessmentsService.prototype) as VendorAssessmentsService;
 
@@ -161,7 +161,7 @@ describe('VendorAssessmentsService — scoring', () => {
   });
 });
 
-describe('VendorAssessmentsService — DB-backed branches', () => {
+describe('VendorAssessmentsService: DB-backed branches', () => {
   let module: TestingModule;
   let service: VendorAssessmentsService;
   let prisma: PrismaService;

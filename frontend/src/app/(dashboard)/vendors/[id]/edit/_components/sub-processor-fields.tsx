@@ -49,7 +49,7 @@ export function SubProcessorFields({
               borderColor: 'var(--a30-border)',
             }}
           >
-            <option value="">—</option>
+            <option value="">-</option>
             {vendors.map(v => (
               <option key={v.id} value={v.id}>
                 {v.name}

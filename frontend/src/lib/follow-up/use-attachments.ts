@@ -36,7 +36,7 @@ export function useAttachments(entityType: EntityType, entityId: string): UseAtt
       form.append('entityType', entityType);
       form.append('entityId', entityId);
       form.append('category', category);
-      // Multipart upload bypasses the JSON-serialising api.post — use fetch
+      // Multipart upload bypasses the JSON-serialising api.post and uses fetch
       // directly with the existing XSRF cookie.
       const res = await fetch('/api/follow-up/attachments', {
         method: 'POST',

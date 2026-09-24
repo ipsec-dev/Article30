@@ -26,7 +26,7 @@ import type { VendorDto, VendorAssessmentDto } from '@article30/shared';
 
 const SCORE_GREEN_THRESHOLD = 70;
 const SCORE_AMBER_THRESHOLD = 40;
-const EM_DASH = '—';
+const PLACEHOLDER = '-';
 const NO_RESULTS_KEY = 'common.noResults';
 const APPROVED_CLASS = 'bg-green-100 text-green-800';
 const REJECTED_CLASS = 'bg-red-100 text-red-800';
@@ -106,7 +106,7 @@ interface VendorDetail {
 type AnswerEntry = { answer: string; notes: string };
 
 function formatDate(value: string | null): string {
-  return formatDateGlobal(value) || EM_DASH;
+  return formatDateGlobal(value) || PLACEHOLDER;
 }
 
 function pickLocalizedLabel(label: { fr: string; en: string }, locale: string): string {
@@ -244,7 +244,7 @@ function AssessmentReadOnly({
       {VENDOR_ASSESSMENT_QUESTIONS.map(q => {
         const a = assessmentAnswers[q.id];
         const label = pickLocalizedLabel(q.label, locale);
-        let answerText = EM_DASH;
+        let answerText = PLACEHOLDER;
         if (a?.answer) {
           answerText = t(`assessment.answer.${a.answer}`);
         }
@@ -458,7 +458,7 @@ function VendorInfoCard({ vendor, t }: VendorInfoCardProps) {
             {t('vendor.contactName')}
           </p>
           <p className="mt-1 text-sm" style={{ color: 'var(--ink)' }}>
-            {vendor.contactName ?? EM_DASH}
+            {vendor.contactName ?? PLACEHOLDER}
           </p>
         </div>
         <div>
@@ -466,7 +466,7 @@ function VendorInfoCard({ vendor, t }: VendorInfoCardProps) {
             {t('vendor.contactEmail')}
           </p>
           <p className="mt-1 text-sm" style={{ color: 'var(--ink)' }}>
-            {vendor.contactEmail ?? EM_DASH}
+            {vendor.contactEmail ?? PLACEHOLDER}
           </p>
         </div>
         <div>
@@ -474,7 +474,7 @@ function VendorInfoCard({ vendor, t }: VendorInfoCardProps) {
             {t('vendor.country')}
           </p>
           <p className="mt-1 text-sm" style={{ color: 'var(--ink)' }}>
-            {vendor.country ?? EM_DASH}
+            {vendor.country ?? PLACEHOLDER}
           </p>
         </div>
       </CardContent>

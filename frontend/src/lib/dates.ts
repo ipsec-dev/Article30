@@ -1,5 +1,5 @@
 // Pin locale AND timezone so the server (UTC) and the browser render identical
-// text — otherwise date/time formatting drifts and React reports a hydration
+// text; otherwise date/time formatting drifts and React reports a hydration
 // mismatch. Europe/Paris matches the product's primary jurisdiction.
 const DISPLAY_TIME_ZONE = 'Europe/Paris';
 
