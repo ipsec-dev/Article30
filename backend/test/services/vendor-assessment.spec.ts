@@ -27,7 +27,7 @@ const SCORE_ZERO = 0;
 const SCORE_SINGLE_YES = 18;
 const SCORE_MIXED = 56;
 
-describe('VendorAssessmentsService — scoring', () => {
+describe('VendorAssessmentsService: scoring', () => {
   // We test the pure computeScore method directly
   const service = Object.create(VendorAssessmentsService.prototype) as VendorAssessmentsService;
 
@@ -161,7 +161,7 @@ describe('VendorAssessmentsService — scoring', () => {
   });
 });
 
-describe('VendorAssessmentsService — DB-backed branches', () => {
+describe('VendorAssessmentsService: DB-backed branches', () => {
   let module: TestingModule;
   let service: VendorAssessmentsService;
   let prisma: PrismaService;

@@ -1,4 +1,4 @@
-[TRT] Revue requise — {{shortRef}}
+[TRT] Revue requise - {{shortRef}}
 
 Bonjour {{recipientFirstName}},
 
@@ -13,8 +13,8 @@ Action recommandée
   Réviser le traitement et confirmer sa pertinence.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Gérer vos notifications : {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

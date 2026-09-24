@@ -87,7 +87,7 @@ export function RiskPanel({ violationId }: RiskPanelProps) {
           </p>
           <Matrix3x3 likelihood={current.likelihood} severity={current.severity} />
           <p className="mt-2 text-xs" style={{ color: 'var(--ink-3)' }}>
-            {t('violation.risk.affected')}: {current.affectedDataCategories.join(', ') || '—'} ·{' '}
+            {t('violation.risk.affected')}: {current.affectedDataCategories.join(', ') || '-'} ·{' '}
             {t('violation.risk.crossBorder')}:{' '}
             {current.crossBorder
               ? t('violation.risk.crossBorderYes')

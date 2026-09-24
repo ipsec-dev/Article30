@@ -260,7 +260,7 @@ export class AuditPackageService {
       });
       registerArticle30Fonts(doc);
       setPdfMetadata(doc, {
-        title: `${s.checklistSubtitle} — ${s.checklistTitle}`,
+        title: `${s.checklistSubtitle} - ${s.checklistTitle}`,
         subject: s.checklistMetaSubject,
         keywords: ['RGPD', 'GDPR', 'Audit', 'Checklist'],
       });
@@ -323,7 +323,7 @@ export class AuditPackageService {
               .font(PDF_FONT_REGULAR)
               .fontSize(PDF_FONT_SIZES.detail)
               .fillColor(PDF_COLORS.light)
-              .text('—', pillX, startY + 1, { width: ANSWER_PILL_WIDTH, align: 'center' });
+              .text('-', pillX, startY + 1, { width: ANSWER_PILL_WIDTH, align: 'center' });
           }
           doc.x = labelX;
           doc.y = Math.max(doc.y, startY + PDF_LAYOUT.pillHeight) + 2;

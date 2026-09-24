@@ -13,7 +13,7 @@ const TEST_DB_URL =
 const GENESIS = 'GENESIS';
 const TEST_ENTITY_ID = '00000000-0000-0000-0000-000000000001';
 
-describe('AuditLogService — create() hash chain', () => {
+describe('AuditLogService: create() hash chain', () => {
   let module: TestingModule;
   let service: AuditLogService;
   let prisma: PrismaService;

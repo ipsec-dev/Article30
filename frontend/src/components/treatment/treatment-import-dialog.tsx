@@ -223,7 +223,7 @@ export function TreatmentImportDialog({ open, onClose, onComplete }: TreatmentIm
                     <strong>
                       {t('register.import.row').replace('{{row}}', String(r.rowNumber))}
                     </strong>{' '}
-                    — {r.name || '?'} — {t(STATUS_KEY[r.status])}
+                    - {r.name || '?'} - {t(STATUS_KEY[r.status])}
                     {r.errors.length > 0 && (
                       <ul className="ml-4 list-disc">
                         {r.errors.map(e => (

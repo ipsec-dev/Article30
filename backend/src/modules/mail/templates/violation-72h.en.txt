@@ -1,4 +1,4 @@
-[VIO] CNIL reminder — {{leadTimeLabel}} — {{shortRef}}
+[VIO] CNIL reminder - {{leadTimeLabel}} - {{shortRef}}
 
 Hello {{recipientFirstName}},
 
@@ -13,8 +13,8 @@ Recommended action
   Finalize the CNIL notification now.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Manage your notifications: {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

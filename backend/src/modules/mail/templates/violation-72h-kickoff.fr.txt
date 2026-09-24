@@ -1,4 +1,4 @@
-[VIO] URGENT — Fenêtre CNIL 72h — {{shortRef}}
+[VIO] URGENT - Fenêtre CNIL 72h - {{shortRef}}
 
 Bonjour {{recipientFirstName}},
 
@@ -14,8 +14,8 @@ Action recommandée
   Préparer la notification CNIL au plus tard sous 72 heures.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Gérer vos notifications : {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

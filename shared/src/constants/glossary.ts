@@ -416,8 +416,8 @@ export const GLOSSARY: ReadonlyArray<GlossaryEntry> = [
     category: 'concept',
     aliases: ['Profiling', 'Profilage automatisé'],
     definition: {
-      fr: "Toute forme de traitement automatisé de données personnelles consistant à utiliser ces données pour évaluer certains aspects personnels relatifs à une personne physique — notamment pour analyser ou prédire des éléments concernant son rendement au travail, sa situation économique, sa santé, ses préférences, ses centres d'intérêt, son comportement, sa localisation ou ses déplacements.",
-      en: 'Any form of automated processing of personal data consisting of the use of personal data to evaluate certain personal aspects relating to a natural person — in particular to analyse or predict elements concerning their work performance, economic situation, health, personal preferences, interests, behaviour, location or movements.',
+      fr: "Toute forme de traitement automatisé de données personnelles consistant à utiliser ces données pour évaluer certains aspects personnels relatifs à une personne physique, notamment pour analyser ou prédire des éléments concernant son rendement au travail, sa situation économique, sa santé, ses préférences, ses centres d'intérêt, son comportement, sa localisation ou ses déplacements.",
+      en: 'Any form of automated processing of personal data consisting of the use of personal data to evaluate certain personal aspects relating to a natural person, in particular to analyse or predict elements concerning their work performance, economic situation, health, personal preferences, interests, behaviour, location or movements.',
     },
     references: ['Art. 4(4) RGPD'],
   },
@@ -676,8 +676,8 @@ export const GLOSSARY: ReadonlyArray<GlossaryEntry> = [
     category: 'concept',
     aliases: ['OSS mechanism', 'One-stop-shop mechanism'],
     definition: {
-      fr: "Mécanisme du RGPD en vertu duquel un responsable de traitement ou sous-traitant établi dans plusieurs États membres (ou ayant son établissement principal dans un seul État membre) n'a à traiter qu'avec une seule autorité de contrôle — l'autorité chef de file — pour les traitements transfrontaliers.",
-      en: 'GDPR mechanism whereby a controller or processor established in multiple Member States (or with a single main establishment in one Member State) only needs to deal with a single supervisory authority — the lead supervisory authority — for cross-border processing.',
+      fr: "Mécanisme du RGPD en vertu duquel un responsable de traitement ou sous-traitant établi dans plusieurs États membres (ou ayant son établissement principal dans un seul État membre) n'a à traiter qu'avec une seule autorité de contrôle (l'autorité chef de file) pour les traitements transfrontaliers.",
+      en: 'GDPR mechanism whereby a controller or processor established in multiple Member States (or with a single main establishment in one Member State) only needs to deal with a single supervisory authority (the lead supervisory authority) for cross-border processing.',
     },
     references: ['Art. 56 RGPD', 'Considérant 127 RGPD'],
   },
@@ -701,8 +701,8 @@ export const GLOSSARY: ReadonlyArray<GlossaryEntry> = [
     category: 'concept',
     aliases: ['Personally Identifiable Information', 'PII', 'Personal information'],
     definition: {
-      fr: "Terme d'origine américaine et ISO (ISO/IEC 29101) désignant les informations permettant d'identifier directement ou indirectement un individu. Notion proche de celle de «données personnelles» au sens du RGPD, mais plus large dans certains contextes ISO — le RGPD reste la référence normative en Europe.",
-      en: "Term of US and ISO origin (ISO/IEC 29101) referring to information that can directly or indirectly identify an individual. Closely related to the concept of 'personal data' under the GDPR, but broader in some ISO contexts — the GDPR remains the normative reference in Europe.",
+      fr: "Terme d'origine américaine et ISO (ISO/IEC 29101) désignant les informations permettant d'identifier directement ou indirectement un individu. Notion proche de celle de «données personnelles» au sens du RGPD, mais plus large dans certains contextes ISO. Le RGPD reste la référence normative en Europe.",
+      en: "Term of US and ISO origin (ISO/IEC 29101) referring to information that can directly or indirectly identify an individual. Closely related to the concept of 'personal data' under the GDPR, but broader in some ISO contexts. The GDPR remains the normative reference in Europe.",
     },
     references: ['Art. 4(1) RGPD', 'ISO/IEC 29101'],
   },
@@ -956,7 +956,7 @@ export const GLOSSARY: ReadonlyArray<GlossaryEntry> = [
 
   {
     id: 'iso-27001',
-    term: { fr: 'ISO/IEC 27001 — SMSI', en: 'ISO/IEC 27001 — ISMS' },
+    term: { fr: 'ISO/IEC 27001 - SMSI', en: 'ISO/IEC 27001 - ISMS' },
     category: 'framework',
     aliases: [
       'ISO 27001',
@@ -973,7 +973,7 @@ export const GLOSSARY: ReadonlyArray<GlossaryEntry> = [
   },
   {
     id: 'iso-27701',
-    term: { fr: 'ISO/IEC 27701 — SMVP', en: 'ISO/IEC 27701 — PIMS' },
+    term: { fr: 'ISO/IEC 27701 - SMVP', en: 'ISO/IEC 27701 - PIMS' },
     category: 'framework',
     aliases: [
       'ISO 27701',
@@ -990,7 +990,7 @@ export const GLOSSARY: ReadonlyArray<GlossaryEntry> = [
   },
   {
     id: 'iso-27018',
-    term: { fr: 'ISO/IEC 27018 — IPI cloud', en: 'ISO/IEC 27018 — Cloud PII' },
+    term: { fr: 'ISO/IEC 27018 - IPI cloud', en: 'ISO/IEC 27018 - Cloud PII' },
     category: 'framework',
     aliases: ['ISO 27018', 'Cloud PII standard', 'Cloud privacy standard'],
     definition: {
@@ -1039,7 +1039,7 @@ export const GLOSSARY: ReadonlyArray<GlossaryEntry> = [
       fr: "Mécanisme d'authentification combinant au moins deux facteurs indépendants parmi : quelque chose que l'on sait (mot de passe), quelque chose que l'on possède (token, téléphone) et quelque chose que l'on est (biométrie). Il réduit significativement le risque de compromission en cas de vol de mot de passe.",
       en: 'Authentication mechanism combining at least two independent factors from: something known (password), something possessed (token, phone), and something inherent (biometrics). It significantly reduces the risk of compromise in the event of password theft.',
     },
-    references: ['Art. 32 RGPD', "ANSSI — Guide d'authentification"],
+    references: ['Art. 32 RGPD', "ANSSI - Guide d'authentification"],
   },
   {
     id: 'cookie-consent',
@@ -1083,8 +1083,8 @@ export const GLOSSARY: ReadonlyArray<GlossaryEntry> = [
     category: 'framework',
     aliases: ['NIST CSF', 'NIST Framework', 'CSF'],
     definition: {
-      fr: 'Référentiel volontaire développé par le National Institute of Standards and Technology américain, structuré autour de six fonctions — Gouverner, Identifier, Protéger, Détecter, Répondre, Restaurer — fournissant des lignes directrices pour la gestion des risques de cybersécurité.',
-      en: 'Voluntary framework developed by the US National Institute of Standards and Technology, structured around six functions — Govern, Identify, Protect, Detect, Respond, Recover — providing guidelines for managing cybersecurity risk.',
+      fr: 'Référentiel volontaire développé par le National Institute of Standards and Technology américain, structuré autour de six fonctions (Gouverner, Identifier, Protéger, Détecter, Répondre, Restaurer), fournissant des lignes directrices pour la gestion des risques de cybersécurité.',
+      en: 'Voluntary framework developed by the US National Institute of Standards and Technology, structured around six functions (Govern, Identify, Protect, Detect, Respond, Recover), providing guidelines for managing cybersecurity risk.',
     },
     references: ['NIST CSF v2.0 (2024)'],
   },

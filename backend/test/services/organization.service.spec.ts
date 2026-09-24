@@ -85,7 +85,7 @@ describe('OrganizationService', () => {
     });
   });
 
-  describe('Organization upgrade — slug + locale + timestamps', () => {
+  describe('Organization upgrade: slug + locale + timestamps', () => {
     it('exposes slug, locale, createdAt, updatedAt on every organization', async () => {
       const existing = await prisma.organization.findFirst();
       let org = existing;

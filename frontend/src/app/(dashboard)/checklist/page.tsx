@@ -164,7 +164,7 @@ function ScreeningRow({ screening, onNavigate, verdictLabel }: Readonly<Screenin
     },
     [handleClick],
   );
-  let treatmentName = '—';
+  let treatmentName = '-';
   if (screening.treatment) {
     treatmentName = screening.treatment.name;
   }
@@ -196,7 +196,7 @@ function ScreeningRow({ screening, onNavigate, verdictLabel }: Readonly<Screenin
         {treatmentName}
       </td>
       <td className="px-4 py-3" style={{ color: 'var(--ink-2)' }}>
-        {screening.creator ? `${screening.creator.firstName} ${screening.creator.lastName}` : '—'}
+        {screening.creator ? `${screening.creator.firstName} ${screening.creator.lastName}` : '-'}
       </td>
     </tr>
   );

@@ -64,7 +64,7 @@ describe('DsrTreatmentProcessingService', () => {
     expect(row.performedBy).toBeNull();
   });
 
-  it('link is idempotent — calling twice returns the existing row without error', async () => {
+  it('link is idempotent: calling twice returns the existing row without error', async () => {
     const first = await svc.link(dsrId, treatmentId);
     const second = await svc.link(dsrId, treatmentId);
 
@@ -153,7 +153,7 @@ describe('DsrTreatmentProcessingService', () => {
     expect(count).toBe(0);
   });
 
-  it('unlink is idempotent — does not throw when row does not exist', async () => {
+  it('unlink is idempotent: does not throw when row does not exist', async () => {
     await expect(svc.unlink(dsrId, treatmentId)).resolves.toBeUndefined();
   });
 });

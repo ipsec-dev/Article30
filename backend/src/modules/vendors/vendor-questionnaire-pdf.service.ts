@@ -71,7 +71,7 @@ export class VendorQuestionnairePdfService {
     });
     registerArticle30Fonts(doc);
     setPdfMetadata(doc, {
-      title: `Questionnaire RGPD — ${vendorName}`,
+      title: `Questionnaire RGPD - ${vendorName}`,
       subject: 'Questionnaire de due-diligence sous-traitant (RGPD Art. 28)',
       keywords: ['RGPD', 'Article 28', 'Sous-traitant', 'Vendor', 'Due diligence'],
     });

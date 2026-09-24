@@ -28,7 +28,7 @@ function auditHmac(input: string): string {
   const secret = process.env.AUDIT_HMAC_SECRET;
   if (!secret) {
     throw new InternalServerErrorException(
-      'AUDIT_HMAC_SECRET is not set — refusing to write an unprotected audit log entry',
+      'AUDIT_HMAC_SECRET is not set: refusing to write an unprotected audit log entry',
     );
   }
   return createHmac('sha256', secret).update(input).digest('hex');

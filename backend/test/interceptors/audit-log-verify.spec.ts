@@ -18,7 +18,7 @@ const JSONB_REORDER_FIXTURE = {
   beta: [3, 2, 1], // NOSONAR: test fixture data
 };
 
-describe('AuditLogService — verify() chain integrity', () => {
+describe('AuditLogService: verify() chain integrity', () => {
   let module: TestingModule;
   let service: AuditLogService;
   let prisma: PrismaService;

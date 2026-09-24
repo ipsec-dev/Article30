@@ -1,4 +1,4 @@
-[VEN] DPA expire dans {{leadTimeLabel}} — {{shortRef}}
+[VEN] DPA expire dans {{leadTimeLabel}} - {{shortRef}}
 
 Bonjour {{recipientFirstName}},
 
@@ -13,8 +13,8 @@ Action recommandée
   Renouveler le DPA avant expiration.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Gérer vos notifications : {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

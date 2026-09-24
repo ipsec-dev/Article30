@@ -1,4 +1,4 @@
-[VIO] New {{severityLabel}}-severity violation — {{shortRef}}
+[VIO] New {{severityLabel}}-severity violation - {{shortRef}}
 
 Hello {{recipientFirstName}},
 
@@ -13,8 +13,8 @@ Recommended action
   Qualify the violation and start the risk assessment.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Manage your notifications: {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

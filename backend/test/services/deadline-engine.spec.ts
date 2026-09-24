@@ -4,7 +4,7 @@ import { computeDeadline } from '../../src/common/deadlines/compute';
 const MS_PER_DAY = 86_400_000;
 const MS_PER_HOUR = 3_600_000;
 
-describe('computeDeadline — DSR_STANDARD_30D', () => {
+describe('computeDeadline: DSR_STANDARD_30D', () => {
   it('no pauses, no extension, well before deadline', () => {
     const r = computeDeadline({
       profile: 'DSR_STANDARD_30D',
@@ -72,7 +72,7 @@ describe('computeDeadline — DSR_STANDARD_30D', () => {
   });
 });
 
-describe('computeDeadline — BREACH_CNIL_72H', () => {
+describe('computeDeadline: BREACH_CNIL_72H', () => {
   it('exactly at deadline → daysRemaining=0, not overdue', () => {
     const anchor = new Date('2026-04-01T00:00:00Z');
     const r = computeDeadline({
@@ -113,7 +113,7 @@ describe('computeDeadline — BREACH_CNIL_72H', () => {
   });
 });
 
-describe('computeDeadline — DSR_HEALTH_8D', () => {
+describe('computeDeadline: DSR_HEALTH_8D', () => {
   it('uses 8-day window', () => {
     const r = computeDeadline({
       profile: 'DSR_HEALTH_8D',
@@ -124,7 +124,7 @@ describe('computeDeadline — DSR_HEALTH_8D', () => {
   });
 });
 
-describe('computeDeadline — REMEDIATION_CUSTOM', () => {
+describe('computeDeadline: REMEDIATION_CUSTOM', () => {
   it('uses customDays', () => {
     const r = computeDeadline({
       profile: 'REMEDIATION_CUSTOM',

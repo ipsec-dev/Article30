@@ -71,7 +71,7 @@ export function RolePermissionsDialog({
                     if (allowed) {
                       indicator = <Check className="mx-auto size-4 text-emerald-600" aria-hidden />;
                     } else {
-                      indicator = <span aria-hidden>—</span>;
+                      indicator = <span aria-hidden>-</span>;
                     }
                     let srLabel: string;
                     if (allowed) {

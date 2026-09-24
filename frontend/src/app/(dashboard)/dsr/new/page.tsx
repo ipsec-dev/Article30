@@ -202,7 +202,7 @@ export default function NewDsrPage() {
                     value={assignedTo}
                     onChange={handleAssignedChange}
                   >
-                    <option value="">—</option>
+                    <option value="">-</option>
                     {users.map(u => (
                       <option key={u.id} value={u.id}>
                         {`${u.firstName} ${u.lastName}`}

@@ -57,7 +57,7 @@ const PDF_COL_RATIO = {
 } as const;
 
 const RISK_CRITERIA_COUNT = 9;
-const PLACEHOLDER = '—';
+const PLACEHOLDER = '-';
 
 interface TreatmentStrings {
   metaTitle: string;
@@ -268,7 +268,7 @@ export class PdfExportService {
       registerArticle30Fonts(doc);
       const s = STRINGS[locale];
       setPdfMetadata(doc, {
-        title: `${s.metaTitle} — ${treatment.name}`,
+        title: `${s.metaTitle} - ${treatment.name}`,
         subject: s.metaSubject,
         keywords: ['RGPD', 'GDPR', 'Article 30', 'Register', 'Treatment'],
       });

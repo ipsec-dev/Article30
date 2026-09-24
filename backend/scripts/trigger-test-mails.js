@@ -52,10 +52,10 @@ async function main() {
   const vendorAssessments = app.get(VendorAssessmentsService);
   const scheduler = app.get(NotificationsScheduler);
 
-  console.log('— Resetting notification_log so every mail re-fires —');
+  console.log('-- Resetting notification_log so every mail re-fires --');
   await prisma.notificationLog.deleteMany();
 
-  console.log('— Ensuring single-tenant org with dpoEmail —');
+  console.log('-- Ensuring single-tenant org with dpoEmail --');
   let org = await prisma.organization.findFirst();
   if (!org) {
     org = await prisma.organization.create({
@@ -81,10 +81,10 @@ async function main() {
         notifyViolation72h: true,
       },
     });
-    console.log('  reused org', org.id, '— ensured toggles are ON');
+    console.log('  reused org', org.id, '(ensured toggles are ON)');
   }
 
-  console.log('— Ensuring demo admin (target for password-reset) —');
+  console.log('-- Ensuring demo admin (target for password-reset) --');
   let admin = await prisma.user.findUnique({ where: { email: DEMO_ADMIN_EMAIL } });
   if (!admin) {
     admin = await prisma.user.create({
@@ -99,7 +99,7 @@ async function main() {
     });
   }
 
-  console.log('— Ensuring demo owner (target for action-item.assigned) —');
+  console.log('-- Ensuring demo owner (target for action-item.assigned) --');
   let owner = await prisma.user.findUnique({ where: { email: DEMO_OWNER_EMAIL } });
   if (!owner) {
     owner = await prisma.user.create({
@@ -125,7 +125,7 @@ async function main() {
       type: 'ACCESS',
       requesterName: 'René Demandeur',
       requesterEmail: 'requester@example.test',
-      description: 'Demo run — please ignore.',
+      description: 'Demo run, please ignore.',
     },
     admin.id,
   );
@@ -134,8 +134,8 @@ async function main() {
   console.log('[3/8] violation.logged + violation.high-severity-72h-kickoff (HIGH)');
   const newViolation = await violations.create(
     {
-      title: 'Demo violation — high severity',
-      description: 'Demo run — please ignore.',
+      title: 'Demo violation, high severity',
+      description: 'Demo run, please ignore.',
       severity: 'HIGH',
       // 48h ago → 24h remaining in the 72h window → T-24h stripe.
       discoveredAt: new Date(Date.now() - 48 * HOUR).toISOString(),
@@ -183,13 +183,13 @@ async function main() {
   // So the offsets must be EXACTLY N days from midnight (today). +12h rounds up to N+1
   // and the sweep silently misses the record. Add 1h so the timestamp is mid-morning
   // (visually obvious in mailpit) but still rounds back to N.
-  console.log('— Pinning DSR deadline to T-7 (exactly 7 days from midnight) —');
+  console.log('-- Pinning DSR deadline to T-7 (exactly 7 days from midnight) --');
   await prisma.dataSubjectRequest.update({
     where: { id: newDsr.id },
     data: { deadline: new Date(today.getTime() + 7 * DAY + HOUR) },
   });
 
-  console.log('— Creating a vendor with DPA expiring T-30 —');
+  console.log('-- Creating a vendor with DPA expiring T-30 --');
   await prisma.vendor.create({
     data: {
       name: 'Demo Vendor (DPA T-30)',
@@ -198,7 +198,7 @@ async function main() {
     },
   });
 
-  console.log('— Creating a treatment with nextReviewAt T-7 —');
+  console.log('-- Creating a treatment with nextReviewAt T-7 --');
   await prisma.treatment.create({
     data: {
       name: 'Demo treatment',
@@ -212,11 +212,11 @@ async function main() {
   // 6. dsr.deadline-approaching (scheduler)
   // 7. vendor.dpa-expiring (scheduler)
   // 8. treatment.review-due (scheduler)
-  console.log('\n[6-8/8] daily sweep — DSR / vendor DPA / treatment review');
+  console.log('\n[6-8/8] daily sweep: DSR / vendor DPA / treatment review');
   await scheduler.runDailyDeadlineSweep();
 
   // 9. violation.72h-window (scheduler)
-  console.log('[9/8] 72h sweep — violation T-24h');
+  console.log('[9/8] 72h sweep: violation T-24h');
   await scheduler.runViolation72hSweep();
 
   console.log('\n✅ All notifications dispatched. Open http://localhost:8025 to review.');

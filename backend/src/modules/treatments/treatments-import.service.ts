@@ -29,7 +29,7 @@ export class TreatmentsImportService {
 
     const legalBasisValues = Object.values(LegalBasis).join(', ');
     const readme = XLSX.utils.aoa_to_sheet([
-      ['Treatment register import — read me'],
+      ['Treatment register import: read me'],
       [''],
       ['Fill the "Treatments" sheet, one row per treatment.'],
       ['Required column: name. All other columns are optional.'],

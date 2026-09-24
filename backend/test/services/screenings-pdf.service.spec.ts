@@ -189,7 +189,7 @@ describe('ScreeningsPdfService', () => {
     assertValidPdf(buf);
   });
 
-  it('handles responses missing a question (answer falls back to "—" placeholder)', async () => {
+  it('handles responses missing a question (answer falls back to "-" placeholder)', async () => {
     await seedCreator();
     const s = await prisma.screening.create({
       data: {

@@ -336,7 +336,7 @@ export class ReportService {
     registerArticle30Fonts(doc);
     const s = STRINGS[locale];
     setPdfMetadata(doc, {
-      title: `${s.headerTitle} — ${org?.companyName ?? s.sectionOrg}`,
+      title: `${s.headerTitle} - ${org?.companyName ?? s.sectionOrg}`,
       subject: s.metaSubject,
       keywords: ['RGPD', 'GDPR', 'Compliance', 'Score'],
     });

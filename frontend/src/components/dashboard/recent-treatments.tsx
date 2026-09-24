@@ -24,7 +24,7 @@ const FRESHNESS_KIND: Record<string, { kind: StatusKind; label: string }> = {
 function freshnessFor(t: TreatmentDto): { kind: StatusKind; label: string } {
   const s = t.indicators?.freshnessStatus;
   if (s && FRESHNESS_KIND[s]) return FRESHNESS_KIND[s];
-  return { kind: 'neutral', label: '—' };
+  return { kind: 'neutral', label: '-' };
 }
 
 export function RecentTreatments({ treatments }: RecentTreatmentsProps) {
@@ -106,7 +106,7 @@ export function RecentTreatments({ treatments }: RecentTreatmentsProps) {
               <tr key={t.id} style={{ borderTop: i ? '1px solid var(--a30-border)' : 'none' }}>
                 <td className="px-5 py-2.5">
                   <span className="num font-mono text-[12px]" style={{ color: 'var(--ink-3)' }}>
-                    {t.refNumber !== null && t.refNumber !== undefined ? `#${t.refNumber}` : '—'}
+                    {t.refNumber !== null && t.refNumber !== undefined ? `#${t.refNumber}` : '-'}
                   </span>
                 </td>
                 <td className="px-5 py-2.5">

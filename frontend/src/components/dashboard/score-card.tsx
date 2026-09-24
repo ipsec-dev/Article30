@@ -57,7 +57,7 @@ function deltaLabel(delta: number): string {
 }
 
 function freshnessPercent(slice: FreshnessSlice | null): string {
-  if (!slice || slice.total === 0) return '—';
+  if (!slice || slice.total === 0) return '-';
   return `${Math.round((slice.validated / slice.total) * 100)}%`;
 }
 

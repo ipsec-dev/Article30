@@ -120,7 +120,7 @@ export class ScreeningsPdfService {
     });
     registerArticle30Fonts(doc);
     setPdfMetadata(doc, {
-      title: `${STRINGS[locale].title} — ${screening.title}`,
+      title: `${STRINGS[locale].title} - ${screening.title}`,
       subject: STRINGS[locale].metadataSubject,
       keywords: ['RGPD', 'GDPR', 'Checklist', 'DPIA', 'AIPD'],
     });
@@ -152,7 +152,7 @@ export class ScreeningsPdfService {
       org,
       title: STRINGS[locale].title,
       subtitle: screening.title,
-      meta: `${screening.creator.firstName} ${screening.creator.lastName} — ${formatDate(screening.createdAt, locale)}`,
+      meta: `${screening.creator.firstName} ${screening.creator.lastName} - ${formatDate(screening.createdAt, locale)}`,
     });
   }
 
@@ -192,7 +192,7 @@ export class ScreeningsPdfService {
     // Pre-measure body height so the card outline can be drawn before content.
     doc.font(PDF_FONT_REGULAR).fontSize(PDF_FONT_SIZES.detail);
     const bodyHeight = SCREENING_QUESTIONS.reduce((acc, q) => {
-      const text = `${q.articleRef} — ${pickLabel(q.label, locale)}`;
+      const text = `${q.articleRef} - ${pickLabel(q.label, locale)}`;
       const labelHeight = doc.heightOfString(text, { width: labelWidth });
       return acc + Math.max(labelHeight, PDF_LAYOUT.pillHeight) + ROW_GAP;
     }, 0);
@@ -209,7 +209,7 @@ export class ScreeningsPdfService {
           .font(PDF_FONT_REGULAR)
           .fontSize(PDF_FONT_SIZES.detail)
           .fillColor(PDF_COLORS.dark)
-          .text(`${q.articleRef} — ${pickLabel(q.label, locale)}`, labelX, startY, {
+          .text(`${q.articleRef} - ${pickLabel(q.label, locale)}`, labelX, startY, {
             width: labelWidth,
           });
 
@@ -240,7 +240,7 @@ export class ScreeningsPdfService {
 
     const lines = redFlags.map(
       q =>
-        `• ${q.articleRef} — ${pickLabel(q.label, locale)} (${ANSWER_LABELS[locale][responses[q.id]] ?? ''})`,
+        `• ${q.articleRef} - ${pickLabel(q.label, locale)} (${ANSWER_LABELS[locale][responses[q.id]] ?? ''})`,
     );
 
     // Pre-measure callout + section header so we addPage before drawing the

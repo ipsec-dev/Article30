@@ -10,8 +10,8 @@ export function RoleBanner({ role }: RoleBannerProps) {
   const isAuditor = role === Role.AUDITOR;
   const Icon = isAuditor ? Eye : Pen;
   const label = isAuditor
-    ? 'Mode Auditeur — accès lecture seule pour revue de conformité.'
-    : 'Mode Éditeur — vous pouvez modifier les traitements mais pas les valider.';
+    ? 'Mode Auditeur : accès en lecture seule pour revue de conformité.'
+    : 'Mode Éditeur : vous pouvez modifier les traitements mais pas les valider.';
   return (
     <div
       role="status"

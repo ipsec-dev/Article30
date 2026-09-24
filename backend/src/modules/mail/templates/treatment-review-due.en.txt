@@ -1,4 +1,4 @@
-[TRT] Review due — {{shortRef}}
+[TRT] Review due - {{shortRef}}
 
 Hello {{recipientFirstName}},
 
@@ -13,8 +13,8 @@ Recommended action
   Review the treatment and confirm its relevance.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Manage your notifications: {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

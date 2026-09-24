@@ -420,10 +420,10 @@ export function ViolationForm({ initialData, onSubmit, isLoading }: ViolationFor
               onValueChange={v => handlers.handleAssignedToChange(v === '__none__' ? '' : v)}
             >
               <SelectTrigger id="assignedTo" className="mt-1 w-full">
-                <SelectValue placeholder="—" />
+                <SelectValue placeholder="-" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="__none__">—</SelectItem>
+                <SelectItem value="__none__">-</SelectItem>
                 {users.map(u => (
                   <SelectItem key={u.id} value={u.id}>
                     {userDisplayLabel(u)}

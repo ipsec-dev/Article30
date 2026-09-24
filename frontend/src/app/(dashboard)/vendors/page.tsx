@@ -94,7 +94,7 @@ export default function VendorsPage() {
             </thead>
             <tbody>
               {data.data.map(vendor => {
-                let expiryLabel = '—';
+                let expiryLabel = '-';
                 if (vendor.dpaExpiry) {
                   expiryLabel = formatDate(vendor.dpaExpiry);
                 }
@@ -111,7 +111,7 @@ export default function VendorsPage() {
                         {vendor.name}
                       </Link>
                     </td>
-                    <td className={CELL_MUTED_CLASS}>{vendor.country ?? '—'}</td>
+                    <td className={CELL_MUTED_CLASS}>{vendor.country ?? '-'}</td>
                     <td className="px-4 py-3">
                       <Badge className={DPA_STATUS_COLORS[vendor.dpaStatus]}>
                         {t(`vendor.dpaStatus.${vendor.dpaStatus}`)}

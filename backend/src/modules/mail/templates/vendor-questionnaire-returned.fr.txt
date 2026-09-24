@@ -1,4 +1,4 @@
-[VEN] Questionnaire RGPD reçu — {{shortRef}}
+[VEN] Questionnaire RGPD reçu - {{shortRef}}
 
 Bonjour {{recipientFirstName}},
 
@@ -12,8 +12,8 @@ Action recommandée
   Examiner les réponses du sous-traitant.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Gérer vos notifications : {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

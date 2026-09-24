@@ -191,14 +191,14 @@ describe('BreachNotificationsService', () => {
       violationId,
       method: 'EMAIL',
       notifiedAt: new Date('2026-04-10T12:00:00Z'),
-      recipientScope: 'First batch — EU customers',
+      recipientScope: 'First batch: EU customers',
       sentBy: userId,
     });
     await svc.notifyPersons({
       violationId,
       method: 'POST',
       notifiedAt: new Date('2026-04-11T09:00:00Z'),
-      recipientScope: 'Second batch — postal-only customers',
+      recipientScope: 'Second batch: postal-only customers',
       sentBy: userId,
     });
     await svc.notifyPersons({

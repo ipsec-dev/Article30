@@ -115,7 +115,7 @@ describe('Password reset endpoints', () => {
       expect(mailSink[0].subject).toBe('Réinitialisation de votre mot de passe Article30');
     });
 
-    it('does nothing for a nonexistent email — no row, no mail', async () => {
+    it('does nothing for a nonexistent email: no row, no mail', async () => {
       await authService.forgotPassword({ email: 'nobody@example.com' }, 'en');
       expect(await prisma.passwordResetToken.count()).toBe(0);
       expect(mailSink).toHaveLength(0);

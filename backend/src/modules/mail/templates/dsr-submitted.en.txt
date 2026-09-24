@@ -1,4 +1,4 @@
-[DSR] New request — {{shortRef}}
+[DSR] New request - {{shortRef}}
 
 Hello {{recipientFirstName}},
 
@@ -14,8 +14,8 @@ Recommended action
   Open the request to verify the requester's identity and start qualification.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Manage your notifications: {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}

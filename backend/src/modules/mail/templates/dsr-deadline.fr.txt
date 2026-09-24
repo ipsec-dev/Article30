@@ -1,4 +1,4 @@
-[DSR] Échéance dans {{leadTimeLabel}} — {{shortRef}}
+[DSR] Échéance dans {{leadTimeLabel}} - {{shortRef}}
 
 Bonjour {{recipientFirstName}},
 
@@ -14,8 +14,8 @@ Action recommandée
   Traiter la demande avant l'échéance.
   → {{recordUrl}}
 
-—
+--
 {{footerOrientation}}
 Gérer vos notifications : {{settingsUrl}}
 
-— {{orgCompanyName}}
+-- {{orgCompanyName}}
