@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.14](https://github.com/ipsec-dev/Article30/compare/v1.1.13...v1.1.14) (2026-10-03)
+
+
+### Maintenance & Dependencies
+
+* **deps-dev:** bump the dev-deps group with 12 updates ([#159](https://github.com/ipsec-dev/Article30/issues/159)) ([69edec3](https://github.com/ipsec-dev/Article30/commit/69edec3a0eed6f98d462d93b3198befc1c9f2441))
+
 ## [1.1.13](https://github.com/ipsec-dev/Article30/compare/v1.1.12...v1.1.13) (2026-09-24)
 
 
