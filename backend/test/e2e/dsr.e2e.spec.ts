@@ -1,5 +1,4 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
-import { ThrottlerStorage } from '@nestjs/throttler';
 import { DsrType, Role } from '@article30/shared';
 import { cleanupDatabase } from '../helpers';
 import { createTestApp, type TestApp } from './app-factory';
@@ -25,10 +24,7 @@ describe('dsr.controller (e2e)', () => {
     // Reset the in-memory ThrottlerStorageService map so rate limits don't
     // leak across tests sharing one source IP (the 3/60s public submit cap
     // would otherwise trip across repeated public-submit specs).
-    const throttlerStorage = testApp.app.get<{ storage?: Map<string, unknown> }>(ThrottlerStorage, {
-      strict: false,
-    });
-    throttlerStorage?.storage?.clear();
+    testApp.resetThrottler();
     testApp.mailSink.length = 0;
   });
 

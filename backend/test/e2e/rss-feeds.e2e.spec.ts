@@ -1,5 +1,4 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ThrottlerStorage } from '@nestjs/throttler';
 import { Role } from '@article30/shared';
 import { cleanupDatabase } from '../helpers';
 import { createTestApp, type TestApp } from './app-factory';
@@ -41,12 +40,7 @@ describe('rss-feeds.controller (e2e)', () => {
     await cleanupDatabase(testApp.prisma);
     const sessionKeys = await testApp.redis.keys('sess:*');
     if (sessionKeys.length > 0) await testApp.redis.del(...sessionKeys);
-    // Reset the in-memory ThrottlerStorageService map so rate limits don't
-    // leak across tests sharing one source IP.
-    const throttlerStorage = testApp.app.get<{ storage?: Map<string, unknown> }>(ThrottlerStorage, {
-      strict: false,
-    });
-    throttlerStorage?.storage?.clear();
+    testApp.resetThrottler();
     testApp.mailSink.length = 0;
     vi.restoreAllMocks();
   });
