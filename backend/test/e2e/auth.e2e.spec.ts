@@ -1,5 +1,4 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
-import { ThrottlerStorage } from '@nestjs/throttler';
 import { Role } from '@article30/shared';
 import { cleanupDatabase } from '../helpers';
 import { createTestApp, type TestApp } from './app-factory';
@@ -26,10 +25,7 @@ describe('auth.controller (e2e)', () => {
     // Reset the in-memory ThrottlerStorageService map so rate limits don't
     // leak across tests sharing one source IP (the 3/60s signup cap and
     // 5/60s login cap would otherwise trip during a full suite run).
-    const throttlerStorage = testApp.app.get<{ storage?: Map<string, unknown> }>(ThrottlerStorage, {
-      strict: false,
-    });
-    throttlerStorage?.storage?.clear();
+    testApp.resetThrottler();
     testApp.mailSink.length = 0;
   });
 

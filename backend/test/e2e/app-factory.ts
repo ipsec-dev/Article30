@@ -1,5 +1,6 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { ThrottlerStorage } from '@nestjs/throttler';
 import cookieParser from 'cookie-parser';
 import Redis from 'ioredis';
 import nodemailer, { type Transporter } from 'nodemailer';
@@ -33,6 +34,8 @@ export interface TestApp {
   mailSink: MailSink;
   /** Bare agent with no session. Use loginAs() to authenticate. */
   agent: () => ReturnType<typeof request>;
+  /** Clears in-memory rate-limit counters so limits don't leak across tests sharing one IP. */
+  resetThrottler: () => void;
   close: () => Promise<void>;
 }
 
@@ -102,6 +105,15 @@ export async function createTestApp(): Promise<TestApp> {
     redis,
     mailSink,
     agent: () => request(app.getHttpServer()),
+    resetThrottler: () => {
+      // Internals of ThrottlerStorageService; 6.7+ also tracks per-hit expirations.
+      const storage = app.get<{
+        storage?: Map<string, unknown>;
+        hitExpirations?: Map<string, unknown>;
+      }>(ThrottlerStorage, { strict: false });
+      storage?.storage?.clear();
+      storage?.hitExpirations?.clear();
+    },
     close: async () => {
       await app.close();
       await redis.quit();

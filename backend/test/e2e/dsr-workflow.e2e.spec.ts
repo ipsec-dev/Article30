@@ -1,5 +1,4 @@
 import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
-import { ThrottlerStorage } from '@nestjs/throttler';
 import { Role, DsrType } from '@article30/shared';
 import { DsrStatus } from '@prisma/client';
 import { cleanupDatabase } from '../helpers';
@@ -23,10 +22,7 @@ describe('dsr-workflow.controller (e2e)', () => {
     await cleanupDatabase(testApp.prisma);
     const sessionKeys = await testApp.redis.keys('sess:*');
     if (sessionKeys.length > 0) await testApp.redis.del(...sessionKeys);
-    const throttlerStorage = testApp.app.get<{ storage?: Map<string, unknown> }>(ThrottlerStorage, {
-      strict: false,
-    });
-    throttlerStorage?.storage?.clear();
+    testApp.resetThrottler();
   });
 
   // Helper: seed a DSR in the org context of the given user

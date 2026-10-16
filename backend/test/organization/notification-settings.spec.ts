@@ -1,5 +1,4 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
-import { ThrottlerStorage } from '@nestjs/throttler';
 import { Role } from '@article30/shared';
 import { cleanupDatabase } from '../helpers';
 import { createTestApp, type TestApp } from '../e2e/app-factory';
@@ -25,10 +24,7 @@ describe('GET/PATCH /api/organization/settings', () => {
     await cleanupDatabase(testApp.prisma);
     const sessionKeys = await testApp.redis.keys('sess:*');
     if (sessionKeys.length > 0) await testApp.redis.del(...sessionKeys);
-    const throttlerStorage = testApp.app.get<{ storage?: Map<string, unknown> }>(ThrottlerStorage, {
-      strict: false,
-    });
-    throttlerStorage?.storage?.clear();
+    testApp.resetThrottler();
     testApp.mailSink.length = 0;
   });
 
