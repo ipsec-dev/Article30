@@ -1,11 +1,11 @@
 # Dependabot version updates.
 #
-# Strategy: weekly batches, 3-day cooldown on every bump (filters
-# yanked-after-publish supply-chain attacks), aggressive grouping so
-# the busy maintainer reviews a handful of PRs/week. Major bumps fall
-# outside the groups and surface as individual PRs (handled by the
-# auto-merge workflow's update-type guard), except for lockstep families
-# (Nest, Prisma) whose majors arrive as one PR per family.
+# Strategy: one batch per ecosystem per month, majors included, so the
+# maintainer reviews ~3 PRs a month instead of a steady trickle. A batch
+# with a major in it is held for review by the auto-merge workflow's
+# update-type guard. Security updates are not scheduled: they still open
+# as soon as an advisory lands. 3-day cooldown on every bump filters
+# yanked-after-publish supply-chain attacks.
 
 version: 2
 
@@ -14,9 +14,7 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
-      day: monday
-    open-pull-requests-limit: 10
+      interval: monthly
     labels:
       - dependencies
       - npm
@@ -54,41 +52,17 @@ updates:
       - dependency-name: archiver
         update-types: ['version-update:semver-major']
     groups:
-      # Lockstep families: their packages pin each other's versions, so a
-      # split major can never pass CI (core 12 can't load common 11). Each
-      # family moves in one PR, majors included; the auto-merge guard still
-      # holds a group back when any member is a major. Listed first because
-      # a dependency joins the first group it matches.
-      nestjs:
+      # Everything in one PR, which also keeps lockstep families (Nest,
+      # Prisma) together: a split major can never pass CI.
+      npm:
         applies-to: version-updates
-        patterns:
-          - '@nestjs/*'
-          - 'nestjs-*'
-      prisma:
-        applies-to: version-updates
-        patterns:
-          - prisma
-          - '@prisma/*'
-      production-deps:
-        applies-to: version-updates
-        dependency-type: production
-        update-types:
-          - minor
-          - patch
-      dev-deps:
-        applies-to: version-updates
-        dependency-type: development
-        update-types:
-          - minor
-          - patch
+        patterns: ['*']
 
   # ---- GitHub Actions (workflows + composite actions under .github/) ----
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
-      day: monday
-    open-pull-requests-limit: 5
+      interval: monthly
     labels:
       - dependencies
       - github-actions
@@ -99,17 +73,15 @@ updates:
     groups:
       actions:
         applies-to: version-updates
-        update-types:
-          - minor
-          - patch
+        patterns: ['*']
 
-  # ---- Docker (backend image) ----
+  # ---- Docker (backend + frontend images) ----
   - package-ecosystem: docker
-    directory: /backend
+    directories:
+      - /backend
+      - /frontend
     schedule:
-      interval: weekly
-      day: monday
-    open-pull-requests-limit: 3
+      interval: monthly
     labels:
       - dependencies
       - docker
@@ -122,29 +94,4 @@ updates:
     groups:
       docker-base:
         applies-to: version-updates
-        update-types:
-          - minor
-          - patch
-
-  # ---- Docker (frontend image) ----
-  - package-ecosystem: docker
-    directory: /frontend
-    schedule:
-      interval: weekly
-      day: monday
-    open-pull-requests-limit: 3
-    labels:
-      - dependencies
-      - docker
-    commit-message:
-      # Docker base image bumps change the published artifact byte-for-byte,
-      # so they get `fix(docker)` to trigger a release-please patch bump.
-      prefix: fix(docker)
-    cooldown:
-      default-days: 3
-    groups:
-      docker-base:
-        applies-to: version-updates
-        update-types:
-          - minor
-          - patch
+        patterns: ['*']
