@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.15](https://github.com/ipsec-dev/Article30/compare/v1.1.14...v1.1.15) (2026-10-16)
+
+
+### Maintenance & Dependencies
+
+* **ci:** batch dependabot updates monthly ([#179](https://github.com/ipsec-dev/Article30/issues/179)) ([e84ba2c](https://github.com/ipsec-dev/Article30/commit/e84ba2c6d41d9411e927e862489ab4d28d220943))
+
 ## [1.1.14](https://github.com/ipsec-dev/Article30/compare/v1.1.13...v1.1.14) (2026-10-16)
 
 
