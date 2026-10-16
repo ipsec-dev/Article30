@@ -80,9 +80,9 @@ describe('DsrService (crud)', () => {
       const after = new Date();
 
       const expectedMin = new Date(before);
-      expectedMin.setDate(expectedMin.getDate() + DEADLINE_DAYS);
+      expectedMin.setUTCDate(expectedMin.getUTCDate() + DEADLINE_DAYS);
       const expectedMax = new Date(after);
-      expectedMax.setDate(expectedMax.getDate() + DEADLINE_DAYS);
+      expectedMax.setUTCDate(expectedMax.getUTCDate() + DEADLINE_DAYS);
 
       expect(dsr.deadline.getTime()).toBeGreaterThanOrEqual(expectedMin.getTime());
       expect(dsr.deadline.getTime()).toBeLessThanOrEqual(expectedMax.getTime());
