@@ -5,16 +5,16 @@
 
 ### Bug Fixes
 
-* **deps:** bump the production-deps group across 1 directory with 19 updates ([#171](https://github.com/ipsec-dev/Article30/issues/171)) ([fdc0ea1](https://github.com/ipsec-dev/Article30/commit/fdc0ea17ed28724a2f89df5e0fab38ad4b04df48))
 * **deps:** clear fixable high audit advisories ([#173](https://github.com/ipsec-dev/Article30/issues/173)) ([7ebc00e](https://github.com/ipsec-dev/Article30/commit/7ebc00e83d51d1ee60217aa2f23ae2555cdfd6e1))
-* **deps:** clear remaining fixable audit advisories ([#178](https://github.com/ipsec-dev/Article30/issues/178)) ([611793a](https://github.com/ipsec-dev/Article30/commit/611793ab8f38402bed3f2ddeb0574e2207b30c0e))
+* **deps:** bump the production-deps group across 1 directory with 19 updates ([#171](https://github.com/ipsec-dev/Article30/issues/171)) ([fdc0ea1](https://github.com/ipsec-dev/Article30/commit/fdc0ea17ed28724a2f89df5e0fab38ad4b04df48))
+* **deps:** keep next at 16.4.2 ([#171](https://github.com/ipsec-dev/Article30/issues/171)) ([fdc0ea1](https://github.com/ipsec-dev/Article30/commit/fdc0ea17ed28724a2f89df5e0fab38ad4b04df48))
 * **deps:** upgrade NestJS to 12 ([#174](https://github.com/ipsec-dev/Article30/issues/174)) ([6b80556](https://github.com/ipsec-dev/Article30/commit/6b8055642fa4b527a307128bb6c5f1091313530d))
-
+* **deps:** clear remaining fixable audit advisories ([#178](https://github.com/ipsec-dev/Article30/issues/178)) ([611793a](https://github.com/ipsec-dev/Article30/commit/611793ab8f38402bed3f2ddeb0574e2207b30c0e))
 
 ### Maintenance & Dependencies
 
-* **ci:** group Nest and Prisma updates in lockstep ([#175](https://github.com/ipsec-dev/Article30/issues/175)) ([014a4f8](https://github.com/ipsec-dev/Article30/commit/014a4f82bbadfeda0b5e013ad8a5769bb27c1f1a))
 * **deps-dev:** bump the dev-deps group with 12 updates ([#159](https://github.com/ipsec-dev/Article30/issues/159)) ([69edec3](https://github.com/ipsec-dev/Article30/commit/69edec3a0eed6f98d462d93b3198befc1c9f2441))
+* **ci:** group Nest and Prisma updates in lockstep ([#175](https://github.com/ipsec-dev/Article30/issues/175)) ([014a4f8](https://github.com/ipsec-dev/Article30/commit/014a4f82bbadfeda0b5e013ad8a5769bb27c1f1a))
 
 ## [1.1.13](https://github.com/ipsec-dev/Article30/compare/v1.1.12...v1.1.13) (2026-09-24)
 
