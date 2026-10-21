@@ -24,7 +24,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.5.1",
     "prettier": "^3.9.9",
-    "vite": "^8.3.1"
+    "vite": "^8.3.3"
   },
   "lint-staged": {
     "backend/src/**/*.ts": "backend/node_modules/.bin/eslint --config backend/eslint.config.mjs --fix",
