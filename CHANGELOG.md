@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.16](https://github.com/ipsec-dev/Article30/compare/v1.1.15...v1.1.16) (2026-10-22)
+
+
+### Maintenance & Dependencies
+
+* **deps-dev:** bump vite from 8.3.1 to 8.3.3 ([#182](https://github.com/ipsec-dev/Article30/issues/182)) ([f4c7a3e](https://github.com/ipsec-dev/Article30/commit/f4c7a3e4f524e09ed6116b113c93651f5a200af1))
+
 ## [1.1.15](https://github.com/ipsec-dev/Article30/compare/v1.1.14...v1.1.15) (2026-10-16)
 
 
