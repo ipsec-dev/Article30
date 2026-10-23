@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.17](https://github.com/ipsec-dev/Article30/compare/v1.1.16...v1.1.17) (2026-10-23)
+
+
+### Bug Fixes
+
+* **deps:** bump sanitize-html from 2.18.0 to 2.18.1 ([#184](https://github.com/ipsec-dev/Article30/issues/184)) ([84e0b63](https://github.com/ipsec-dev/Article30/commit/84e0b63ec9f96e9a0ffd5e7593379223cc55e2ad))
+* **docker:** bump node image to 24.22.1 (CVE-2026-111497) ([#186](https://github.com/ipsec-dev/Article30/issues/186)) ([1d0abc6](https://github.com/ipsec-dev/Article30/commit/1d0abc6ec56998c8d61b3a426eb04dc774e9d8e2))
+
 ## [1.1.16](https://github.com/ipsec-dev/Article30/compare/v1.1.15...v1.1.16) (2026-10-22)
 
 
