@@ -6,6 +6,7 @@
 ### Bug Fixes
 
 * **compliance:** handle archive finalize rejection in audit package ([#188](https://github.com/ipsec-dev/Article30/issues/188)) ([b2219e1](https://github.com/ipsec-dev/Article30/commit/b2219e1d7c16a340af49df067db133b94f2bd3fd))
+* **deps:** bump body-parser to 2.4.0 and multer to 2.5.0 ([#188](https://github.com/ipsec-dev/Article30/issues/188)) ([b2219e1](https://github.com/ipsec-dev/Article30/commit/b2219e1d7c16a340af49df067db133b94f2bd3fd))
 
 ## [1.1.17](https://github.com/ipsec-dev/Article30/compare/v1.1.16...v1.1.17) (2026-10-23)
 
