@@ -200,7 +200,9 @@ export class AuditPackageService {
       archive.append(checklistPdf, { name: fileNames.checklist });
       archive.append(violationsPdf, { name: fileNames.violations });
 
-      archive.finalize();
+      // finalize() also returns a promise that rejects on zip errors: route it to
+      // reject so it can't become an unhandled rejection that kills the process.
+      archive.finalize().catch(reject);
     });
   }
 
