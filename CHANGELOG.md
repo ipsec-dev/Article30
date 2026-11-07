@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.19](https://github.com/ipsec-dev/Article30/compare/v1.1.18...v1.1.19) (2026-11-07)
+
+
+### Maintenance & Dependencies
+
+* **ci:** bump docker/login-action ([#190](https://github.com/ipsec-dev/Article30/issues/190)) ([8411a8f](https://github.com/ipsec-dev/Article30/commit/8411a8f84fb1fc3443b9d8fe476ab52a5eda7bb4))
+
 ## [1.1.18](https://github.com/ipsec-dev/Article30/compare/v1.1.17...v1.1.18) (2026-11-01)
 
 
