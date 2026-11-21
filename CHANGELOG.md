@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.19](https://github.com/ipsec-dev/Article30/compare/v1.1.18...v1.1.19) (2026-11-21)
+
+
+### Bug Fixes
+
+* **deps:** bump next from 16.4.2 to 16.4.5 ([#194](https://github.com/ipsec-dev/Article30/issues/194)) ([23e5571](https://github.com/ipsec-dev/Article30/commit/23e55712b28f3ea7e0133c05f3012ee37013c220))
+
+
+### Maintenance & Dependencies
+
+* **ci:** bump docker/login-action ([#190](https://github.com/ipsec-dev/Article30/issues/190)) ([8411a8f](https://github.com/ipsec-dev/Article30/commit/8411a8f84fb1fc3443b9d8fe476ab52a5eda7bb4))
+
 ## [1.1.18](https://github.com/ipsec-dev/Article30/compare/v1.1.17...v1.1.18) (2026-11-01)
 
 
