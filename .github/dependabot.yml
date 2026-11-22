@@ -51,6 +51,11 @@ updates:
       # Patch/minor v7 updates are still allowed for security fixes.
       - dependency-name: archiver
         update-types: ['version-update:semver-major']
+      # TypeScript pinned at 6.x. 7.0 ships only the `tsc` binary, with
+      # no compiler API, so `nest build` and typescript-eslint both
+      # refuse to run. Re-evaluate when 7.1 brings the API back.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
     groups:
       # Everything in one PR, which also keeps lockstep families (Nest,
       # Prisma) together: a split major can never pass CI.
