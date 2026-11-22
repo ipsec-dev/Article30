@@ -10,20 +10,20 @@ describe('<StatusDot />', () => {
 
   it('applies the success color via inline style on the dot', () => {
     const { container } = render(<StatusDot kind="success">x</StatusDot>);
-    const dot = container.querySelector('span > span');
-    expect(dot).toHaveStyle({ background: 'var(--success)' });
+    const dot = container.querySelector<HTMLElement>('span > span');
+    expect(dot?.style.background).toBe('var(--success)');
   });
 
   it('renders neutral by default', () => {
     const { container } = render(<StatusDot>x</StatusDot>);
-    const dot = container.querySelector('span > span');
-    expect(dot).toHaveStyle({ background: 'var(--ink-3)' });
+    const dot = container.querySelector<HTMLElement>('span > span');
+    expect(dot?.style.background).toBe('var(--ink-3)');
   });
 
   it('renders danger color', () => {
     const { container } = render(<StatusDot kind="danger">x</StatusDot>);
-    const dot = container.querySelector('span > span');
-    expect(dot).toHaveStyle({ background: 'var(--danger)' });
+    const dot = container.querySelector<HTMLElement>('span > span');
+    expect(dot?.style.background).toBe('var(--danger)');
   });
 
   it('uses tabular numeric font when mono', () => {
