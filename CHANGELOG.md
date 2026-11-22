@@ -6,11 +6,11 @@
 ### Bug Fixes
 
 * **deps:** bump next from 16.4.2 to 16.4.5 ([#194](https://github.com/ipsec-dev/Article30/issues/194)) ([23e5571](https://github.com/ipsec-dev/Article30/commit/23e55712b28f3ea7e0133c05f3012ee37013c220))
-* **deps:** bump the npm group with 40 updates ([#192](https://github.com/ipsec-dev/Article30/issues/192)) ([dad48ad](https://github.com/ipsec-dev/Article30/commit/dad48ad9890403a92ca0a49ff6ee3e90ad5fbefb))
-* **deps:** bump the npm group with 9 updates ([#197](https://github.com/ipsec-dev/Article30/issues/197)) ([4bed47f](https://github.com/ipsec-dev/Article30/commit/4bed47f0233c370cb786a34f099a1803b8138c94))
+* **deps:** bump the npm group with 40 updates, keeping typescript on 6.x ([#192](https://github.com/ipsec-dev/Article30/issues/192)) ([dad48ad](https://github.com/ipsec-dev/Article30/commit/dad48ad9890403a92ca0a49ff6ee3e90ad5fbefb))
 * **deps:** override effect to 3.22.x to clear the Schema ReDoS advisory ([#195](https://github.com/ipsec-dev/Article30/issues/195)) ([91bcbb5](https://github.com/ipsec-dev/Article30/commit/91bcbb5e03490f8625975e4ab3247c4e2abaca72))
 * **docker:** bump the docker-base group across 2 directories with 1 update ([#191](https://github.com/ipsec-dev/Article30/issues/191)) ([f0f1d6b](https://github.com/ipsec-dev/Article30/commit/f0f1d6b53df938bcdc1c80a9c9c332075bf9231c))
-
+* **docker:** install corepack on node 26 and run CI on node 26 ([#191](https://github.com/ipsec-dev/Article30/issues/191)) ([f0f1d6b](https://github.com/ipsec-dev/Article30/commit/f0f1d6b53df938bcdc1c80a9c9c332075bf9231c))
+* **deps:** bump the npm group with 9 updates ([#197](https://github.com/ipsec-dev/Article30/issues/197)) ([4bed47f](https://github.com/ipsec-dev/Article30/commit/4bed47f0233c370cb786a34f099a1803b8138c94))
 
 ### Maintenance & Dependencies
 
